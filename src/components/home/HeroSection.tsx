@@ -13,22 +13,22 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (75vh height, desktop background image enlarged +20%) */}
+      {/* 1. DESKTOP HERO LAYOUT (75vh height, desktop background image enlarged +30%) */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative w-full min-h-[75vh] items-center">
         
-        {/* Desktop Product Bags Image Container (Enlarged by +20%: max-w-[1050px] h-[72vh]) */}
+        {/* Desktop Product Bags Image Container (Enlarged by +30%: max-w-[1360px] h-[85vh]) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="max-w-[1440px] mx-auto px-6 h-full relative">
-            <div className="absolute left-[480px] xl:left-[520px] right-0 top-[10%] bottom-0 flex items-start justify-end pr-2">
-              <div className="relative w-full h-[72vh] max-w-[1050px]">
+          <div className="max-w-[1536px] mx-auto px-6 h-full relative">
+            <div className="absolute left-[440px] xl:left-[480px] right-0 top-[2%] bottom-0 flex items-start justify-end pr-2">
+              <div className="relative w-full h-[85vh] max-w-[1360px]">
                 <Image
                   src="/images/landscape_hero_section_image.png"
                   alt="Pawnourish B2B Wholesale Hero Background Desktop"
                   fill
                   priority
                   className="object-contain object-right-top"
-                  sizes="1050px"
+                  sizes="1360px"
                 />
               </div>
             </div>
