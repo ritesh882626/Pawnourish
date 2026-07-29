@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import { useStore } from '@/store/useStore';
-import { X, Send, CheckCircle2, Building2, Phone, Mail, MapPin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Send, CheckCircle2, Building2, ArrowLeft, ArrowRight, Sparkles, Store, MapPin, User, Phone, Mail, FileText } from 'lucide-react';
 
 export default function DealerEnquiryModal() {
   const { isDealerModalOpen, closeDealerModal, selectedProductForInquiry } = useStore();
-  const [submitted, setSubmitted] = useState(false);
+  const [step, setStep] = useState<number>(1);
+  const [submitted, setSubmitted] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     businessName: '',
     contactName: '',
@@ -14,184 +16,300 @@ export default function DealerEnquiryModal() {
     email: '',
     businessType: 'Pet Store',
     location: 'Delhi',
-    estimatedMonthlyBudget: '₹50,000 - ₹1,00,000',
     notes: ''
   });
 
   if (!isDealerModalOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleNext = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (step < 3) {
+      setStep((prev) => prev + 1);
+    } else {
+      setSubmitted(true);
+    }
+  };
+
+  const handleBack = () => {
+    if (step > 1) setStep((prev) => prev - 1);
+  };
+
+  const handleClose = () => {
+    setStep(1);
+    setSubmitted(false);
+    closeDealerModal();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       
-      {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
-        onClick={closeDealerModal}
+      {/* Dark Overlay Backdrop */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"
+        onClick={handleClose}
       />
 
-      {/* Modal Container (Bottom sheet on mobile, centered modal on desktop) */}
-      <div className="relative bg-white w-full max-w-2xl max-h-[92vh] sm:max-h-[90vh] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden z-10 border border-slate-200 flex flex-col">
-        
-        {/* Mobile Drag Indicator */}
-        <div className="sm:hidden w-full flex justify-center py-2 bg-emerald-950">
-          <div className="w-12 h-1.5 bg-emerald-700/60 rounded-full" />
-        </div>
+      {/* Main Slide-Up Sheet Container */}
+      <motion.div 
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "100%", opacity: 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 220 }}
+        className="relative bg-amber-500 w-full max-w-xl max-h-[92vh] sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden z-10 border border-amber-400 flex flex-col"
+      >
 
-        {/* Modal Sticky Header */}
-        <div className="bg-emerald-950 text-white px-5 py-4 sm:p-6 flex justify-between items-center shrink-0 border-b border-emerald-900">
-          <div className="space-y-0.5 max-w-[85%]">
-            <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold text-emerald-400 uppercase tracking-wider">
-              <Building2 className="w-3.5 h-3.5" /> B2B Wholesale Inquiry
+        {/* Top Header & Navigation */}
+        <div className="px-6 pt-5 pb-4 flex items-center justify-between text-slate-950 shrink-0">
+          <div className="flex items-center gap-3">
+            {step > 1 && !submitted && (
+              <button 
+                onClick={handleBack}
+                className="w-9 h-9 rounded-full bg-white/30 hover:bg-white/50 flex items-center justify-center text-slate-950 transition-colors"
+                aria-label="Back"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+            )}
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-900/80 block">
+                {!submitted ? `Step 0${step} of 03` : "Complete"}
+              </span>
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-slate-950">
+                {selectedProductForInquiry ? "Inquire Rate Card" : "Dealer Application"}
+              </h2>
             </div>
-            <h2 className="text-lg sm:text-2xl font-bold truncate">
-              {selectedProductForInquiry 
-                ? `Inquire: ${selectedProductForInquiry.title}` 
-                : 'Become an Authorized Dealer'}
-            </h2>
           </div>
 
           <button 
-            onClick={closeDealerModal}
-            className="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-colors shrink-0"
-            aria-label="Close modal"
+            onClick={handleClose}
+            className="w-9 h-9 rounded-full bg-slate-950/10 hover:bg-slate-950/20 flex items-center justify-center text-slate-950 transition-colors"
+            aria-label="Close"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Scrollable Modal Body */}
-        <div className="p-5 sm:p-8 overflow-y-auto flex-1 text-slate-900">
+        {/* Progress Line */}
+        {!submitted && (
+          <div className="w-full bg-slate-950/10 h-1.5 shrink-0">
+            <motion.div 
+              className="bg-slate-950 h-full"
+              initial={{ width: "33%" }}
+              animate={{ width: step === 1 ? "33%" : step === 2 ? "66%" : "100%" }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+        )}
+
+        {/* Slide-Up White Form Card Container */}
+        <div className="bg-white rounded-t-[2rem] p-6 sm:p-8 flex-1 overflow-y-auto shadow-2xl flex flex-col justify-between">
+          
           {submitted ? (
-            <div className="text-center py-8 sm:py-10 space-y-4">
-              <CheckCircle2 className="w-16 h-16 text-emerald-600 mx-auto" />
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900">Enquiry Received!</h3>
-              <p className="text-slate-600 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-                Thank you for reaching out. Our Delhi NCR wholesale manager will contact you via Phone & WhatsApp within 2 hours with the official Royal Canin & Drools price list.
+            /* Success Step */
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center py-8 space-y-4 my-auto"
+            >
+              <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600 shadow-inner">
+                <CheckCircle2 className="w-12 h-12" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900">Application Submitted!</h3>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
+                Thank you for applying. Our Delhi NCR wholesale manager will contact you on <strong>{formData.phone || "WhatsApp"}</strong> within 2 hours with the official Royal Canin & Drools price list.
               </p>
               <button
-                onClick={() => { setSubmitted(false); closeDealerModal(); }}
-                className="mt-4 w-full sm:w-auto px-8 py-3.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl transition-all text-sm"
+                onClick={handleClose}
+                className="mt-6 w-full py-4 bg-slate-950 hover:bg-slate-900 text-white font-extrabold rounded-2xl shadow-xl transition-all text-sm"
               >
-                Close Window
+                Close & Continue Browsing
               </button>
-            </div>
+            </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            /* Step Wise Wizard Form */
+            <form onSubmit={handleNext} className="flex flex-col justify-between flex-1 min-h-[300px]">
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-bold uppercase text-slate-700 mb-1">Business / Store Name *</label>
-                  <input 
-                    required 
-                    type="text" 
-                    placeholder="e.g. Pet Care Plaza"
-                    value={formData.businessName}
-                    onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-base sm:text-sm focus:outline-none focus:border-emerald-600 min-h-[46px]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-bold uppercase text-slate-700 mb-1">Contact Person Name *</label>
-                  <input 
-                    required 
-                    type="text" 
-                    placeholder="Your Name"
-                    value={formData.contactName}
-                    onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-base sm:text-sm focus:outline-none focus:border-emerald-600 min-h-[46px]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-bold uppercase text-slate-700 mb-1">Phone Number (WhatsApp) *</label>
-                  <input 
-                    required 
-                    type="tel" 
-                    placeholder="+91 98100 XXXXX"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-base sm:text-sm focus:outline-none focus:border-emerald-600 min-h-[46px]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-bold uppercase text-slate-700 mb-1">Business Email *</label>
-                  <input 
-                    required 
-                    type="email" 
-                    placeholder="store@domain.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-base sm:text-sm focus:outline-none focus:border-emerald-600 min-h-[46px]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-bold uppercase text-slate-700 mb-1">Business Type *</label>
-                  <select 
-                    value={formData.businessType}
-                    onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-base sm:text-sm font-medium focus:outline-none focus:border-emerald-600 min-h-[46px]"
+              <AnimatePresence mode="wait">
+                
+                {/* STEP 1: Business Info */}
+                {step === 1 && (
+                  <motion.div
+                    key="step1"
+                    initial={{ y: 25, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -25, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-4"
                   >
-                    <option value="Pet Store">Pet Retail Store</option>
-                    <option value="Veterinary Clinic">Veterinary Clinic</option>
-                    <option value="Pet Grooming Salon">Pet Grooming Salon</option>
-                    <option value="Pet Pharmacy">Pet Pharmacy</option>
-                    <option value="Breeder / Kennel">Breeder / Kennel</option>
-                    <option value="Distributor">Local Distributor</option>
-                  </select>
-                </div>
+                    <div className="space-y-1 mb-2">
+                      <span className="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <Store className="w-4 h-4" /> Store Profile
+                      </span>
+                      <h3 className="text-lg font-extrabold text-slate-900">Tell us about your business</h3>
+                    </div>
 
-                <div>
-                  <label className="block text-[11px] sm:text-xs font-bold uppercase text-slate-700 mb-1">NCR Region / City *</label>
-                  <select 
-                    value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-base sm:text-sm font-medium focus:outline-none focus:border-emerald-600 min-h-[46px]"
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Store / Business Name *</label>
+                      <input 
+                        required
+                        type="text"
+                        placeholder="e.g. Royal Pet Care Plaza"
+                        value={formData.businessName}
+                        onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Business Type *</label>
+                      <select 
+                        value={formData.businessType}
+                        onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm font-medium focus:outline-none focus:border-amber-500 min-h-[48px]"
+                      >
+                        <option value="Pet Store">Pet Retail Store</option>
+                        <option value="Veterinary Clinic">Veterinary Clinic</option>
+                        <option value="Grooming Salon">Pet Grooming Salon</option>
+                        <option value="Pet Pharmacy">Pet Pharmacy</option>
+                        <option value="Breeder / Kennel">Breeder / Kennel</option>
+                        <option value="Distributor">Local Distributor</option>
+                      </select>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 2: Contact Details */}
+                {step === 2 && (
+                  <motion.div
+                    key="step2"
+                    initial={{ y: 25, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -25, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-4"
                   >
-                    <option value="Delhi">Delhi (All Zones)</option>
-                    <option value="Gurugram">Gurugram</option>
-                    <option value="Noida">Noida / Greater Noida</option>
-                    <option value="Ghaziabad">Ghaziabad</option>
-                    <option value="Faridabad">Faridabad</option>
-                    <option value="Other NCR">Other NCR Region</option>
-                  </select>
-                </div>
-              </div>
+                    <div className="space-y-1 mb-2">
+                      <span className="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <User className="w-4 h-4" /> Contact & Location
+                      </span>
+                      <h3 className="text-lg font-extrabold text-slate-900">How can our team reach you?</h3>
+                    </div>
 
-              <div>
-                <label className="block text-[11px] sm:text-xs font-bold uppercase text-slate-700 mb-1">Additional Requirements / Preferred Brands</label>
-                <textarea 
-                  rows={2} 
-                  placeholder="Mention specific Royal Canin or Drools SKUs or order frequency..."
-                  value={formData.notes}
-                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-base sm:text-sm focus:outline-none focus:border-emerald-600"
-                />
-              </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Contact Person Name *</label>
+                      <input 
+                        required
+                        type="text"
+                        placeholder="Owner / Manager Name"
+                        value={formData.contactName}
+                        onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                      />
+                    </div>
 
-              <button
-                type="submit"
-                className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white font-extrabold rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl transition-all min-h-[50px] mt-2"
-              >
-                <Send className="w-5 h-5" /> Submit Dealer Enquiry & Get Price List
-              </button>
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Phone Number (WhatsApp) *</label>
+                      <input 
+                        required
+                        type="tel"
+                        placeholder="+91 98100 XXXXX"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">NCR Location / City *</label>
+                      <select 
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm font-medium focus:outline-none focus:border-amber-500 min-h-[48px]"
+                      >
+                        <option value="Delhi">Delhi (All Zones)</option>
+                        <option value="Gurugram">Gurugram</option>
+                        <option value="Noida">Noida / Greater Noida</option>
+                        <option value="Ghaziabad">Ghaziabad</option>
+                        <option value="Faridabad">Faridabad</option>
+                        <option value="Other NCR">Other NCR Region</option>
+                      </select>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 3: Email & Final Submit */}
+                {step === 3 && (
+                  <motion.div
+                    key="step3"
+                    initial={{ y: 25, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -25, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-4"
+                  >
+                    <div className="space-y-1 mb-2">
+                      <span className="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <FileText className="w-4 h-4" /> Preferences & Submit
+                      </span>
+                      <h3 className="text-lg font-extrabold text-slate-900">Final step to get your rate card</h3>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Business Email *</label>
+                      <input 
+                        required
+                        type="email"
+                        placeholder="store@domain.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Preferred Brands / SKUs Notes</label>
+                      <textarea 
+                        rows={2}
+                        placeholder="Mention Royal Canin or Drools requirements..."
+                        value={formData.notes}
+                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+                  </motion.div>
+                )}
+
+              </AnimatePresence>
+
+              {/* Bottom Action Button */}
+              <div className="pt-6">
+                <button
+                  type="submit"
+                  className="w-full py-4 bg-slate-950 hover:bg-slate-900 active:scale-[0.98] text-white font-black rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl transition-all min-h-[52px]"
+                >
+                  {step === 3 ? (
+                    <>
+                      <Send className="w-5 h-5 text-amber-400" />
+                      <span>Submit & Get Price List</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Continue</span>
+                      <ArrowRight className="w-5 h-5 text-amber-400" />
+                    </>
+                  )}
+                </button>
+              </div>
 
             </form>
           )}
+
         </div>
 
-      </div>
+      </motion.div>
     </div>
   );
 }
