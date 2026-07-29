@@ -83,7 +83,7 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (2% Blur, Supporting Line Below Heading, Single Row Buttons) */}
+      {/* 2. MOBILE HERO LAYOUT (0.5% Blur, Icons Removed, Buttons Sized to Heading) */}
       {/* ========================================================================= */}
       <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[90vh] flex items-center justify-center">
         
@@ -101,13 +101,13 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* 2% Minimal Blur Layer for Pristine Text Readability */}
-        <div className="absolute inset-0 bg-white/55 backdrop-blur-[2px] pointer-events-none z-1" />
+        {/* 0.5% Minimal Blur Layer for Pristine Text Readability */}
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-[0.5px] pointer-events-none z-1" />
 
-        {/* Content Container (Left Aligned over 2% Blur Layer) */}
+        {/* Content Container (Left Aligned over 0.5% Blur Layer) */}
         <div className="relative z-10 px-5 sm:px-6 py-10 text-left max-w-sm w-full my-auto">
           
-          <div className="space-y-3.5">
+          <div className="space-y-3">
             
             {/* 1. Subheading: Pawnourish */}
             <div className="inline-block">
@@ -121,46 +121,30 @@ export default function HeroSection() {
               Royal Canin & Drools <span className="text-emerald-700 font-extrabold">Authorized Dealer</span>
             </h1>
 
-            {/* 3. Supporting Line (Positioned EXACTLY below main heading per user request) */}
-            <div className="pt-1">
+            {/* 3. Supporting Line (Positioned EXACTLY below main heading) */}
+            <div className="pt-0.5">
               <p className="text-xs sm:text-sm font-extrabold tracking-wider text-slate-600 uppercase">
                 Authorized B2B Supplier
               </p>
             </div>
 
-            {/* 4. Action Buttons in a SINGLE HORIZONTAL ROW with rounded edges */}
-            <div className="flex flex-row items-center gap-2.5 sm:gap-3 pt-3">
+            {/* 4. Action Buttons (No Icons, sized neatly to fit heading width) */}
+            <div className="flex flex-row items-center gap-2 pt-2.5 max-w-full">
               
               {/* Button 1: Become partner */}
               <Link
                 href="/become-a-dealer"
-                className="flex-1 px-4 py-3 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-xl sm:rounded-2xl flex items-center justify-center gap-1.5 text-xs sm:text-sm shadow-md transition-all whitespace-nowrap"
+                className="px-3.5 py-2.5 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-lg sm:rounded-xl text-xs shadow-md transition-all whitespace-nowrap text-center"
               >
-                <span>Become partner</span>
-                <div className="w-4 h-4 relative shrink-0">
-                  <Image
-                    src="/images/bold_arrow_up_right.png"
-                    alt="Arrow Icon"
-                    fill
-                    className="object-contain invert brightness-200"
-                  />
-                </div>
+                Become partner
               </Link>
 
               {/* Button 2: Get Quote */}
               <button
                 onClick={() => openDealerModal()}
-                className="flex-1 px-4 py-3 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-xl sm:rounded-2xl border border-slate-300 shadow-xs transition-all text-xs sm:text-sm flex items-center justify-center gap-1.5 whitespace-nowrap"
+                className="px-3.5 py-2.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-lg sm:rounded-xl border border-slate-300 shadow-xs transition-all text-xs whitespace-nowrap text-center"
               >
-                <span>Get Quote</span>
-                <div className="w-4 h-4 relative shrink-0">
-                  <Image
-                    src="/images/bold_arrow_up_right.png"
-                    alt="Arrow Icon"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+                Get Quote
               </button>
 
             </div>
