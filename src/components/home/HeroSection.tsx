@@ -13,24 +13,24 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (hidden on mobile, visible on lg screens)           */}
+      {/* 1. DESKTOP HERO LAYOUT (using new Royal Canin + Drools product pack hero bg) */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative w-full min-h-[620px] items-center">
         
-        {/* Desktop Background Image (Brought down by 30px on desktop per user request) */}
+        {/* Desktop Background Image */}
         <div className="absolute inset-0 z-0">
-          <div className="relative w-full h-full translate-y-[30px]">
+          <div className="relative w-full h-full">
             <Image
               src="/images/landscape_hero_section_image.png"
               alt="Pawnourish B2B Wholesale Hero Background Desktop"
               fill
               priority
-              className="object-cover object-bottom"
+              className="object-cover object-right"
               sizes="100vw"
             />
           </div>
-          {/* Gradient Fade Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent w-3/4 pointer-events-none z-1" />
+          {/* Gradient Fade Overlay on Left for Pristine Text Contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent w-2/3 pointer-events-none z-1" />
         </div>
 
         {/* Desktop Hero Content Overlay */}
@@ -43,7 +43,7 @@ export default function HeroSection() {
               <span>Official B2B Wholesale Supplier • Delhi NCR Region</span>
             </div>
 
-            {/* Headline (No wavy red/amber lines) */}
+            {/* Headline */}
             <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.18] text-slate-900">
               Authorized Wholesale Distributor of{' '}
               <span className="text-emerald-700 font-extrabold">
