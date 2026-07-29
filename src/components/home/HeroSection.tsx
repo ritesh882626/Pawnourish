@@ -1,13 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/store/useStore';
-import { ArrowRight, FileText, Building2, MapPin } from 'lucide-react';
+import { ArrowRight, FileText, Building2, MapPin, ShieldCheck, Truck, TrendingUp, Store, Zap, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function HeroSection() {
   const { openDealerModal } = useStore();
+
+  // Dynamic text animation phrases for B2B pet food platform
+  const phrases = [
+    "Factory Direct Supply for Retailers",
+    "24-Hour Express Delhi NCR Dispatch",
+    "100% Genuine Royal Canin & Drools",
+    "Maximum B2B Retailer Margins"
+  ];
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % phrases.length);
+    }, 3200);
+    return () => clearInterval(interval);
+  }, [phrases.length]);
 
   return (
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
@@ -85,69 +102,120 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Text centered in 50% vh area in the middle)         */}
+      {/* 2. MODERN MOBILE HERO LAYOUT (No Image, Animated B2B Text & Interactive Icons) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[85vh] flex items-center justify-center">
+      <div className="block lg:hidden relative w-full bg-slate-950 text-white overflow-hidden min-h-[85vh] flex flex-col justify-center px-5 sm:px-6 py-12">
         
-        {/* Centered Vertical Hero Image (+10% size, object-center) */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[85vh] max-w-md mx-auto">
-            <Image
-              src="/images/dalmatian_hero_mobile.png"
-              alt="Pawnourish Royal Canin & Drools Mobile Hero Background"
-              fill
-              priority
-              className="object-contain object-center scale-110"
-              sizes="100vw"
-            />
-          </div>
-        </div>
+        {/* Modern Background Radial Ambient Glows */}
+        <div className="absolute -top-24 -left-20 w-72 h-72 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -right-20 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#005F56_1px,transparent_1px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
 
-        {/* Content Container (Kept in 50% vh area centered in the middle) */}
-        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full min-h-[50vh] flex flex-col justify-center my-auto">
+        <div className="relative z-10 max-w-sm mx-auto w-full space-y-6 text-left my-auto">
           
-          <div className="space-y-3 my-auto">
-            
-            {/* 1. Subheading: Pawnourish */}
-            <div className="inline-block">
-              <span className="text-[#005F56] font-black text-lg sm:text-xl tracking-wider uppercase block">
-                Pawnourish
-              </span>
+          {/* Subheading & Animated B2B Text Tag */}
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-3 py-1.5 rounded-full text-xs font-black text-emerald-400 backdrop-blur-md shadow-xs">
+              <Zap className="w-3.5 h-3.5 text-emerald-400 animate-pulse shrink-0" />
+              <span>PAWNOURISH® B2B</span>
             </div>
 
-            {/* 2. Main Heading: Royal Canin & Drools Authorized Dealer */}
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-[1.2]">
-              Royal Canin & Drools <span className="text-emerald-700 font-extrabold">Authorized Dealer</span>
-            </h1>
+            {/* Framer Motion Text Animation Loop */}
+            <div className="h-7 overflow-hidden relative flex items-center">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={index}
+                  initial={{ y: 16, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -16, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="text-xs sm:text-sm font-extrabold text-emerald-300 tracking-wide uppercase whitespace-nowrap flex items-center gap-1.5"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>{phrases[index]}</span>
+                </motion.p>
+              </AnimatePresence>
+            </div>
+          </div>
 
-            {/* 3. Supporting Line (Positioned EXACTLY below main heading) */}
-            <div className="pt-0.5">
-              <p className="text-xs sm:text-sm font-extrabold tracking-wider text-slate-600 uppercase">
-                Authorized B2B Supplier
-              </p>
+          {/* Main Headline with Emerald Glow */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-[1.18]"
+          >
+            Royal Canin & Drools{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">
+              Authorized B2B Partner
+            </span>
+          </motion.h1>
+
+          {/* Supporting Line */}
+          <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+            Official wholesale supplier of 100% factory-genuine pet food for pet stores, clinics & vets across Delhi NCR.
+          </p>
+
+          {/* Interactive B2B Feature Badges Grid (4 Animated Icon Badges) */}
+          <div className="grid grid-cols-2 gap-2.5 pt-1">
+            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              </div>
+              <div className="text-left">
+                <div className="text-[11px] font-black text-white leading-tight">100% Authentic</div>
+                <div className="text-[9px] font-semibold text-slate-400">Direct Brand Stock</div>
+              </div>
             </div>
 
-            {/* 4. Action Buttons (No Icons, sized neatly to fit heading width) */}
-            <div className="flex flex-row items-center gap-2 pt-2.5 max-w-full">
-              
-              {/* Button 1: Become partner */}
-              <Link
-                href="/become-a-dealer"
-                className="px-3.5 py-2.5 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-lg sm:rounded-xl text-xs shadow-md transition-all whitespace-nowrap text-center"
-              >
-                Become partner
-              </Link>
-
-              {/* Button 2: Get Quote */}
-              <button
-                onClick={() => openDealerModal()}
-                className="px-3.5 py-2.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-lg sm:rounded-xl border border-slate-300 shadow-xs transition-all text-xs whitespace-nowrap text-center"
-              >
-                Get Quote
-              </button>
-
+            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
+              <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                <Truck className="w-4 h-4 text-amber-400" />
+              </div>
+              <div className="text-left">
+                <div className="text-[11px] font-black text-white leading-tight">24H Express</div>
+                <div className="text-[9px] font-semibold text-slate-400">NCR Delivery</div>
+              </div>
             </div>
 
+            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
+              <div className="w-7 h-7 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center shrink-0">
+                <TrendingUp className="w-4 h-4 text-teal-400" />
+              </div>
+              <div className="text-left">
+                <div className="text-[11px] font-black text-white leading-tight">Max Profit</div>
+                <div className="text-[9px] font-semibold text-slate-400">Retailer Margins</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
+              <div className="w-7 h-7 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                <Store className="w-4 h-4 text-indigo-400" />
+              </div>
+              <div className="text-left">
+                <div className="text-[11px] font-black text-white leading-tight">500+ Outlets</div>
+                <div className="text-[9px] font-semibold text-slate-400">Supplied in NCR</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Single Row Action Buttons */}
+          <div className="flex flex-row items-center gap-2.5 pt-2">
+            <Link
+              href="/become-a-dealer"
+              className="flex-1 px-4 py-3 bg-[#005F56] hover:bg-emerald-600 active:scale-[0.98] text-white font-extrabold rounded-xl text-xs sm:text-sm shadow-lg shadow-emerald-950/50 transition-all text-center flex items-center justify-center gap-1.5"
+            >
+              <Building2 className="w-4 h-4 shrink-0" />
+              <span>Become Partner</span>
+            </Link>
+
+            <button
+              onClick={() => openDealerModal()}
+              className="flex-1 px-4 py-3 bg-white/10 hover:bg-white/15 border border-white/20 active:scale-[0.98] text-white font-extrabold rounded-xl text-xs sm:text-sm backdrop-blur-md transition-all text-center flex items-center justify-center gap-1.5"
+            >
+              <FileText className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>Get Rate Card</span>
+            </button>
           </div>
 
         </div>
