@@ -30,22 +30,22 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (Dog catching treat image on white bg)            */}
+      {/* 1. DESKTOP HERO LAYOUT (Dog image enlarged by +50%)                       */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative w-full min-h-[75vh] items-center">
         
-        {/* Desktop Dog Hero Image Container */}
+        {/* Desktop Dog Hero Image Container (Enlarged by +50%) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <div className="max-w-[1536px] mx-auto px-6 h-full relative">
-            <div className="absolute left-[440px] xl:left-[480px] right-0 top-[2%] bottom-0 flex items-start justify-end pr-2">
-              <div className="relative w-full h-[85vh] max-w-[1360px]">
+            <div className="absolute left-[380px] xl:left-[420px] right-0 top-[-10%] bottom-0 flex items-center justify-end pr-2">
+              <div className="relative w-full h-[110vh] max-w-[1800px]">
                 <Image
                   src="/images/landscape_hero_section_image.png"
                   alt="Pawnourish B2B Wholesale Hero Dog Background Desktop"
                   fill
                   priority
-                  className="object-contain object-right-center"
-                  sizes="1360px"
+                  className="object-contain object-right-center scale-150"
+                  sizes="1800px"
                 />
               </div>
             </div>
@@ -102,11 +102,11 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (60vh height, text pushed to top with 20% nav margin) */}
+      {/* 2. MOBILE HERO LAYOUT (Image enlarged +50%, NO blur, 60vh height)          */}
       {/* ========================================================================= */}
       <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex items-start justify-center">
         
-        {/* Centered Mobile Dog Hero Image */}
+        {/* Centered Mobile Dog Hero Image (Enlarged +50% with scale-[1.55]) */}
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
           <div className="relative w-full h-[60vh] max-w-md mx-auto">
             <Image
@@ -114,14 +114,11 @@ export default function HeroSection() {
               alt="Pawnourish B2B Mobile Hero Dog Background"
               fill
               priority
-              className="object-contain object-bottom scale-105"
+              className="object-contain object-center scale-[1.55]"
               sizes="100vw"
             />
           </div>
         </div>
-
-        {/* Minimal Blur Overlay for Pristine Readability */}
-        <div className="absolute inset-0 bg-white/45 backdrop-blur-[0.5px] pointer-events-none z-1" />
 
         {/* Content Container (Pushed to top with 20% top margin from nav bar) */}
         <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-[20%] pb-8 mb-auto">
@@ -130,7 +127,7 @@ export default function HeroSection() {
             
             {/* Subheading Tag & Framer Motion Text Loop */}
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 bg-emerald-50/90 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
                 <Zap className="w-3.5 h-3.5 text-emerald-600 animate-pulse shrink-0" />
                 <span>PAWNOURISH® B2B</span>
               </div>
