@@ -2,11 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useStore } from '@/store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, MessageCircle, Menu, X, FileText, Building2, ChevronRight, Home, Info, Award, ShoppingBag, Mail } from 'lucide-react';
+import { Phone, MessageCircle, X, Building2, ArrowUpRight } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -62,6 +61,15 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Price List Menu Item in Plain Yellow Text with 45° Tilted Upward Arrow */}
+            <button
+              onClick={() => openDealerModal()}
+              className="text-sm font-black text-amber-400 hover:text-amber-300 transition-colors py-1 flex items-center gap-1"
+            >
+              <span>Price List</span>
+              <ArrowUpRight className="w-4 h-4 text-amber-400" />
+            </button>
           </div>
 
           {/* Desktop Header Actions */}
@@ -78,26 +86,27 @@ export default function Navbar() {
 
             <button
               onClick={() => openDealerModal()}
-              className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl shadow-lg text-xs sm:text-sm flex items-center gap-2 transition-all hover:scale-105"
+              className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl shadow-lg text-xs sm:text-sm flex items-center gap-1.5 transition-all hover:scale-105"
             >
-              <FileText className="w-4 h-4" /> Request Price List
+              <span>Request Price List</span>
+              <ArrowUpRight className="w-4 h-4 text-slate-950" />
             </button>
           </div>
 
-          {/* Mobile Off-Canvas Menu Toggle (Minimalist 2-line = icon) */}
+          {/* Mobile Off-Canvas Menu Toggle */}
           <div className="lg:hidden flex items-center gap-2.5">
             <button
               onClick={() => openDealerModal()}
-              className="px-3.5 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs shadow-md active:scale-95"
+              className="px-3.5 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs shadow-md active:scale-95 flex items-center gap-1"
             >
-              Price List
+              <span>Price List</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(true)}
               className="w-10 h-10 rounded-xl bg-slate-900/40 hover:bg-slate-900/60 text-white flex items-center justify-center focus:outline-none border border-emerald-400/20"
               aria-label="Toggle menu"
             >
-              {/* Minimalist 2-line = Icon matching Reference Image */}
               <div className="space-y-1.5 w-5">
                 <span className="block w-full h-0.5 bg-white rounded-full" />
                 <span className="block w-full h-0.5 bg-white rounded-full" />
@@ -108,7 +117,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Off-Canvas Side Drawer Navigation (Matching Reference UI Image Exactly) */}
+      {/* Off-Canvas Side Drawer Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-[100] flex">
@@ -148,8 +157,8 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* Main Typography Links Stack (Matching Reference Image) */}
-              <div className="py-10 space-y-4 sm:space-y-5 my-auto">
+              {/* Main Typography Links Stack */}
+              <div className="py-8 space-y-4 sm:space-y-5 my-auto">
                 {navLinks.map((link, idx) => {
                   const isActive = pathname === link.href;
 
@@ -174,29 +183,39 @@ export default function Navbar() {
                     </motion.div>
                   );
                 })}
+
+                {/* Plain Yellow Text "Request Price List ↗" in Menu Items */}
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: navLinks.length * 0.05 }}
+                  className="pt-2"
+                >
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); openDealerModal(); }}
+                    className="flex items-center gap-1.5 text-2xl sm:text-3xl font-black text-amber-500 hover:text-amber-600 transition-colors"
+                  >
+                    <span>Request Price List</span>
+                    <ArrowUpRight className="w-7 h-7 text-amber-500 stroke-[3]" />
+                  </button>
+                </motion.div>
               </div>
 
               {/* Secondary Links & Bottom Sales Representative Badge */}
               <div className="space-y-6 pt-6 border-t border-slate-200">
                 
                 <div className="space-y-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                  <button 
-                    onClick={() => { setMobileMenuOpen(false); openDealerModal(); }}
-                    className="block hover:text-slate-900 transition-colors"
-                  >
-                    Request Rate Card
-                  </button>
                   <a 
                     href="https://wa.me/919810098100"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block hover:text-slate-900 transition-colors"
                   >
-                    WhatsApp Desk
+                    WhatsApp Desk: +91 98100 98100
                   </a>
                 </div>
 
-                {/* Bottom Profile Badge (Matching Reference UI Avatar Footer) */}
+                {/* Bottom Profile Badge */}
                 <div className="flex items-center gap-3 pt-2">
                   <div className="w-9 h-9 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs shadow-md shrink-0">
                     <Building2 className="w-4 h-4" />
@@ -206,7 +225,7 @@ export default function Navbar() {
                       Pawnourish NCR Sales
                     </span>
                     <span className="text-[11px] font-medium text-slate-500">
-                      +91 98100 98100
+                      Direct Wholesale Supplier
                     </span>
                   </div>
                 </div>
