@@ -102,26 +102,12 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Image propagates from lower strip, <30% face gap) */}
+      {/* 2. MOBILE HERO LAYOUT (Fully visible dog head, eyes, treat & mouth)        */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[62vh] flex items-start justify-center">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[68vh] flex flex-col justify-between">
         
-        {/* Mobile Dog Hero Image (Originating from lower strip, scale-[1.8] to close face-button gap) */}
-        <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[62vh] max-w-md mx-auto">
-            <Image
-              src="/images/dalmatian_hero_mobile.png"
-              alt="Pawnourish B2B Mobile Hero Dog Background"
-              fill
-              priority
-              className="object-contain object-bottom scale-[1.8] translate-y-[8%]"
-              sizes="100vw"
-            />
-          </div>
-        </div>
-
-        {/* Content Container (Pushed to top with 16% top margin from nav bar) */}
-        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-[16%] pb-4 mb-auto">
+        {/* Content Container (Top Section) */}
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
           
           <div className="space-y-3">
             
@@ -163,7 +149,7 @@ export default function HeroSection() {
             </div>
 
             {/* Single Row Action Buttons */}
-            <div className="flex flex-row items-center gap-2 pt-2 max-w-full">
+            <div className="flex flex-row items-center gap-2 pt-1 max-w-full">
               
               {/* Button 1: Become partner */}
               <Link
@@ -185,6 +171,18 @@ export default function HeroSection() {
 
           </div>
 
+        </div>
+
+        {/* Mobile Dog Hero Image (Clean bottom-aligned positioning displaying full dog head, treat & mouth) */}
+        <div className="relative w-full h-[32vh] min-h-[220px] max-w-md mx-auto mt-2 shrink-0 z-0">
+          <Image
+            src="/images/dalmatian_hero_mobile.png"
+            alt="Pawnourish B2B Mobile Hero Dog Background"
+            fill
+            priority
+            className="object-contain object-bottom scale-110"
+            sizes="100vw"
+          />
         </div>
 
       </div>
