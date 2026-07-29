@@ -30,21 +30,21 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (75vh height, desktop background image enlarged +30%) */}
+      {/* 1. DESKTOP HERO LAYOUT (Dog catching treat image on white bg)            */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative w-full min-h-[75vh] items-center">
         
-        {/* Desktop Product Bags Image Container (Enlarged by +30%: max-w-[1360px] h-[85vh]) */}
+        {/* Desktop Dog Hero Image Container */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <div className="max-w-[1536px] mx-auto px-6 h-full relative">
             <div className="absolute left-[440px] xl:left-[480px] right-0 top-[2%] bottom-0 flex items-start justify-end pr-2">
               <div className="relative w-full h-[85vh] max-w-[1360px]">
                 <Image
                   src="/images/landscape_hero_section_image.png"
-                  alt="Pawnourish B2B Wholesale Hero Background Desktop"
+                  alt="Pawnourish B2B Wholesale Hero Dog Background Desktop"
                   fill
                   priority
-                  className="object-contain object-right-top"
+                  className="object-contain object-right-center"
                   sizes="1360px"
                 />
               </div>
@@ -102,120 +102,90 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MODERN MOBILE HERO LAYOUT (No Image, Animated B2B Text & Interactive Icons) */}
+      {/* 2. MOBILE HERO LAYOUT (Dog catching treat image on mobile)               */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-slate-950 text-white overflow-hidden min-h-[85vh] flex flex-col justify-center px-5 sm:px-6 py-12">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[85vh] flex items-center justify-center">
         
-        {/* Modern Background Radial Ambient Glows */}
-        <div className="absolute -top-24 -left-20 w-72 h-72 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-20 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#005F56_1px,transparent_1px)] [background-size:20px_20px] opacity-20 pointer-events-none" />
+        {/* Centered Mobile Dog Hero Image */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
+          <div className="relative w-full h-[85vh] max-w-md mx-auto">
+            <Image
+              src="/images/dalmatian_hero_mobile.png"
+              alt="Pawnourish B2B Mobile Hero Dog Background"
+              fill
+              priority
+              className="object-contain object-bottom scale-105"
+              sizes="100vw"
+            />
+          </div>
+        </div>
 
-        <div className="relative z-10 max-w-sm mx-auto w-full space-y-6 text-left my-auto">
+        {/* Minimal Blur Overlay for Pristine Readability */}
+        <div className="absolute inset-0 bg-white/45 backdrop-blur-[0.5px] pointer-events-none z-1" />
+
+        {/* Content Container (50% vh centered in the middle) */}
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full min-h-[50vh] flex flex-col justify-center my-auto">
           
-          {/* Subheading & Animated B2B Text Tag */}
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-3 py-1.5 rounded-full text-xs font-black text-emerald-400 backdrop-blur-md shadow-xs">
-              <Zap className="w-3.5 h-3.5 text-emerald-400 animate-pulse shrink-0" />
-              <span>PAWNOURISH® B2B</span>
-            </div>
-
-            {/* Framer Motion Text Animation Loop */}
-            <div className="h-7 overflow-hidden relative flex items-center">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={index}
-                  initial={{ y: 16, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -16, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="text-xs sm:text-sm font-extrabold text-emerald-300 tracking-wide uppercase whitespace-nowrap flex items-center gap-1.5"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span>{phrases[index]}</span>
-                </motion.p>
-              </AnimatePresence>
-            </div>
-          </div>
-
-          {/* Main Headline with Emerald Glow */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-[1.18]"
-          >
-            Royal Canin & Drools{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">
-              Authorized B2B Partner
-            </span>
-          </motion.h1>
-
-          {/* Supporting Line */}
-          <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
-            Official wholesale supplier of 100% factory-genuine pet food for pet stores, clinics & vets across Delhi NCR.
-          </p>
-
-          {/* Interactive B2B Feature Badges Grid (4 Animated Icon Badges) */}
-          <div className="grid grid-cols-2 gap-2.5 pt-1">
-            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
-              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <div className="space-y-3.5 my-auto">
+            
+            {/* Subheading Tag & Framer Motion Text Loop */}
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
+                <Zap className="w-3.5 h-3.5 text-emerald-600 animate-pulse shrink-0" />
+                <span>PAWNOURISH® B2B</span>
               </div>
-              <div className="text-left">
-                <div className="text-[11px] font-black text-white leading-tight">100% Authentic</div>
-                <div className="text-[9px] font-semibold text-slate-400">Direct Brand Stock</div>
+
+              {/* Dynamic B2B Animated Text */}
+              <div className="h-6 overflow-hidden relative flex items-center">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={index}
+                    initial={{ y: 14, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -14, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="text-xs font-extrabold text-emerald-700 tracking-wide uppercase whitespace-nowrap flex items-center gap-1"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span>{phrases[index]}</span>
+                  </motion.p>
+                </AnimatePresence>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
-              <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
-                <Truck className="w-4 h-4 text-amber-400" />
-              </div>
-              <div className="text-left">
-                <div className="text-[11px] font-black text-white leading-tight">24H Express</div>
-                <div className="text-[9px] font-semibold text-slate-400">NCR Delivery</div>
-              </div>
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-[1.2]">
+              Royal Canin & Drools <span className="text-emerald-700 font-extrabold">Authorized Dealer</span>
+            </h1>
+
+            {/* Supporting Line */}
+            <div className="pt-0.5">
+              <p className="text-xs sm:text-sm font-extrabold tracking-wider text-slate-600 uppercase">
+                Authorized B2B Supplier
+              </p>
             </div>
 
-            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
-              <div className="w-7 h-7 rounded-lg bg-teal-500/10 border border-teal-500/20 flex items-center justify-center shrink-0">
-                <TrendingUp className="w-4 h-4 text-teal-400" />
-              </div>
-              <div className="text-left">
-                <div className="text-[11px] font-black text-white leading-tight">Max Profit</div>
-                <div className="text-[9px] font-semibold text-slate-400">Retailer Margins</div>
-              </div>
+            {/* Single Row Action Buttons */}
+            <div className="flex flex-row items-center gap-2 pt-2 max-w-full">
+              
+              {/* Button 1: Become partner */}
+              <Link
+                href="/become-a-dealer"
+                className="px-3.5 py-2.5 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-lg sm:rounded-xl text-xs shadow-md transition-all whitespace-nowrap text-center"
+              >
+                Become partner
+              </Link>
+
+              {/* Button 2: Get Quote */}
+              <button
+                onClick={() => openDealerModal()}
+                className="px-3.5 py-2.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-lg sm:rounded-xl border border-slate-300 shadow-xs transition-all text-xs whitespace-nowrap text-center"
+              >
+                Get Quote
+              </button>
+
             </div>
 
-            <div className="flex items-center gap-2 p-2.5 bg-slate-900/80 border border-slate-800 rounded-xl backdrop-blur-xs">
-              <div className="w-7 h-7 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
-                <Store className="w-4 h-4 text-indigo-400" />
-              </div>
-              <div className="text-left">
-                <div className="text-[11px] font-black text-white leading-tight">500+ Outlets</div>
-                <div className="text-[9px] font-semibold text-slate-400">Supplied in NCR</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Single Row Action Buttons */}
-          <div className="flex flex-row items-center gap-2.5 pt-2">
-            <Link
-              href="/become-a-dealer"
-              className="flex-1 px-4 py-3 bg-[#005F56] hover:bg-emerald-600 active:scale-[0.98] text-white font-extrabold rounded-xl text-xs sm:text-sm shadow-lg shadow-emerald-950/50 transition-all text-center flex items-center justify-center gap-1.5"
-            >
-              <Building2 className="w-4 h-4 shrink-0" />
-              <span>Become Partner</span>
-            </Link>
-
-            <button
-              onClick={() => openDealerModal()}
-              className="flex-1 px-4 py-3 bg-white/10 hover:bg-white/15 border border-white/20 active:scale-[0.98] text-white font-extrabold rounded-xl text-xs sm:text-sm backdrop-blur-md transition-all text-center flex items-center justify-center gap-1.5"
-            >
-              <FileText className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>Get Rate Card</span>
-            </button>
           </div>
 
         </div>
