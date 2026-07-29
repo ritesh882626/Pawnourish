@@ -102,7 +102,7 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Dog image kept strictly inside hero vh & vw bounds) */}
+      {/* 2. MOBILE HERO LAYOUT (Mobile dog image occupying 90% vw width)           */}
       {/* ========================================================================= */}
       <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex flex-col justify-between">
         
@@ -173,15 +173,15 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Dog Hero Image (Strictly bounded inside hero section vh and vw) */}
-        <div className="relative w-full h-[38vh] min-h-[250px] max-w-md mx-auto shrink-0 z-0 flex items-end justify-center overflow-hidden pointer-events-none">
+        {/* Mobile Dog Hero Image (Occupying 90% vw width) */}
+        <div className="relative w-[90vw] h-[45vh] min-h-[300px] mx-auto shrink-0 z-0 flex items-end justify-center overflow-hidden pointer-events-none">
           <Image
             src="/images/dalmatian_hero_mobile.png"
             alt="Pawnourish B2B Mobile Hero Dog Background"
             fill
             priority
             className="object-contain object-bottom scale-100"
-            sizes="100vw"
+            sizes="90vw"
           />
         </div>
 
