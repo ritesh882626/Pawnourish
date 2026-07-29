@@ -13,22 +13,22 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[90vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (90vh height, 40% top gap, 40px right of text)     */}
+      {/* 1. DESKTOP HERO LAYOUT (Bags enlarged to cover 80% of right negative space) */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative w-full min-h-[90vh] items-center">
         
-        {/* Desktop Product Bags Image Container (40% top gap, 40px right of text) */}
+        {/* Desktop Product Bags Image Container (Enlarged to fill 80% right negative space) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 h-full relative">
-            <div className="absolute left-[580px] xl:left-[620px] right-4 top-[40%] bottom-0 flex items-start">
-              <div className="relative w-full h-[52vh] max-w-[640px]">
+          <div className="max-w-[1400px] mx-auto px-6 h-full relative">
+            <div className="absolute left-[520px] xl:left-[560px] right-0 top-[22%] bottom-0 flex items-start justify-end pr-2">
+              <div className="relative w-full h-[72vh] max-w-[880px]">
                 <Image
                   src="/images/landscape_hero_section_image.png"
                   alt="Pawnourish B2B Wholesale Hero Background Desktop"
                   fill
                   priority
-                  className="object-contain object-top object-left"
-                  sizes="640px"
+                  className="object-contain object-right-top"
+                  sizes="880px"
                 />
               </div>
             </div>
