@@ -13,29 +13,27 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (using new Royal Canin + Drools product pack hero bg) */}
+      {/* 1. DESKTOP HERO LAYOUT (crisp native resolution, no enlargement/stretching) */}
       {/* ========================================================================= */}
-      <div className="hidden lg:flex relative w-full min-h-[620px] items-center">
+      <div className="hidden lg:flex relative w-full min-h-[600px] items-center">
         
-        {/* Desktop Background Image */}
-        <div className="absolute inset-0 z-0">
-          <div className="relative w-full h-full">
+        {/* Desktop Background Image (Rendered sharp at natural resolution without object-cover stretching) */}
+        <div className="absolute inset-0 z-0 flex items-center justify-end pointer-events-none pr-4 lg:pr-12">
+          <div className="relative h-[560px] w-[640px]">
             <Image
               src="/images/landscape_hero_section_image.png"
               alt="Pawnourish B2B Wholesale Hero Background Desktop"
               fill
               priority
-              className="object-cover object-right"
-              sizes="100vw"
+              className="object-contain object-right"
+              sizes="640px"
             />
           </div>
-          {/* Gradient Fade Overlay on Left for Pristine Text Contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent w-2/3 pointer-events-none z-1" />
         </div>
 
         {/* Desktop Hero Content Overlay */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full">
-          <div className="max-w-2xl space-y-6 text-left">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 w-full">
+          <div className="max-w-xl space-y-6 text-left">
             
             {/* Service Area Pill */}
             <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-full text-xs font-bold text-emerald-800 shadow-xs">
@@ -83,19 +81,19 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (0.5% Blur, Icons Removed, Buttons Sized to Heading) */}
+      {/* 2. MOBILE HERO LAYOUT (No enlargement scaling, 100% sharp image rendering) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[90vh] flex items-center justify-center">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[85vh] flex items-center justify-center">
         
-        {/* Centered Dalmatian Hero Image Occupying 90% Viewport Height */}
+        {/* Centered Dalmatian Hero Image (Crisp native scale, no scale-105 stretching) */}
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[90vh] max-w-md mx-auto">
+          <div className="relative w-full h-[85vh] max-w-sm mx-auto">
             <Image
               src="/images/dalmatian_hero_mobile.png"
               alt="Pawnourish Dalmatian Mobile Hero Background"
               fill
               priority
-              className="object-contain object-center scale-105"
+              className="object-contain object-center scale-100"
               sizes="100vw"
             />
           </div>
