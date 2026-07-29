@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@/store/useStore';
 import { 
   ShieldCheck, 
@@ -109,89 +109,74 @@ const DogFoodBagSVG = ({ className = "w-5 h-5", active = false }: { className?: 
 
 export default function WholesaleAdvantage() {
   const { openDealerModal } = useStore();
-  const targetRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
-  // Scroll Progress within sticky container
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start start", "end end"],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 24,
-    restDelta: 0.001
-  });
-
-  const progressPercent = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
-  const packFloat = useTransform(smoothProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0, -12, 0, -12, 0, -12]);
-
+  // Automatic repetitive animation loop (changes step every 3.5 seconds)
   useEffect(() => {
-    const unsubscribe = smoothProgress.on("change", (latest) => {
-      const index = Math.min(
-        BENEFITS.length - 1,
-        Math.floor(latest * BENEFITS.length)
-      );
-      setActiveIndex(index);
-      setIsCompleted(latest >= 0.92);
-    });
+    if (isPaused) return;
 
-    return () => unsubscribe();
-  }, [smoothProgress]);
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % BENEFITS.length);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
   const activeBenefit = BENEFITS[activeIndex] || BENEFITS[0];
+  const progressPercentage = (activeIndex / (BENEFITS.length - 1)) * 100;
 
   return (
-    <section ref={targetRef} className="relative bg-white text-slate-900 min-h-[500vh] lg:min-h-[300vh]">
+    <section className="relative bg-white text-slate-900 py-16 sm:py-24">
       
       {/* Background: Linear/Vercel style ultra-subtle ambient glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 -left-32 w-[650px] h-[650px] bg-emerald-500/[0.03] rounded-full blur-[160px]" />
         <div className="absolute bottom-1/4 -right-32 w-[700px] h-[700px] bg-emerald-400/[0.03] rounded-full blur-[180px]" />
-        
-        {/* Fine background mesh line */}
         <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:32px_32px] opacity-40" />
       </div>
 
-      {/* Sticky Viewport Frame */}
-      <div className="sticky top-0 h-screen flex flex-col justify-between py-4 lg:py-5 px-4 sm:px-8 max-w-7xl mx-auto overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
         
-        {/* Section Header: Retailer Journey */}
-        <div className="text-center max-w-3xl mx-auto space-y-1.5 z-10 pt-1 shrink-0">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest shadow-sm">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-2 mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] sm:text-xs font-extrabold uppercase tracking-widest shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
             <span>Retailer Journey</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-slate-900 leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
             Your Store. <span className="bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent">Powered by Pawnourish.</span>
           </h2>
 
-          <p className="text-slate-600 text-xs sm:text-sm font-medium max-w-2xl mx-auto leading-normal">
+          <p className="text-slate-600 text-xs sm:text-sm lg:text-base font-medium max-w-2xl mx-auto leading-relaxed">
             Everything a modern pet retailer needs—from genuine products and reliable inventory to higher margins and dependable support—all delivered through one trusted wholesale partner.
           </p>
         </div>
 
 
-        {/* ================= DESKTOP LAYOUT (300vh Scroll Experience) ================= */}
-        <div className="hidden lg:grid grid-cols-12 gap-6 my-auto z-10 items-center flex-1 min-h-0 py-2">
+        {/* ================= MAIN INTERACTIVE STORYTELLING GRID (Desktop & Mobile) ================= */}
+        <div 
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           
-          {/* Left Column (40%): Pinned Glassmorphism Timeline */}
-          <div className="col-span-5 bg-slate-50/90 backdrop-blur-2xl border border-slate-200/90 rounded-[2rem] p-4 lg:p-5 shadow-xl flex flex-col justify-between h-full relative overflow-hidden">
+          {/* Left Column (Desktop 5-cols / 40%): Timeline List */}
+          <div className="lg:col-span-5 bg-slate-50/90 backdrop-blur-2xl border border-slate-200/90 rounded-[2rem] p-5 lg:p-6 shadow-xl flex flex-col justify-between relative overflow-hidden min-h-[460px]">
             
             {/* Background Line Track (Centered at left-[44px]) */}
-            <div className="absolute left-[44px] top-8 bottom-8 w-2 bg-slate-200/80 rounded-full" />
+            <div className="absolute left-[44px] top-10 bottom-10 w-2 bg-slate-200/80 rounded-full" />
             
             {/* Active Green Progress Fill (Centered at left-[44px]) */}
             <motion.div
-              style={{ height: progressPercent }}
-              className="absolute left-[44px] top-8 w-2 bg-emerald-500 rounded-full shadow-[0_0_16px_rgba(16,185,129,0.6)] origin-top"
+              animate={{ height: `${progressPercentage}%` }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="absolute left-[44px] top-10 w-2 bg-emerald-500 rounded-full shadow-[0_0_16px_rgba(16,185,129,0.6)] origin-top"
             />
 
             {/* 6 Milestone Nodes */}
-            <div className="relative flex flex-col justify-between h-full z-10 py-1">
+            <div className="relative flex flex-col justify-between h-full z-10 py-1 space-y-3">
               {BENEFITS.map((benefit, idx) => {
                 const isActive = idx === activeIndex;
                 const isPassed = idx < activeIndex;
@@ -199,15 +184,19 @@ export default function WholesaleAdvantage() {
                 return (
                   <motion.div
                     key={benefit.id}
+                    onClick={() => {
+                      setActiveIndex(idx);
+                      setIsPaused(true);
+                    }}
                     animate={{
                       scale: isActive ? 1.03 : 1,
                       x: isActive ? 6 : 0,
                     }}
-                    transition={{ duration: 0.2 }}
-                    className={`flex items-center gap-3 cursor-pointer p-2 rounded-xl transition-all ${
+                    transition={{ duration: 0.25 }}
+                    className={`flex items-center gap-3.5 cursor-pointer p-2.5 rounded-2xl transition-all ${
                       isActive 
-                        ? "bg-white border border-emerald-200 shadow-md shadow-emerald-500/10" 
-                        : "hover:bg-white/40"
+                        ? "bg-white border border-emerald-200 shadow-lg shadow-emerald-500/10" 
+                        : "hover:bg-white/60"
                     }`}
                   >
                     {/* Dog Food Bag SVG Icon Marker (w-10 h-10, centered on left-[44px]) */}
@@ -229,13 +218,13 @@ export default function WholesaleAdvantage() {
 
                     {/* Milestone Text Info */}
                     <div className="flex flex-col">
-                      <span className={`text-[9px] font-extrabold uppercase tracking-wider ${
-                        isActive ? "text-emerald-700" : isPassed ? "text-slate-700" : "text-slate-400"
+                      <span className={`text-[10px] font-extrabold uppercase tracking-wider ${
+                        isActive ? "text-emerald-700 font-black" : isPassed ? "text-slate-700" : "text-slate-400"
                       }`}>
                         0{benefit.id} {benefit.tagline}
                       </span>
-                      <span className={`text-xs font-extrabold leading-tight ${
-                        isActive ? "text-slate-900 text-sm" : isPassed ? "text-slate-800" : "text-slate-400 font-medium"
+                      <span className={`text-xs sm:text-sm font-extrabold leading-tight ${
+                        isActive ? "text-slate-900" : isPassed ? "text-slate-800" : "text-slate-400 font-medium"
                       }`}>
                         {benefit.title}
                       </span>
@@ -248,56 +237,55 @@ export default function WholesaleAdvantage() {
           </div>
 
 
-          {/* Right Column (60%): Hero Drools Pack + Story Card */}
-          <div className="col-span-7 flex flex-col justify-between h-full relative pl-2">
+          {/* Right Column (Desktop 7-cols / 60%): Hero Drools Pack + Story Card */}
+          <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
             
-            {/* Hero Drools Pack */}
-            <div className="relative flex-1 flex items-center justify-center min-h-0 py-2">
+            {/* Hero Drools Product Pack (Floating Motion) */}
+            <div className="relative w-full h-[320px] sm:h-[400px] flex items-center justify-center">
               <motion.div
-                style={{ y: packFloat }}
-                className="relative w-full h-full max-h-[360px] lg:max-h-[390px] flex items-center justify-center"
+                animate={{ y: [0, -12, 0] }}
+                transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+                className="relative w-[280px] sm:w-[340px] h-[300px] sm:h-[370px] filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.16)]"
               >
-                <div className="relative w-[280px] lg:w-[320px] h-[340px] lg:h-[370px] filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.16)]">
-                  <Image
-                    src="/images/drools_packaging.png"
-                    alt="Drools Product Pack Hero"
-                    fill
-                    className="object-contain"
-                    priority
-                    sizes="(max-width: 1200px) 300px, 400px"
-                  />
-                </div>
+                <Image
+                  src="/images/drools_packaging.png"
+                  alt="Drools Product Pack Hero"
+                  fill
+                  className="object-contain"
+                  priority
+                  sizes="(max-width: 1200px) 300px, 400px"
+                />
               </motion.div>
             </div>
 
             {/* Active Story Card Display */}
-            <div className="shrink-0 pt-1">
+            <div className="shrink-0">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeBenefit.id}
-                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  initial={{ opacity: 0, y: 12, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                  transition={{ duration: 0.25 }}
-                  className="bg-white/95 backdrop-blur-2xl border-2 border-emerald-100 rounded-2xl lg:rounded-3xl p-4 lg:p-5 shadow-xl shadow-emerald-500/5 flex items-center gap-4 lg:gap-5"
+                  exit={{ opacity: 0, y: -12, scale: 0.98 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-white/95 backdrop-blur-2xl border-2 border-emerald-100 rounded-3xl p-5 sm:p-6 shadow-xl shadow-emerald-500/5 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
                 >
-                  <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0 shadow-sm">
-                    {React.createElement(activeBenefit.icon, { className: "w-6 h-6 lg:w-7 lg:h-7" })}
+                  <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0 shadow-sm">
+                    {React.createElement(activeBenefit.icon, { className: "w-7 h-7" })}
                   </div>
 
-                  <div className="space-y-0.5 flex-1">
+                  <div className="space-y-1 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] lg:text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
                         Retailer Advantage 0{activeBenefit.id}
                       </span>
-                      <span className="flex items-center gap-1 text-[10px] lg:text-xs text-emerald-700 font-bold">
-                        <DogFoodBagSVG active className="w-3.5 h-3.5" /> {activeBenefit.tagline}
+                      <span className="flex items-center gap-1 text-xs text-emerald-700 font-bold">
+                        <DogFoodBagSVG active className="w-4 h-4" /> {activeBenefit.tagline}
                       </span>
                     </div>
-                    <h3 className="text-lg lg:text-xl font-black text-slate-900 tracking-tight leading-tight">
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
                       {activeBenefit.title}
                     </h3>
-                    <p className="text-slate-600 text-xs lg:text-sm leading-relaxed">
+                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                       {activeBenefit.description}
                     </p>
                   </div>
@@ -310,117 +298,29 @@ export default function WholesaleAdvantage() {
         </div>
 
 
-        {/* ================= MOBILE LAYOUT (500vh Scroll Experience) ================= */}
-        <div className="lg:hidden flex flex-col justify-between my-auto z-10 space-y-3 pt-1 flex-1 min-h-0">
-          
-          <div className="flex items-stretch gap-3 flex-1 min-h-0">
-            
-            {/* Left Column (25%): Vertical Progress Bar */}
-            <div className="w-1/4 bg-slate-50 border border-slate-200 rounded-2xl p-2 flex flex-col justify-between items-center relative overflow-hidden shadow-inner">
-              <div className="absolute top-3 bottom-3 left-1/2 -translate-x-1/2 w-1.5 bg-slate-200/80 rounded-full" />
-              
-              <motion.div
-                style={{ height: progressPercent }}
-                className="absolute top-3 left-1/2 -translate-x-1/2 w-1.5 bg-emerald-500 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.6)] origin-top"
-              />
-
-              <div className="relative z-10 flex flex-col justify-between h-full w-full items-center py-0.5">
-                {BENEFITS.map((benefit, idx) => {
-                  const isActive = idx === activeIndex;
-                  const isPassed = idx < activeIndex;
-
-                  return (
-                    <div 
-                      key={benefit.id} 
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
-                        isActive 
-                          ? "bg-emerald-500 border-2 border-emerald-700 shadow-[0_0_10px_rgba(16,185,129,0.5)] scale-110" 
-                          : isPassed 
-                          ? "bg-emerald-100 border border-emerald-300" 
-                          : "bg-white border border-slate-300"
-                      }`}
-                    >
-                      <DogFoodBagSVG active={isActive || isPassed} className="w-3.5 h-3.5" />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Right Column (75%): Product Pack & Benefit Card */}
-            <div className="w-3/4 flex flex-col justify-between space-y-2 pb-1">
-              
-              {/* Mobile Drools Pack (45vh height - raised by 15% so content sits cleanly above CTA) */}
-              <div className="relative flex-1 min-h-[32vh] max-h-[46vh] h-[45vh] w-full flex items-center justify-center -mt-2">
-                <motion.div
-                  style={{ y: packFloat }}
-                  className="relative w-full h-full max-h-[46vh] flex items-center justify-center"
-                >
-                  <div className="relative w-[60vw] max-w-[240px] h-[42vh] max-h-[42vh] filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.15)]">
-                    <Image
-                      src="/images/drools_packaging.png"
-                      alt="Drools Product Pack Mobile"
-                      fill
-                      className="object-contain"
-                      priority
-                      sizes="70vw"
-                    />
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Active Benefit Detail Card (Positioned cleanly above CTA) */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeBenefit.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-white/95 backdrop-blur-md border-2 border-emerald-100 p-3 rounded-2xl space-y-1 shadow-lg shrink-0 z-20"
-                >
-                  <span className="text-[9px] font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 w-max block">
-                    Step {activeBenefit.id} of 6 • {activeBenefit.tagline}
-                  </span>
-                  <h3 className="text-sm font-extrabold text-slate-900 leading-tight">
-                    {activeBenefit.title}
-                  </h3>
-                  <p className="text-[11px] text-slate-600 leading-relaxed">
-                    {activeBenefit.description}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        {/* ================= FINAL STATE CTA PANEL ================= */}
-        <div className="z-30 pt-2 shrink-0 w-full">
+        {/* ================= CTA BANNER (Positioned 100px Down from Retailer Journey section) ================= */}
+        <div className="mt-[100px]">
           <motion.div
             animate={{
-              borderColor: isCompleted ? "#10B981" : "#334155",
-              boxShadow: isCompleted ? "0 10px 30px rgba(16, 185, 129, 0.25)" : "0 10px 25px rgba(0, 0, 0, 0.15)",
+              borderColor: activeIndex === BENEFITS.length - 1 ? "#10B981" : "#334155",
+              boxShadow: activeIndex === BENEFITS.length - 1 ? "0 10px 30px rgba(16, 185, 129, 0.25)" : "0 10px 25px rgba(0, 0, 0, 0.15)",
             }}
-            className="w-full bg-slate-900 text-white rounded-2xl lg:rounded-3xl p-4 lg:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 lg:gap-4 transition-all border border-slate-800"
+            className="w-full bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 transition-all border border-slate-800"
           >
-            <div className="text-center sm:text-left space-y-0.5">
-              <h4 className="text-base lg:text-lg font-black text-white flex items-center justify-center sm:justify-start gap-2">
+            <div className="text-center sm:text-left space-y-1">
+              <h4 className="text-xl sm:text-2xl font-black text-white flex items-center justify-center sm:justify-start gap-2">
                 <span>Ready to Grow Your Pet Store?</span>
-                <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
+                <Sparkles className="w-5 h-5 text-emerald-400 animate-pulse" />
               </h4>
-              <p className="text-[11px] lg:text-xs text-slate-300">
+              <p className="text-xs sm:text-sm text-slate-300">
                 Become a trusted Pawnourish retail partner today and get verified dealer pricing.
               </p>
             </div>
 
-            <div className="flex flex-row items-center gap-2.5 w-full sm:w-auto shrink-0">
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto shrink-0">
               <button
                 onClick={() => openDealerModal()}
-                className="flex-1 sm:flex-initial px-5 lg:px-6 py-2.5 lg:py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black rounded-xl text-xs lg:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all hover:scale-105"
+                className="w-full sm:w-auto px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all hover:scale-105"
               >
                 <span>Become a Dealer</span>
                 <ArrowRight className="w-4 h-4" />
@@ -428,10 +328,10 @@ export default function WholesaleAdvantage() {
 
               <button
                 onClick={() => openDealerModal()}
-                className="flex-1 sm:flex-initial px-5 lg:px-6 py-2.5 lg:py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 text-xs lg:text-sm flex items-center justify-center gap-2 transition-all"
+                className="w-full sm:w-auto px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
               >
                 <FileText className="w-4 h-4 text-emerald-400" />
-                <span>Request Pricing</span>
+                <span>Request Wholesale Pricing</span>
               </button>
             </div>
           </motion.div>
