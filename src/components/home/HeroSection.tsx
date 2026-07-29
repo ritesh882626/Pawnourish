@@ -85,13 +85,13 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (using new Royal Canin + Drools vertical hero image) */}
+      {/* 2. MOBILE HERO LAYOUT (85vh height, text/buttons shifted slightly higher) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[90vh] flex items-center justify-center">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[85vh] flex items-start justify-center">
         
         {/* Centered Vertical Hero Image */}
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[90vh] max-w-md mx-auto">
+          <div className="relative w-full h-[85vh] max-w-md mx-auto">
             <Image
               src="/images/dalmatian_hero_mobile.png"
               alt="Pawnourish Royal Canin & Drools Mobile Hero Background"
@@ -106,8 +106,8 @@ export default function HeroSection() {
         {/* 0.5% Minimal Blur Layer for Pristine Text Readability */}
         <div className="absolute inset-0 bg-white/40 backdrop-blur-[0.5px] pointer-events-none z-1" />
 
-        {/* Content Container (Left Aligned over 0.5% Blur Layer) */}
-        <div className="relative z-10 px-5 sm:px-6 py-10 text-left max-w-sm w-full my-auto">
+        {/* Content Container (Shifted slightly higher up: pt-8 sm:pt-10 mb-auto mt-2) */}
+        <div className="relative z-10 px-5 sm:px-6 pt-7 sm:pt-10 pb-20 text-left max-w-sm w-full mb-auto mt-2">
           
           <div className="space-y-3">
             
