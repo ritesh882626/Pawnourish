@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "project_name": "Pawnourish",
+  "project_type": "B2B Wholesale Lead Generation Portfolio",
+  "authorized_brands": ["Royal Canin", "Drools"],
+  "primary_service_region": "Delhi NCR (Delhi, Gurugram, Noida, Ghaziabad, Faridabad, Greater Noida)",
+  "tech_stack": {
+    "framework": "Next.js 14+ (App Router)",
+    "library": "React 18+",
+    "language": "TypeScript",
+    "styling": "Tailwind CSS",
+    "animations": "Framer Motion",
+    "icons": "Lucide React"
+  },
+  "routes": [
+    {
+      "path": "/",
+      "component": "app/page.tsx",
+      "name": "Home",
+      "description": "Enterprise B2B Hero, Royal Canin & Drools showcase, Delhi NCR trust stats, Dealer enquiry lead capture form, Retailer benefits, Testimonials."
+    },
+    {
+      "path": "/about",
+      "component": "app/about/page.tsx",
+      "name": "About Us",
+      "description": "Pawnourish story, wholesale distribution network, warehouse capacity, commitment to genuine products."
+    },
+    {
+      "path": "/brands",
+      "component": "app/brands/page.tsx",
+      "name": "Authorized Brands",
+      "description": "Deep dive into Royal Canin & Drools product lines supplied by Pawnourish."
+    },
+    {
+      "path": "/catalogue",
+      "component": "app/catalogue/page.tsx",
+      "name": "Product Catalogue",
+      "description": "Showcase catalog of Royal Canin & Drools SKUs with 'Request Wholesale Price List' & 'Enquire Stock' buttons (No e-commerce checkout)."
+    },
+    {
+      "path": "/become-a-dealer",
+      "component": "app/become-a-dealer/page.tsx",
+      "name": "Become a Dealer",
+      "description": "High-converting B2B dealer registration & wholesale price inquiry form."
+    },
+    {
+      "path": "/contact",
+      "component": "app/contact/page.tsx",
+      "name": "Contact Us",
+      "description": "Direct phone numbers, WhatsApp quick link, sales team contact, Delhi NCR warehouse addresses."
+    },
+    {
+      "path": "/faq",
+      "component": "app/faq/page.tsx",
+      "name": "Frequently Asked Questions",
+      "description": "B2B Retailer FAQs regarding minimum order quantities, delivery timelines in Delhi NCR, credit terms."
+    },
+    {
+      "path": "/privacy-policy",
+      "component": "app/privacy-policy/page.tsx",
+      "name": "Privacy Policy",
+      "description": "Standard business privacy policy."
+    },
+    {
+      "path": "/terms",
+      "component": "app/terms/page.tsx",
+      "name": "Terms & Conditions",
+      "description": "B2B dealer terms and conditions."
+    }
+  ]
+}
