@@ -10,24 +10,28 @@ export default function HeroSection() {
   const { openDealerModal } = useStore();
 
   return (
-    <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100">
+    <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[90vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (crisp native resolution, no enlargement/stretching) */}
+      {/* 1. DESKTOP HERO LAYOUT (90vh height, 40% top gap, 40px right of text)     */}
       {/* ========================================================================= */}
-      <div className="hidden lg:flex relative w-full min-h-[600px] items-center">
+      <div className="hidden lg:flex relative w-full min-h-[90vh] items-center">
         
-        {/* Desktop Background Image (Rendered sharp at natural resolution without object-cover stretching) */}
-        <div className="absolute inset-0 z-0 flex items-center justify-end pointer-events-none pr-4 lg:pr-12">
-          <div className="relative h-[560px] w-[640px]">
-            <Image
-              src="/images/landscape_hero_section_image.png"
-              alt="Pawnourish B2B Wholesale Hero Background Desktop"
-              fill
-              priority
-              className="object-contain object-right"
-              sizes="640px"
-            />
+        {/* Desktop Product Bags Image Container (40% top gap, 40px right of text) */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 h-full relative">
+            <div className="absolute left-[580px] xl:left-[620px] right-4 top-[40%] bottom-0 flex items-start">
+              <div className="relative w-full h-[52vh] max-w-[640px]">
+                <Image
+                  src="/images/landscape_hero_section_image.png"
+                  alt="Pawnourish B2B Wholesale Hero Background Desktop"
+                  fill
+                  priority
+                  className="object-contain object-top object-left"
+                  sizes="640px"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -81,13 +85,13 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (No enlargement scaling, 100% sharp image rendering) */}
+      {/* 2. MOBILE HERO LAYOUT (90vh height, 0.5% Blur, Icons Removed)              */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[85vh] flex items-center justify-center">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[90vh] flex items-center justify-center">
         
         {/* Centered Dalmatian Hero Image (Crisp native scale, no scale-105 stretching) */}
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[85vh] max-w-sm mx-auto">
+          <div className="relative w-full h-[90vh] max-w-sm mx-auto">
             <Image
               src="/images/dalmatian_hero_mobile.png"
               alt="Pawnourish Dalmatian Mobile Hero Background"
