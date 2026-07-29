@@ -43,41 +43,41 @@ export default function DealerEnquiryModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       
-      {/* Dark Overlay Backdrop */}
+      {/* Dark Blur Overlay Backdrop */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl transition-opacity"
         onClick={handleClose}
       />
 
-      {/* Main Slide-Up Sheet Container */}
+      {/* Main Slide-Up Glassmorphism Green Container */}
       <motion.div 
         initial={{ y: "100%", opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: "100%", opacity: 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 220 }}
-        className="relative bg-amber-500 w-full max-w-xl max-h-[92vh] sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden z-10 border border-amber-400 flex flex-col"
+        className="relative bg-emerald-950/90 backdrop-blur-2xl text-white w-full max-w-xl max-h-[92vh] sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl shadow-emerald-950/50 overflow-hidden z-10 border border-emerald-500/30 flex flex-col"
       >
 
-        {/* Top Header & Navigation */}
-        <div className="px-6 pt-5 pb-4 flex items-center justify-between text-slate-950 shrink-0">
+        {/* Top Header & Step Navigation */}
+        <div className="px-6 py-5 flex items-center justify-between text-white shrink-0 border-b border-emerald-800/40">
           <div className="flex items-center gap-3">
             {step > 1 && !submitted && (
               <button 
                 onClick={handleBack}
-                className="w-9 h-9 rounded-full bg-white/30 hover:bg-white/50 flex items-center justify-center text-slate-950 transition-colors"
+                className="w-10 h-10 rounded-2xl bg-emerald-900/60 hover:bg-emerald-800/80 border border-emerald-500/30 flex items-center justify-center text-white transition-colors"
                 aria-label="Back"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
             )}
             <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-slate-900/80 block">
+              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400 block">
                 {!submitted ? `Step 0${step} of 03` : "Complete"}
               </span>
-              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-slate-950">
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
                 {selectedProductForInquiry ? "Inquire Rate Card" : "Dealer Application"}
               </h2>
             </div>
@@ -85,7 +85,7 @@ export default function DealerEnquiryModal() {
 
           <button 
             onClick={handleClose}
-            className="w-9 h-9 rounded-full bg-slate-950/10 hover:bg-slate-950/20 flex items-center justify-center text-slate-950 transition-colors"
+            className="w-10 h-10 rounded-2xl bg-emerald-900/60 hover:bg-emerald-800/80 border border-emerald-500/30 flex items-center justify-center text-white transition-colors"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -94,9 +94,9 @@ export default function DealerEnquiryModal() {
 
         {/* Progress Line */}
         {!submitted && (
-          <div className="w-full bg-slate-950/10 h-1.5 shrink-0">
+          <div className="w-full bg-emerald-950/60 h-1.5 shrink-0">
             <motion.div 
-              className="bg-slate-950 h-full"
+              className="bg-emerald-400 shadow-[0_0_12px_#34d399] h-full"
               initial={{ width: "33%" }}
               animate={{ width: step === 1 ? "33%" : step === 2 ? "66%" : "100%" }}
               transition={{ duration: 0.3 }}
@@ -104,37 +104,37 @@ export default function DealerEnquiryModal() {
           </div>
         )}
 
-        {/* Slide-Up White Form Card Container */}
-        <div className="bg-white rounded-t-[2rem] p-6 sm:p-8 flex-1 overflow-y-auto shadow-2xl flex flex-col justify-between">
+        {/* Scrollable Glassmorphism Green Form Body with Generous Spacing */}
+        <div className="p-6 sm:p-8 overflow-y-auto flex-1 text-white space-y-6">
           
           {submitted ? (
             /* Success Step */
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="text-center py-8 space-y-4 my-auto"
+              className="text-center py-8 space-y-5 my-auto"
             >
-              <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600 shadow-inner">
+              <div className="w-20 h-20 bg-emerald-900/80 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto text-emerald-400 shadow-inner">
                 <CheckCircle2 className="w-12 h-12" />
               </div>
-              <h3 className="text-2xl font-black text-slate-900">Application Submitted!</h3>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
+              <h3 className="text-2xl font-black text-white">Application Submitted!</h3>
+              <p className="text-emerald-100 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
                 Thank you for applying. Our Delhi NCR wholesale manager will contact you on <strong>{formData.phone || "WhatsApp"}</strong> within 2 hours with the official Royal Canin & Drools price list.
               </p>
               <button
                 onClick={handleClose}
-                className="mt-6 w-full py-4 bg-slate-950 hover:bg-slate-900 text-white font-extrabold rounded-2xl shadow-xl transition-all text-sm"
+                className="mt-6 w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-2xl shadow-xl transition-all text-sm min-h-[52px]"
               >
                 Close & Continue Browsing
               </button>
             </motion.div>
           ) : (
-            /* Step Wise Wizard Form */
-            <form onSubmit={handleNext} className="flex flex-col justify-between flex-1 min-h-[300px]">
+            /* Step Wise Glassmorphism Form with Spacing */
+            <form onSubmit={handleNext} className="flex flex-col justify-between flex-1 min-h-[320px] space-y-6">
               
               <AnimatePresence mode="wait">
                 
-                {/* STEP 1: Business Info */}
+                {/* STEP 1: Business Profile */}
                 {step === 1 && (
                   <motion.div
                     key="step1"
@@ -142,40 +142,40 @@ export default function DealerEnquiryModal() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -25, opacity: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="space-y-4"
+                    className="space-y-6"
                   >
-                    <div className="space-y-1 mb-2">
-                      <span className="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+                    <div className="space-y-1">
+                      <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                         <Store className="w-4 h-4" /> Store Profile
                       </span>
-                      <h3 className="text-lg font-extrabold text-slate-900">Tell us about your business</h3>
+                      <h3 className="text-lg sm:text-xl font-extrabold text-white">Tell us about your business</h3>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Store / Business Name *</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Store / Business Name *</label>
                       <input 
                         required
                         type="text"
                         placeholder="e.g. Royal Pet Care Plaza"
                         value={formData.businessName}
                         onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 min-h-[52px]"
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Business Type *</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Business Type *</label>
                       <select 
                         value={formData.businessType}
                         onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm font-medium focus:outline-none focus:border-amber-500 min-h-[48px]"
+                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm font-medium text-white focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 min-h-[52px]"
                       >
-                        <option value="Pet Store">Pet Retail Store</option>
-                        <option value="Veterinary Clinic">Veterinary Clinic</option>
-                        <option value="Grooming Salon">Pet Grooming Salon</option>
-                        <option value="Pet Pharmacy">Pet Pharmacy</option>
-                        <option value="Breeder / Kennel">Breeder / Kennel</option>
-                        <option value="Distributor">Local Distributor</option>
+                        <option value="Pet Store" className="bg-emerald-950 text-white">Pet Retail Store</option>
+                        <option value="Veterinary Clinic" className="bg-emerald-950 text-white">Veterinary Clinic</option>
+                        <option value="Grooming Salon" className="bg-emerald-950 text-white">Pet Grooming Salon</option>
+                        <option value="Pet Pharmacy" className="bg-emerald-950 text-white">Pet Pharmacy</option>
+                        <option value="Breeder / Kennel" className="bg-emerald-950 text-white">Breeder / Kennel</option>
+                        <option value="Distributor" className="bg-emerald-950 text-white">Local Distributor</option>
                       </select>
                     </div>
                   </motion.div>
@@ -189,52 +189,52 @@ export default function DealerEnquiryModal() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -25, opacity: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="space-y-4"
+                    className="space-y-5"
                   >
-                    <div className="space-y-1 mb-2">
-                      <span className="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+                    <div className="space-y-1">
+                      <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                         <User className="w-4 h-4" /> Contact & Location
                       </span>
-                      <h3 className="text-lg font-extrabold text-slate-900">How can our team reach you?</h3>
+                      <h3 className="text-lg sm:text-xl font-extrabold text-white">How can our team reach you?</h3>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Contact Person Name *</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Contact Person Name *</label>
                       <input 
                         required
                         type="text"
                         placeholder="Owner / Manager Name"
                         value={formData.contactName}
                         onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 min-h-[52px]"
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Phone Number (WhatsApp) *</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Phone Number (WhatsApp) *</label>
                       <input 
                         required
                         type="tel"
                         placeholder="+91 98100 XXXXX"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 min-h-[52px]"
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">NCR Location / City *</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">NCR Location / City *</label>
                       <select 
                         value={formData.location}
                         onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm font-medium focus:outline-none focus:border-amber-500 min-h-[48px]"
+                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm font-medium text-white focus:outline-none focus:border-emerald-400 min-h-[52px]"
                       >
-                        <option value="Delhi">Delhi (All Zones)</option>
-                        <option value="Gurugram">Gurugram</option>
-                        <option value="Noida">Noida / Greater Noida</option>
-                        <option value="Ghaziabad">Ghaziabad</option>
-                        <option value="Faridabad">Faridabad</option>
-                        <option value="Other NCR">Other NCR Region</option>
+                        <option value="Delhi" className="bg-emerald-950 text-white">Delhi (All Zones)</option>
+                        <option value="Gurugram" className="bg-emerald-950 text-white">Gurugram</option>
+                        <option value="Noida" className="bg-emerald-950 text-white">Noida / Greater Noida</option>
+                        <option value="Ghaziabad" className="bg-emerald-950 text-white">Ghaziabad</option>
+                        <option value="Faridabad" className="bg-emerald-950 text-white">Faridabad</option>
+                        <option value="Other NCR" className="bg-emerald-950 text-white">Other NCR Region</option>
                       </select>
                     </div>
                   </motion.div>
@@ -248,35 +248,35 @@ export default function DealerEnquiryModal() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -25, opacity: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="space-y-4"
+                    className="space-y-5"
                   >
-                    <div className="space-y-1 mb-2">
-                      <span className="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
+                    <div className="space-y-1">
+                      <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                         <FileText className="w-4 h-4" /> Preferences & Submit
                       </span>
-                      <h3 className="text-lg font-extrabold text-slate-900">Final step to get your rate card</h3>
+                      <h3 className="text-lg sm:text-xl font-extrabold text-white">Final step to get your rate card</h3>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Business Email *</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Business Email *</label>
                       <input 
                         required
                         type="email"
                         placeholder="store@domain.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500 min-h-[48px]"
+                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 min-h-[52px]"
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Preferred Brands / SKUs Notes</label>
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Preferred Brands / SKUs Notes</label>
                       <textarea 
                         rows={2}
                         placeholder="Mention Royal Canin or Drools requirements..."
                         value={formData.notes}
                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-base sm:text-sm focus:outline-none focus:border-amber-500"
+                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400"
                       />
                     </div>
                   </motion.div>
@@ -285,20 +285,20 @@ export default function DealerEnquiryModal() {
               </AnimatePresence>
 
               {/* Bottom Action Button */}
-              <div className="pt-6">
+              <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full py-4 bg-slate-950 hover:bg-slate-900 active:scale-[0.98] text-white font-black rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl transition-all min-h-[52px]"
+                  className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl shadow-emerald-500/30 transition-all min-h-[52px]"
                 >
                   {step === 3 ? (
                     <>
-                      <Send className="w-5 h-5 text-amber-400" />
+                      <Send className="w-5 h-5 text-slate-950" />
                       <span>Submit & Get Price List</span>
                     </>
                   ) : (
                     <>
                       <span>Continue</span>
-                      <ArrowRight className="w-5 h-5 text-amber-400" />
+                      <ArrowRight className="w-5 h-5 text-slate-950" />
                     </>
                   )}
                 </button>
