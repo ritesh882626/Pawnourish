@@ -30,14 +30,14 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (Dog image enlarged by +50%)                       */}
+      {/* 1. DESKTOP HERO LAYOUT (Image shifted slightly right)                    */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative w-full min-h-[75vh] items-center">
         
-        {/* Desktop Dog Hero Image Container (Enlarged by +50%) */}
+        {/* Desktop Dog Hero Image Container (Shifted slightly right: left-[520px] xl:left-[560px] translate-x-[40px]) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <div className="max-w-[1536px] mx-auto px-6 h-full relative">
-            <div className="absolute left-[380px] xl:left-[420px] right-0 top-[-10%] bottom-0 flex items-center justify-end pr-2">
+            <div className="absolute left-[520px] xl:left-[560px] right-0 top-[-10%] bottom-0 flex items-center justify-end pr-0 translate-x-[40px]">
               <div className="relative w-full h-[110vh] max-w-[1800px]">
                 <Image
                   src="/images/landscape_hero_section_image.png"
@@ -102,28 +102,28 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Image enlarged +50%, NO blur, 60vh height)          */}
+      {/* 2. MOBILE HERO LAYOUT (Image propagates from lower strip, <30% face gap) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex items-start justify-center">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[62vh] flex items-start justify-center">
         
-        {/* Centered Mobile Dog Hero Image (Enlarged +50% with scale-[1.55]) */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[60vh] max-w-md mx-auto">
+        {/* Mobile Dog Hero Image (Originating from lower strip, scale-[1.8] to close face-button gap) */}
+        <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden">
+          <div className="relative w-full h-[62vh] max-w-md mx-auto">
             <Image
               src="/images/dalmatian_hero_mobile.png"
               alt="Pawnourish B2B Mobile Hero Dog Background"
               fill
               priority
-              className="object-contain object-center scale-[1.55]"
+              className="object-contain object-bottom scale-[1.8] translate-y-[8%]"
               sizes="100vw"
             />
           </div>
         </div>
 
-        {/* Content Container (Pushed to top with 20% top margin from nav bar) */}
-        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-[20%] pb-8 mb-auto">
+        {/* Content Container (Pushed to top with 16% top margin from nav bar) */}
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-[16%] pb-4 mb-auto">
           
-          <div className="space-y-3.5">
+          <div className="space-y-3">
             
             {/* Subheading Tag & Framer Motion Text Loop */}
             <div className="space-y-1.5">
