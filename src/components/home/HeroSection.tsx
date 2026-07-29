@@ -27,12 +27,12 @@ export default function HeroSection() {
   }, [phrases.length]);
 
   return (
-    <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
+    <section className="relative z-10 w-full bg-white text-slate-900 border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
       {/* 1. DESKTOP HERO LAYOUT (Image shifted slightly right)                    */}
       {/* ========================================================================= */}
-      <div className="hidden lg:flex relative w-full min-h-[75vh] items-center">
+      <div className="hidden lg:flex relative w-full min-h-[75vh] items-center overflow-hidden">
         
         {/* Desktop Dog Hero Image Container (Shifted slightly right: left-[520px] xl:left-[560px] translate-x-[40px]) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -102,12 +102,12 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Zero gap between dog body & green strip)            */}
+      {/* 2. MOBILE HERO LAYOUT (Dog image tucks 1 z-index down behind green strip)   */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex flex-col justify-between">
+      <div className="block lg:hidden relative w-full bg-white min-h-[58vh] flex flex-col justify-between">
         
-        {/* Content Container (Top Section over transparent image top) */}
-        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
+        {/* Content Container (Top Section) */}
+        <div className="relative z-20 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
           
           <div className="space-y-3.5">
             
@@ -173,14 +173,14 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Dog Hero Image (Scales and sits flush against bottom edge with zero gap to green strip) */}
-        <div className="relative w-full h-[36vh] min-h-[260px] max-w-md mx-auto mt-2 shrink-0 z-0 overflow-hidden flex items-end justify-center">
+        {/* Mobile Dog Hero Image (Tucked 1 z-index down behind the green TrustIndicators strip) */}
+        <div className="relative w-full h-[36vh] min-h-[260px] max-w-md mx-auto shrink-0 z-10 flex items-end justify-center -mb-10 sm:-mb-12 pointer-events-none">
           <Image
             src="/images/dalmatian_hero_mobile.png"
             alt="Pawnourish B2B Mobile Hero Dog Background"
             fill
             priority
-            className="object-contain object-bottom scale-[1.38] translate-y-[11%]"
+            className="object-contain object-bottom scale-105"
             sizes="100vw"
           />
         </div>
