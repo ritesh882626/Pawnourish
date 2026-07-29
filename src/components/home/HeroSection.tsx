@@ -27,7 +27,7 @@ export default function HeroSection() {
   }, [phrases.length]);
 
   return (
-    <section className="relative z-10 w-full bg-white text-slate-900 border-b border-slate-100 min-h-[75vh]">
+    <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
       {/* 1. DESKTOP HERO LAYOUT (Image shifted slightly right)                    */}
@@ -102,12 +102,12 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Dog image 100% larger, sitting BEHIND green strip) */}
+      {/* 2. MOBILE HERO LAYOUT (Dog image kept strictly inside hero vh & vw bounds) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white min-h-[58vh] flex flex-col justify-between">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex flex-col justify-between">
         
         {/* Content Container (Top Section) */}
-        <div className="relative z-20 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
           
           <div className="space-y-3.5">
             
@@ -173,14 +173,14 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Dog Hero Image (100% larger scale-[2.1] sitting BEHIND the green TrustIndicators strip at z-10) */}
-        <div className="relative w-full h-[48vh] min-h-[340px] max-w-xl mx-auto shrink-0 z-10 flex items-end justify-center -mb-20 sm:-mb-24 pointer-events-none">
+        {/* Mobile Dog Hero Image (Strictly bounded inside hero section vh and vw) */}
+        <div className="relative w-full h-[38vh] min-h-[250px] max-w-md mx-auto shrink-0 z-0 flex items-end justify-center overflow-hidden pointer-events-none">
           <Image
             src="/images/dalmatian_hero_mobile.png"
             alt="Pawnourish B2B Mobile Hero Dog Background"
             fill
             priority
-            className="object-contain object-bottom scale-[2.1] translate-y-6"
+            className="object-contain object-bottom scale-100"
             sizes="100vw"
           />
         </div>
