@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/store/useStore';
-import { ArrowRight, FileText, Building2, MapPin, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, FileText, Building2, MapPin } from 'lucide-react';
 
 export default function HeroSection() {
   const { openDealerModal } = useStore();
@@ -43,7 +43,7 @@ export default function HeroSection() {
               <span>Official B2B Wholesale Supplier • Delhi NCR Region</span>
             </div>
 
-            {/* Headline (Removed red wavy underlines per user request) */}
+            {/* Headline (No wavy red/amber lines) */}
             <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.18] text-slate-900">
               Authorized Wholesale Distributor of{' '}
               <span className="text-emerald-700 font-extrabold">
@@ -83,60 +83,94 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Matching 2nd Reference UI Image Exactly)           */}
+      {/* 2. MOBILE HERO LAYOUT (Stunning Left-Aligned Mobile Layout with Dalmatian) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden bg-white px-6 py-10 sm:py-14 text-center">
-        <div className="max-w-sm mx-auto space-y-6">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[500px]">
+        
+        {/* Dalmatian Hero Dog Image on Mobile Right Background */}
+        <div className="absolute right-[-10px] sm:right-0 bottom-0 z-0 w-[55%] sm:w-[45%] h-[90%] pointer-events-none">
+          <Image
+            src="/images/dalmatian_hero_mobile.png"
+            alt="Pawnourish Dalmatian Mobile Hero Background"
+            fill
+            priority
+            className="object-contain object-bottom object-right"
+            sizes="(max-width: 1024px) 60vw, 40vw"
+          />
+        </div>
+
+        {/* Left Gradient Overlay to keep text 100% readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent w-[80%] pointer-events-none z-1" />
+
+        {/* Content Container (Left Aligned) */}
+        <div className="relative z-10 px-6 py-12 sm:py-16 text-left max-w-sm">
           
-          {/* Centered Dog Hero Portrait (Matching Dalmatian Dog Reference Image) */}
-          <div className="relative w-[220px] sm:w-[260px] h-[220px] sm:h-[260px] mx-auto filter drop-shadow-md">
-            <Image
-              src="/images/dog_avatar.jpg"
-              alt="Pawnourish Hero Dog"
-              fill
-              priority
-              className="object-contain rounded-3xl"
-              sizes="260px"
-            />
-          </div>
-
-          {/* Clean Brand Title (Matching Petsbay Typography Style in 2nd Reference) */}
-          <div className="space-y-1.5 pt-2">
-            <h1 className="text-4xl font-black text-slate-950 tracking-tight leading-none">
-              pawnourish<span className="text-emerald-600">.</span>
-            </h1>
+          <div className="space-y-4">
             
-            {/* Short Direct Subheading */}
-            <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-xs mx-auto leading-relaxed pt-1">
-              Official wholesale supplier of 100% genuine Royal Canin & Drools in Delhi NCR.
-            </p>
+            {/* Subheading: Pawnourish */}
+            <div className="inline-block">
+              <span className="text-[#005F56] font-black text-xl sm:text-2xl tracking-wider uppercase block">
+                Pawnourish
+              </span>
+            </div>
+
+            {/* Main Heading: Royal Canin & Drools Authorized Dealer */}
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-[1.2]">
+              Royal Canin & Drools <span className="text-emerald-700 font-extrabold">Authorized Dealer</span>
+            </h1>
+
+            {/* Action Links (Normal Texts with Provided Bold Arrow Icon) */}
+            <div className="pt-4 space-y-3.5">
+              
+              {/* Button 1: Become partner */}
+              <div>
+                <Link
+                  href="/become-a-dealer"
+                  className="inline-flex items-center gap-2 text-slate-950 font-extrabold text-lg sm:text-xl hover:text-emerald-700 transition-colors group"
+                >
+                  <span className="underline underline-offset-4 decoration-2 decoration-emerald-500">Become partner</span>
+                  <div className="w-5 h-5 relative shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                    <Image
+                      src="/images/bold_arrow_up_right.png"
+                      alt="Arrow Icon"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </Link>
+              </div>
+
+              {/* Button 2: Get Quote */}
+              <div>
+                <button
+                  onClick={() => openDealerModal()}
+                  className="inline-flex items-center gap-2 text-slate-950 font-extrabold text-lg sm:text-xl hover:text-emerald-700 transition-colors group"
+                >
+                  <span className="underline underline-offset-4 decoration-2 decoration-amber-500">Get Quote</span>
+                  <div className="w-5 h-5 relative shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                    <Image
+                      src="/images/bold_arrow_up_right.png"
+                      alt="Arrow Icon"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </button>
+              </div>
+
+            </div>
+
+            {/* Supporting Line Below Buttons */}
+            <div className="pt-6 border-t border-slate-200/60 max-w-[220px]">
+              <p className="text-xs font-bold tracking-wider text-slate-400 uppercase leading-snug">
+                Authorized B2B Supplier
+              </p>
+            </div>
+
           </div>
-
-          {/* Stacked Clean Action Buttons (Matching Reference UI Pills) */}
-          <div className="space-y-3 pt-2">
-            <Link
-              href="/become-a-dealer"
-              className="w-full py-4 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-2xl flex items-center justify-center gap-2 text-base shadow-lg shadow-emerald-900/20 transition-all min-h-[52px]"
-            >
-              <Building2 className="w-5 h-5" />
-              <span>Become an Authorized Dealer</span>
-            </Link>
-
-            <button
-              onClick={() => openDealerModal()}
-              className="w-full py-4 bg-slate-100 hover:bg-slate-200 active:scale-[0.98] text-slate-900 font-extrabold rounded-2xl flex items-center justify-center gap-1.5 text-base border border-slate-200/80 shadow-xs transition-all min-h-[52px]"
-            >
-              <span>Request Price List</span>
-              <ArrowUpRight className="w-5 h-5 text-amber-600 stroke-[2.5]" />
-            </button>
-          </div>
-
-          {/* Footer Subtext */}
-          <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider pt-2">
-            Delhi NCR B2B Wholesale Partner • Direct Factory Dispatch
-          </p>
 
         </div>
+
       </div>
 
     </section>

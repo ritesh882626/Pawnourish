@@ -93,15 +93,8 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Off-Canvas Menu Toggle */}
+          {/* Mobile Off-Canvas Menu Toggle (Price List button removed per user request) */}
           <div className="lg:hidden flex items-center gap-2.5">
-            <button
-              onClick={() => openDealerModal()}
-              className="px-3.5 py-2 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs shadow-md active:scale-95 flex items-center gap-1"
-            >
-              <span>Price List</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
             <button
               onClick={() => setMobileMenuOpen(true)}
               className="w-10 h-10 rounded-xl bg-slate-900/40 hover:bg-slate-900/60 text-white flex items-center justify-center focus:outline-none border border-emerald-400/20"
