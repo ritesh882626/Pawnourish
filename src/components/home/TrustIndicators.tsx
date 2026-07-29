@@ -8,41 +8,43 @@ export default function TrustIndicators() {
     {
       icon: Users,
       value: '500+',
-      label: 'Active Retailers & Vets in NCR',
+      label: 'NCR Retailers & Vets',
     },
     {
       icon: ShieldCheck,
       value: '100%',
-      label: 'Authentic Manufacturer Stock',
+      label: 'Authentic Stock',
     },
     {
       icon: Truck,
       value: '24-Hour',
-      label: 'NCR Dispatch Guarantee',
+      label: 'NCR Dispatch',
     },
     {
       icon: TrendingUp,
       value: 'Max',
-      label: 'Retailer Profit Margins',
+      label: 'Retailer Margins',
     },
   ];
 
   return (
-    <section className="bg-emerald-900 text-white py-6 sm:py-10 border-b border-emerald-800">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6">
+    <section className="bg-emerald-950 text-white py-2.5 sm:py-3.5 border-b border-emerald-900 shadow-inner">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6">
         
-        {/* Single Horizontal Row across all viewports (4 columns on sm, 3/4 columns on mobile) */}
-        <div className="grid grid-cols-4 gap-2 sm:gap-6 text-center divide-x divide-emerald-800/60">
+        {/* Thin Informative Strip across all screen sizes */}
+        <div className="grid grid-cols-4 gap-1 sm:gap-4 text-center divide-x divide-emerald-800/50">
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
             return (
-              <div key={index} className="flex flex-col items-center justify-center px-1 sm:px-4 space-y-1">
-                <IconComponent className="w-4 h-4 sm:w-8 sm:h-8 text-emerald-400 shrink-0" />
-                <div className="text-base sm:text-3xl font-extrabold tracking-tight text-white leading-none">
-                  {stat.value}
-                </div>
-                <div className="text-[9px] sm:text-xs font-semibold text-emerald-200 uppercase tracking-tight sm:tracking-wider leading-tight">
-                  {stat.label}
+              <div key={index} className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 sm:px-3">
+                <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+                <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-1.5 leading-none">
+                  <span className="text-xs sm:text-sm font-black text-white tracking-tight">
+                    {stat.value}
+                  </span>
+                  <span className="text-[9px] sm:text-xs font-bold text-emerald-200 uppercase tracking-tight whitespace-nowrap">
+                    {stat.label}
+                  </span>
                 </div>
               </div>
             );
