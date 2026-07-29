@@ -102,13 +102,13 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Dog catching treat image on mobile)               */}
+      {/* 2. MOBILE HERO LAYOUT (60vh height, text pushed to top with 20% nav margin) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[85vh] flex items-center justify-center">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex items-start justify-center">
         
         {/* Centered Mobile Dog Hero Image */}
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[85vh] max-w-md mx-auto">
+          <div className="relative w-full h-[60vh] max-w-md mx-auto">
             <Image
               src="/images/dalmatian_hero_mobile.png"
               alt="Pawnourish B2B Mobile Hero Dog Background"
@@ -123,10 +123,10 @@ export default function HeroSection() {
         {/* Minimal Blur Overlay for Pristine Readability */}
         <div className="absolute inset-0 bg-white/45 backdrop-blur-[0.5px] pointer-events-none z-1" />
 
-        {/* Content Container (50% vh centered in the middle) */}
-        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full min-h-[50vh] flex flex-col justify-center my-auto">
+        {/* Content Container (Pushed to top with 20% top margin from nav bar) */}
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-[20%] pb-8 mb-auto">
           
-          <div className="space-y-3.5 my-auto">
+          <div className="space-y-3.5">
             
             {/* Subheading Tag & Framer Motion Text Loop */}
             <div className="space-y-1.5">
