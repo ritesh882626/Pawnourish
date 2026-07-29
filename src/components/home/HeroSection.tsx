@@ -85,7 +85,7 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (No Blur, Image Centered & +10% Size, Text Lowered) */}
+      {/* 2. MOBILE HERO LAYOUT (Text centered in 50% vh area in the middle)         */}
       {/* ========================================================================= */}
       <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[85vh] flex items-center justify-center">
         
@@ -103,10 +103,10 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Content Container (Brought slightly down: pt-12 sm:pt-16 my-auto) */}
-        <div className="relative z-10 px-5 sm:px-6 pt-12 sm:pt-16 pb-10 text-left max-w-sm w-full my-auto">
+        {/* Content Container (Kept in 50% vh area centered in the middle) */}
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full min-h-[50vh] flex flex-col justify-center my-auto">
           
-          <div className="space-y-3">
+          <div className="space-y-3 my-auto">
             
             {/* 1. Subheading: Pawnourish */}
             <div className="inline-block">
