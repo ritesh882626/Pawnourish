@@ -85,19 +85,19 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (90vh height, 0.5% Blur, Icons Removed)              */}
+      {/* 2. MOBILE HERO LAYOUT (using new Royal Canin + Drools vertical hero image) */}
       {/* ========================================================================= */}
       <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[90vh] flex items-center justify-center">
         
-        {/* Centered Dalmatian Hero Image (Crisp native scale, no scale-105 stretching) */}
+        {/* Centered Vertical Hero Image */}
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[90vh] max-w-sm mx-auto">
+          <div className="relative w-full h-[90vh] max-w-md mx-auto">
             <Image
               src="/images/dalmatian_hero_mobile.png"
-              alt="Pawnourish Dalmatian Mobile Hero Background"
+              alt="Pawnourish Royal Canin & Drools Mobile Hero Background"
               fill
               priority
-              className="object-contain object-center scale-100"
+              className="object-contain object-bottom scale-100"
               sizes="100vw"
             />
           </div>
