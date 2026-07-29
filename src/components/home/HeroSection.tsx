@@ -10,25 +10,25 @@ export default function HeroSection() {
   const { openDealerModal } = useStore();
 
   return (
-    <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[90vh]">
+    <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (Bags enlarged to cover 80% of right negative space) */}
+      {/* 1. DESKTOP HERO LAYOUT (75vh height, desktop background image enlarged +20%) */}
       {/* ========================================================================= */}
-      <div className="hidden lg:flex relative w-full min-h-[90vh] items-center">
+      <div className="hidden lg:flex relative w-full min-h-[75vh] items-center">
         
-        {/* Desktop Product Bags Image Container (Enlarged to fill 80% right negative space) */}
+        {/* Desktop Product Bags Image Container (Enlarged by +20%: max-w-[1050px] h-[72vh]) */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="max-w-[1400px] mx-auto px-6 h-full relative">
-            <div className="absolute left-[520px] xl:left-[560px] right-0 top-[22%] bottom-0 flex items-start justify-end pr-2">
-              <div className="relative w-full h-[72vh] max-w-[880px]">
+          <div className="max-w-[1440px] mx-auto px-6 h-full relative">
+            <div className="absolute left-[480px] xl:left-[520px] right-0 top-[10%] bottom-0 flex items-start justify-end pr-2">
+              <div className="relative w-full h-[72vh] max-w-[1050px]">
                 <Image
                   src="/images/landscape_hero_section_image.png"
                   alt="Pawnourish B2B Wholesale Hero Background Desktop"
                   fill
                   priority
                   className="object-contain object-right-top"
-                  sizes="880px"
+                  sizes="1050px"
                 />
               </div>
             </div>
@@ -36,7 +36,7 @@ export default function HeroSection() {
         </div>
 
         {/* Desktop Hero Content Overlay */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-14 w-full">
           <div className="max-w-xl space-y-6 text-left">
             
             {/* Service Area Pill */}
