@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useStore } from '@/store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, MessageCircle, Menu, X, FileText, Building2, ChevronRight, Home, Info, Award, ShoppingBag, Mail } from 'lucide-react';
+import { Phone, MessageCircle, Menu, X, FileText, Building2, Home, Info, Award, ShoppingBag, Mail, Share2, Edit, Star, MapPin, PlusSquare, Camera } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -103,39 +103,34 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Glassmorphism Overlay Drawer (Heavy Dark Blur Covering 100% Screen) */}
+      {/* Mobile Glassmorphism Overlay Drawer (Heavy 40px Blur Backdrop with Floating Pills matching Reference UI) */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-3xl flex flex-col justify-between p-6 text-white overflow-y-auto"
+            className="fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-[40px] flex flex-col justify-between p-6 text-white overflow-y-auto"
           >
-            {/* Top Header */}
-            <div className="flex items-center justify-between pt-2 pb-4 border-b border-slate-800/80">
+            {/* Top Header Bar */}
+            <div className="flex items-center justify-between pt-2">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black text-2xl shadow-lg shadow-emerald-500/20">
                   P
                 </div>
                 <div className="flex flex-col">
                   <span className="font-extrabold text-xl text-white leading-tight">Pawnourish</span>
-                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Navigation Menu</span>
+                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Wholesale NCR</span>
                 </div>
               </div>
 
-              {/* Close Button at top right */}
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white flex items-center justify-center shadow-lg active:scale-95 transition-all"
-                aria-label="Close menu"
-              >
-                <X className="w-6 h-6" />
-              </button>
+              <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/90 px-3.5 py-1.5 rounded-full border border-emerald-700/60 shadow-inner">
+                Menu
+              </span>
             </div>
 
-            {/* Menu Items Stack (High Contrast Solid Glass Pill Cards) */}
-            <div className="flex flex-col space-y-3 py-6 my-auto max-w-md mx-auto w-full">
+            {/* Floating Right-Aligned Pill Menu Items (Matching Reference Design) */}
+            <div className="flex flex-col items-end space-y-3.5 py-6 my-auto max-w-xs ml-auto w-full">
               {navLinks.map((link, idx) => {
                 const IconComp = link.icon;
                 const isActive = pathname === link.href;
@@ -143,62 +138,56 @@ export default function Navbar() {
                 return (
                   <motion.div
                     key={link.href}
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: idx * 0.04 }}
-                    className="w-full"
+                    initial={{ x: 40, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="w-full flex justify-end"
                   >
                     <Link
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
+                      className={`flex items-center gap-3.5 px-5 py-3 rounded-full transition-all shadow-xl ${
                         isActive 
-                          ? 'bg-amber-500 text-slate-950 border-amber-400 font-black shadow-lg shadow-amber-500/25' 
-                          : 'bg-[#004D46]/90 hover:bg-[#005F56] border-emerald-500/40 text-white font-extrabold shadow-md'
+                          ? 'bg-amber-400 text-slate-950 font-black shadow-amber-400/20 border-2 border-amber-300' 
+                          : 'bg-white text-blue-600 hover:bg-slate-50 font-bold border border-slate-100'
                       }`}
                     >
-                      <div className="flex items-center gap-3.5">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                          isActive 
-                            ? 'bg-slate-950 text-amber-400' 
-                            : 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30'
-                        }`}>
-                          <IconComp className="w-5 h-5" />
-                        </div>
-                        <span className="text-base sm:text-lg tracking-tight">{link.name}</span>
+                      <span className={`text-sm sm:text-base ${isActive ? 'text-slate-950' : 'text-blue-600'}`}>{link.name}</span>
+                      <div className={`w-9 h-9 rounded-full flex items-center justify-center shadow-md ${
+                        isActive ? 'bg-slate-950 text-amber-400' : 'bg-blue-50 text-blue-600 border border-blue-100'
+                      }`}>
+                        <IconComp className="w-4 h-4" />
                       </div>
-
-                      <ChevronRight className={`w-5 h-5 ${isActive ? 'text-slate-950' : 'text-emerald-400'}`} />
                     </Link>
                   </motion.div>
                 );
               })}
             </div>
 
-            {/* Floating Action Buttons & Close Circular Pill at Bottom */}
-            <div className="space-y-3 pt-4 border-t border-slate-800/80">
+            {/* Bottom Actions & Blue Floating Circular Close Button */}
+            <div className="space-y-3.5 pt-2">
               <button
                 onClick={() => { setMobileMenuOpen(false); openDealerModal(); }}
-                className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-2xl text-center text-base flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/30 min-h-[52px]"
+                className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-2xl text-center text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/30"
               >
-                <Building2 className="w-5 h-5" /> Become an Authorized Dealer
+                <Building2 className="w-4 h-4" /> Become an Authorized Dealer
               </button>
 
-              <div className="flex items-center justify-between gap-3 pt-1">
+              <div className="flex items-center justify-between gap-3">
                 <a
                   href="tel:+919810098100"
-                  className="flex-1 py-3.5 bg-slate-900 border border-slate-700/80 text-white font-bold rounded-2xl text-center text-sm flex items-center justify-center gap-2 min-h-[48px]"
+                  className="flex-1 py-3.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-2xl text-center text-xs flex items-center justify-center gap-2 shadow-lg"
                 >
                   <Phone className="w-4 h-4 text-emerald-400" /> Call Sales Desk
                 </a>
 
-                {/* Circular Floating Close Button (matching reference image) */}
+                {/* Blue Floating Circular Close Button (Matching Reference Image) */}
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-2xl hover:bg-emerald-500 transition-transform active:scale-95 border border-emerald-400/40 shrink-0"
+                  className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-2xl shadow-blue-600/50 transition-transform active:scale-95 border-2 border-white/20 shrink-0"
                   aria-label="Close menu"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-7 h-7" />
                 </button>
               </div>
             </div>
