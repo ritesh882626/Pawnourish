@@ -27,7 +27,7 @@ export default function HeroSection() {
   }, [phrases.length]);
 
   return (
-    <section className="relative z-10 w-full bg-white text-slate-900 border-b border-slate-100 min-h-[75vh]">
+    <section className="relative z-20 w-full bg-white text-slate-900 border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
       {/* 1. DESKTOP HERO LAYOUT (Image shifted slightly right)                    */}
@@ -102,12 +102,12 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Dog image tucks 1 z-index down behind green strip)   */}
+      {/* 2. MOBILE HERO LAYOUT (Dog image 50% larger, popping OUT over green strip) */}
       {/* ========================================================================= */}
       <div className="block lg:hidden relative w-full bg-white min-h-[58vh] flex flex-col justify-between">
         
         {/* Content Container (Top Section) */}
-        <div className="relative z-20 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
           
           <div className="space-y-3.5">
             
@@ -173,14 +173,14 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Dog Hero Image (Tucked 1 z-index down behind the green TrustIndicators strip) */}
-        <div className="relative w-full h-[36vh] min-h-[260px] max-w-md mx-auto shrink-0 z-10 flex items-end justify-center -mb-10 sm:-mb-12 pointer-events-none">
+        {/* Mobile Dog Hero Image (Enlarged +50% scale-[1.58], popping OUT over top of the green TrustIndicators strip) */}
+        <div className="relative w-full h-[40vh] min-h-[280px] max-w-lg mx-auto shrink-0 z-30 flex items-end justify-center -mb-12 sm:-mb-16 pointer-events-none">
           <Image
             src="/images/dalmatian_hero_mobile.png"
             alt="Pawnourish B2B Mobile Hero Dog Background"
             fill
             priority
-            className="object-contain object-bottom scale-105"
+            className="object-contain object-bottom scale-[1.58] translate-y-3 drop-shadow-md"
             sizes="100vw"
           />
         </div>
