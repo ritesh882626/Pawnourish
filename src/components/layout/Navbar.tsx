@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useStore } from '@/store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, MessageCircle, Menu, X, FileText, Building2, Home, Info, Award, ShoppingBag, Mail, Share2, Edit, Star, MapPin, PlusSquare, Camera } from 'lucide-react';
+import { Phone, MessageCircle, Menu, X, FileText, Building2, ChevronRight, Home, Info, Award, ShoppingBag, Mail } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -13,24 +14,24 @@ export default function Navbar() {
   const { openDealerModal } = useStore();
 
   const navLinks = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'About Us', href: '/about', icon: Info },
-    { name: 'Brands', href: '/brands', icon: Award },
-    { name: 'Product Catalogue', href: '/catalogue', icon: ShoppingBag },
-    { name: 'Become a Dealer', href: '/become-a-dealer', icon: Building2 },
-    { name: 'Contact Us', href: '/contact', icon: Mail },
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Brands', href: '/brands' },
+    { name: 'Product Catalogue', href: '/catalogue' },
+    { name: 'Become a Dealer', href: '/become-a-dealer' },
+    { name: 'Contact Us', href: '/contact' },
   ];
 
   return (
     <header className="sticky top-0 z-50">
       
-      {/* Navbar in Emerald (#005F56/90 + backdrop-blur-xl) */}
-      <nav className="bg-[#005F56]/90 backdrop-blur-xl text-white border-b border-emerald-500/20 shadow-lg transition-all">
+      {/* Sticky Header Bar in Emerald (#005F56) */}
+      <nav className="bg-[#005F56] text-white border-b border-emerald-800 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
           
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-extrabold text-2xl shadow-lg shadow-emerald-950/40 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-extrabold text-2xl shadow-lg group-hover:scale-105 transition-transform">
               P
             </div>
             <div className="flex flex-col">
@@ -69,7 +70,7 @@ export default function Navbar() {
               href="https://wa.me/919810098100" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl bg-emerald-700/80 hover:bg-emerald-600 text-white transition-colors flex items-center justify-center backdrop-blur-md"
+              className="p-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white transition-colors flex items-center justify-center"
               title="Chat on WhatsApp"
             >
               <MessageCircle className="w-5 h-5 fill-white text-[#005F56]" />
@@ -83,7 +84,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Toggle Controls */}
+          {/* Mobile Off-Canvas Menu Toggle (Minimalist 2-line = icon) */}
           <div className="lg:hidden flex items-center gap-2.5">
             <button
               onClick={() => openDealerModal()}
@@ -93,106 +94,128 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white focus:outline-none backdrop-blur-md border border-white/10"
+              className="w-10 h-10 rounded-xl bg-slate-900/40 hover:bg-slate-900/60 text-white flex items-center justify-center focus:outline-none border border-emerald-400/20"
               aria-label="Toggle menu"
             >
-              <Menu className="w-6 h-6" />
+              {/* Minimalist 2-line = Icon matching Reference Image */}
+              <div className="space-y-1.5 w-5">
+                <span className="block w-full h-0.5 bg-white rounded-full" />
+                <span className="block w-full h-0.5 bg-white rounded-full" />
+              </div>
             </button>
           </div>
 
         </div>
       </nav>
 
-      {/* Mobile Glassmorphism Overlay Drawer (Heavy 40px Blur Backdrop with Floating Pills matching Reference UI) */}
+      {/* Off-Canvas Side Drawer Navigation (Matching Reference UI Image Exactly) */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-[40px] flex flex-col justify-between p-6 text-white overflow-y-auto"
-          >
-            {/* Top Header Bar */}
-            <div className="flex items-center justify-between pt-2">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black text-2xl shadow-lg shadow-emerald-500/20">
-                  P
+          <div className="fixed inset-0 z-[100] flex">
+            
+            {/* Backdrop Overlay */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm"
+            />
+
+            {/* Sliding White Side Panel */}
+            <motion.div 
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="relative w-[82%] sm:w-[380px] h-full bg-[#FAFAFA] text-slate-900 z-[110] shadow-[25px_0_60px_rgba(0,0,0,0.2)] flex flex-col justify-between p-8 sm:p-10 overflow-y-auto"
+            >
+
+              {/* Top Left Stacked Brand Logo & Close Button */}
+              <div className="flex items-start justify-between">
+                <div className="flex flex-col tracking-tighter leading-none font-black text-2xl text-slate-900">
+                  <span>PAWN</span>
+                  <span>OUR</span>
+                  <span>ISH<sup>®</sup></span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-extrabold text-xl text-white leading-tight">Pawnourish</span>
-                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Wholesale NCR</span>
-                </div>
-              </div>
 
-              <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/90 px-3.5 py-1.5 rounded-full border border-emerald-700/60 shadow-inner">
-                Menu
-              </span>
-            </div>
-
-            {/* Floating Right-Aligned Pill Menu Items (Matching Reference Design) */}
-            <div className="flex flex-col items-end space-y-3.5 py-6 my-auto max-w-xs ml-auto w-full">
-              {navLinks.map((link, idx) => {
-                const IconComp = link.icon;
-                const isActive = pathname === link.href;
-
-                return (
-                  <motion.div
-                    key={link.href}
-                    initial={{ x: 40, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: idx * 0.05 }}
-                    className="w-full flex justify-end"
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`flex items-center gap-3.5 px-5 py-3 rounded-full transition-all shadow-xl ${
-                        isActive 
-                          ? 'bg-amber-400 text-slate-950 font-black shadow-amber-400/20 border-2 border-amber-300' 
-                          : 'bg-white text-blue-600 hover:bg-slate-50 font-bold border border-slate-100'
-                      }`}
-                    >
-                      <span className={`text-sm sm:text-base ${isActive ? 'text-slate-950' : 'text-blue-600'}`}>{link.name}</span>
-                      <div className={`w-9 h-9 rounded-full flex items-center justify-center shadow-md ${
-                        isActive ? 'bg-slate-950 text-amber-400' : 'bg-blue-50 text-blue-600 border border-blue-100'
-                      }`}>
-                        <IconComp className="w-4 h-4" />
-                      </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* Bottom Actions & Blue Floating Circular Close Button */}
-            <div className="space-y-3.5 pt-2">
-              <button
-                onClick={() => { setMobileMenuOpen(false); openDealerModal(); }}
-                className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-2xl text-center text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/30"
-              >
-                <Building2 className="w-4 h-4" /> Become an Authorized Dealer
-              </button>
-
-              <div className="flex items-center justify-between gap-3">
-                <a
-                  href="tel:+919810098100"
-                  className="flex-1 py-3.5 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-2xl text-center text-xs flex items-center justify-center gap-2 shadow-lg"
-                >
-                  <Phone className="w-4 h-4 text-emerald-400" /> Call Sales Desk
-                </a>
-
-                {/* Blue Floating Circular Close Button (Matching Reference Image) */}
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-2xl shadow-blue-600/50 transition-transform active:scale-95 border-2 border-white/20 shrink-0"
+                  className="p-2 text-slate-400 hover:text-slate-900 transition-colors"
                   aria-label="Close menu"
                 >
-                  <X className="w-7 h-7" />
+                  <X className="w-6 h-6" />
                 </button>
               </div>
-            </div>
 
-          </motion.div>
+              {/* Main Typography Links Stack (Matching Reference Image) */}
+              <div className="py-10 space-y-4 sm:space-y-5 my-auto">
+                {navLinks.map((link, idx) => {
+                  const isActive = pathname === link.href;
+
+                  return (
+                    <motion.div
+                      key={link.href}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: idx * 0.05 }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`block text-2xl sm:text-3xl font-extrabold tracking-tight transition-colors ${
+                          isActive 
+                            ? 'text-emerald-700 font-black' 
+                            : 'text-slate-800 hover:text-emerald-600'
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Secondary Links & Bottom Sales Representative Badge */}
+              <div className="space-y-6 pt-6 border-t border-slate-200">
+                
+                <div className="space-y-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  <button 
+                    onClick={() => { setMobileMenuOpen(false); openDealerModal(); }}
+                    className="block hover:text-slate-900 transition-colors"
+                  >
+                    Request Rate Card
+                  </button>
+                  <a 
+                    href="https://wa.me/919810098100"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:text-slate-900 transition-colors"
+                  >
+                    WhatsApp Desk
+                  </a>
+                </div>
+
+                {/* Bottom Profile Badge (Matching Reference UI Avatar Footer) */}
+                <div className="flex items-center gap-3 pt-2">
+                  <div className="w-9 h-9 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-xs shadow-md shrink-0">
+                    <Building2 className="w-4 h-4" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-extrabold text-slate-900 leading-tight">
+                      Pawnourish NCR Sales
+                    </span>
+                    <span className="text-[11px] font-medium text-slate-500">
+                      +91 98100 98100
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+            </motion.div>
+
+          </div>
         )}
       </AnimatePresence>
 
