@@ -83,27 +83,29 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Stunning Left-Aligned Mobile Layout with Dalmatian) */}
+      {/* 2. MOBILE HERO LAYOUT (Centered Dalmatian Image occupying 90vh + Blur Layer) */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[500px]">
+      <div className="block lg:hidden relative w-full bg-slate-100 overflow-hidden min-h-[90vh] flex items-center justify-center">
         
-        {/* Dalmatian Hero Dog Image on Mobile Right Background */}
-        <div className="absolute right-[-10px] sm:right-0 bottom-0 z-0 w-[55%] sm:w-[45%] h-[90%] pointer-events-none">
-          <Image
-            src="/images/dalmatian_hero_mobile.png"
-            alt="Pawnourish Dalmatian Mobile Hero Background"
-            fill
-            priority
-            className="object-contain object-bottom object-right"
-            sizes="(max-width: 1024px) 60vw, 40vw"
-          />
+        {/* Centered Dalmatian Hero Image Occupying 90% Viewport Height */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden">
+          <div className="relative w-full h-[90vh] max-w-md mx-auto">
+            <Image
+              src="/images/dalmatian_hero_mobile.png"
+              alt="Pawnourish Dalmatian Mobile Hero Background"
+              fill
+              priority
+              className="object-contain object-center scale-105"
+              sizes="100vw"
+            />
+          </div>
         </div>
 
-        {/* Left Gradient Overlay to keep text 100% readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent w-[80%] pointer-events-none z-1" />
+        {/* Frosted Glass Blur Overlay Layer */}
+        <div className="absolute inset-0 bg-white/75 backdrop-blur-xl pointer-events-none z-1" />
 
-        {/* Content Container (Left Aligned) */}
-        <div className="relative z-10 px-6 py-12 sm:py-16 text-left max-w-sm">
+        {/* Content Container (Left Aligned over the Blur Layer) */}
+        <div className="relative z-10 px-6 py-12 text-left max-w-sm w-full my-auto">
           
           <div className="space-y-4">
             
@@ -161,8 +163,8 @@ export default function HeroSection() {
             </div>
 
             {/* Supporting Line Below Buttons */}
-            <div className="pt-6 border-t border-slate-200/60 max-w-[220px]">
-              <p className="text-xs font-bold tracking-wider text-slate-400 uppercase leading-snug">
+            <div className="pt-6 border-t border-slate-300/80 max-w-[220px]">
+              <p className="text-xs font-bold tracking-wider text-slate-500 uppercase leading-snug">
                 Authorized B2B Supplier
               </p>
             </div>
