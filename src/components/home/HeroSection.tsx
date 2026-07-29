@@ -102,14 +102,28 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Fully visible dog head, eyes, treat & mouth)        */}
+      {/* 2. MOBILE HERO LAYOUT (Using new transparent vertical dog background)    */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[68vh] flex flex-col justify-between">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[68vh] flex items-start justify-center">
         
-        {/* Content Container (Top Section) */}
-        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
+        {/* Full-height Transparent Vertical Dog Hero Image */}
+        <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden">
+          <div className="relative w-full h-[68vh] max-w-md mx-auto">
+            <Image
+              src="/images/dalmatian_hero_mobile.png"
+              alt="Pawnourish B2B Mobile Hero Dog Background"
+              fill
+              priority
+              className="object-contain object-bottom scale-100"
+              sizes="100vw"
+            />
+          </div>
+        </div>
+
+        {/* Content Container (Top Section over transparent image top) */}
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-7 sm:pt-9 pb-8">
           
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             
             {/* Subheading Tag & Framer Motion Text Loop */}
             <div className="space-y-1.5">
@@ -171,18 +185,6 @@ export default function HeroSection() {
 
           </div>
 
-        </div>
-
-        {/* Mobile Dog Hero Image (Clean bottom-aligned positioning displaying full dog head, treat & mouth) */}
-        <div className="relative w-full h-[32vh] min-h-[220px] max-w-md mx-auto mt-2 shrink-0 z-0">
-          <Image
-            src="/images/dalmatian_hero_mobile.png"
-            alt="Pawnourish B2B Mobile Hero Dog Background"
-            fill
-            priority
-            className="object-contain object-bottom scale-110"
-            sizes="100vw"
-          />
         </div>
 
       </div>
