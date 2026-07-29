@@ -102,26 +102,12 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Using new transparent vertical dog background)    */}
+      {/* 2. MOBILE HERO LAYOUT (Zero gap between dog body & green strip)            */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[68vh] flex items-start justify-center">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex flex-col justify-between">
         
-        {/* Full-height Transparent Vertical Dog Hero Image */}
-        <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden">
-          <div className="relative w-full h-[68vh] max-w-md mx-auto">
-            <Image
-              src="/images/dalmatian_hero_mobile.png"
-              alt="Pawnourish B2B Mobile Hero Dog Background"
-              fill
-              priority
-              className="object-contain object-bottom scale-100"
-              sizes="100vw"
-            />
-          </div>
-        </div>
-
         {/* Content Container (Top Section over transparent image top) */}
-        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-7 sm:pt-9 pb-8">
+        <div className="relative z-10 px-5 sm:px-6 text-left max-w-sm w-full pt-6 sm:pt-8">
           
           <div className="space-y-3.5">
             
@@ -185,6 +171,18 @@ export default function HeroSection() {
 
           </div>
 
+        </div>
+
+        {/* Mobile Dog Hero Image (Scales and sits flush against bottom edge with zero gap to green strip) */}
+        <div className="relative w-full h-[36vh] min-h-[260px] max-w-md mx-auto mt-2 shrink-0 z-0 overflow-hidden flex items-end justify-center">
+          <Image
+            src="/images/dalmatian_hero_mobile.png"
+            alt="Pawnourish B2B Mobile Hero Dog Background"
+            fill
+            priority
+            className="object-contain object-bottom scale-[1.38] translate-y-[11%]"
+            sizes="100vw"
+          />
         </div>
 
       </div>
