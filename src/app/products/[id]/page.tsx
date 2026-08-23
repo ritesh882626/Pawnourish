@@ -91,7 +91,7 @@ export default function ProductDetailPage() {
             <img
               src={product.image}
               alt={product.title}
-              className="w-full h-full object-cover rounded-xl"
+              className="w-full h-full object-contain rounded-xl"
             />
             <span className="absolute top-4 left-4 bg-slate-900 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-md uppercase tracking-wider">
               {product.brand}

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/store/useStore';
 import { submitDealerEnquiry } from '@/services/enquiryService';
+import { getProductImage } from '@/data/mockData';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -161,18 +162,25 @@ export default function DealerEnquiryModal() {
               {selectedProduct ? (
                 /* Selected Product Card Summary */
                 <div className="p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 flex gap-4 items-center">
-                  <div className="w-20 h-20 rounded-xl bg-white p-2 border border-emerald-100 shrink-0 overflow-hidden shadow-sm">
+                  <div className="w-20 h-20 rounded-xl bg-white p-2 border border-emerald-100 shrink-0 overflow-hidden shadow-sm flex items-center justify-center">
                     <img 
-                      src={selectedProduct.image} 
+                      src={selectedProduct.image || getProductImage(selectedProduct.brand, selectedProduct.species)} 
                       alt={selectedProduct.title} 
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-contain rounded-lg"
                     />
                   </div>
 
                   <div className="space-y-1 min-w-0 flex-1 text-left">
-                    <span className="bg-slate-900 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
-                      {selectedProduct.brand}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="bg-slate-900 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                        {selectedProduct.brand}
+                      </span>
+                      {prefilledVariant && (
+                        <span className="bg-amber-400 text-slate-950 text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+                          {prefilledVariant}
+                        </span>
+                      )}
+                    </div>
                     
                     <h5 className="font-extrabold text-slate-900 text-base leading-snug truncate">
                       {selectedProduct.title}
@@ -182,8 +190,11 @@ export default function DealerEnquiryModal() {
                       {selectedProduct.species} • {selectedProduct.lifeStage} • {selectedProduct.subCategory}
                     </p>
 
-                    <div className="text-[11px] text-slate-500 font-mono pt-0.5">
-                      SKU: <span className="font-bold text-slate-800">{selectedProduct.code}</span>
+                    <div className="text-[11px] text-slate-500 font-mono pt-0.5 flex items-center gap-3">
+                      <span>SKU: <strong className="text-slate-800">{selectedProduct.code}</strong></span>
+                      {selectedProduct.packagingSizes[0] && (
+                        <span>Pack: <strong className="text-slate-800">{selectedProduct.packagingSizes[0]}</strong></span>
+                      )}
                     </div>
                   </div>
                 </div>

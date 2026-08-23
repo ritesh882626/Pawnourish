@@ -27,6 +27,16 @@ export interface Product {
   packagingSizes: string[];
 }
 
+export function getProductImage(brand: string, species: string): string {
+  const b = (brand || '').toLowerCase();
+  const s = (species || '').toLowerCase();
+  if (b.includes('drools')) {
+    return s === 'dog' ? '/images/drools_dog.jpg' : '/images/drools_cat.jpg';
+  } else {
+    return s === 'dog' ? '/images/royal_canin_dog.jpg' : '/images/royal_canin_cat.jpg';
+  }
+}
+
 export const PRODUCTS: Product[] = [
   {
     id: "dr-dn-ce-adt",
@@ -48,7 +58,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Part of Drools' entry-level Daily Nutrition range alongside Meat & Rice and Chicken & Vegetables variants.",
-    image: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Chicken & Egg"]
   },
   {
@@ -71,8 +81,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Newer addition (2025) to the Daily Nutrition range.",
-    image: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-dn-cv-adt",
@@ -94,7 +104,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Newer addition (2025) to the Daily Nutrition range.",
-    image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Chicken & Vegetables"]
   },
   {
@@ -117,7 +127,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Part of the Daily Nutrition puppy line alongside Chicken & Milk.",
-    image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Chicken & Egg"]
   },
   {
@@ -140,8 +150,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "One of the newer (2026) Daily Nutrition puppy SKUs.",
-    image: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-foc-adt",
@@ -163,8 +173,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available in Puppy and Starter life-stage variants within the Focus range.",
-    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-foc-pup",
@@ -186,8 +196,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Sits between the Starter and Adult stages of the Focus range.",
-    image: "https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-foc-str",
@@ -209,8 +219,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Entry point of the Focus range before puppies move to Focus Puppy.",
-    image: "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-opt-adt",
@@ -232,8 +242,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available as Optimum Performance Puppy.",
-    image: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-opt-pup",
@@ -255,8 +265,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion product to Optimum Performance Adult.",
-    image: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-ult-adt",
@@ -278,8 +288,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available as Ultium Performance Puppy.",
-    image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-ult-pup",
@@ -301,8 +311,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion product to Ultium Performance Adult.",
-    image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-cc-adt",
@@ -324,8 +334,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available in Puppy and Starter variants.",
-    image: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-cc-pup",
@@ -347,8 +357,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Sits between Starter and Adult stages of Canine Creek.",
-    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-cc-str",
@@ -370,8 +380,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion to Canine Creek Puppy and Adult.",
-    image: "https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/drools_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "dr-wet-adt",
@@ -393,7 +403,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or as a topper over dry kibble, per the feeding guide on pack; refrigerate any unused portion and use within 24-48 hours.",
     storageInstructions: "Store unopened pouches/cans in a cool, dry place; refrigerate after opening and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' dog wet-food range introduced/expanded in 2026.",
-    image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Multi-protein Gravy"]
   },
   {
@@ -416,7 +426,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or as a topper over dry kibble, per the feeding guide on pack; refrigerate any unused portion and use within 24-48 hours.",
     storageInstructions: "Store unopened pouches/cans in a cool, dry place; refrigerate after opening and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' dog wet-food range introduced/expanded in 2026.",
-    image: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Multi-protein Gravy"]
   },
   {
@@ -439,7 +449,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or as a topper over dry kibble, per the feeding guide on pack; refrigerate any unused portion and use within 24-48 hours.",
     storageInstructions: "Store unopened pouches/cans in a cool, dry place; refrigerate after opening and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' dog wet-food range introduced/expanded in 2026.",
-    image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Real lamb chunks in gravy with basil & tomato"]
   },
   {
@@ -462,7 +472,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or as a topper over dry kibble, per the feeding guide on pack; refrigerate any unused portion and use within 24-48 hours.",
     storageInstructions: "Store unopened pouches/cans in a cool, dry place; refrigerate after opening and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' dog wet-food range introduced/expanded in 2026.",
-    image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Real turkey chunks, wild rice & pumpkin in gravy"]
   },
   {
@@ -485,7 +495,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or as a topper over dry kibble, per the feeding guide on pack; refrigerate any unused portion and use within 24-48 hours.",
     storageInstructions: "Store unopened pouches/cans in a cool, dry place; refrigerate after opening and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' dog wet-food range introduced/expanded in 2026.",
-    image: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Real chicken chunks & vegetables in gravy"]
   },
   {
@@ -508,7 +518,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or as a topper over dry kibble, per the feeding guide on pack; refrigerate any unused portion and use within 24-48 hours.",
     storageInstructions: "Store unopened pouches/cans in a cool, dry place; refrigerate after opening and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' dog wet-food range introduced/expanded in 2026.",
-    image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Real chicken & chicken liver in gravy"]
   },
   {
@@ -531,7 +541,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or as a topper over dry kibble, per the feeding guide on pack; refrigerate any unused portion and use within 24-48 hours.",
     storageInstructions: "Store unopened pouches/cans in a cool, dry place; refrigerate after opening and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' dog wet-food range introduced/expanded in 2026.",
-    image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=80",
+    image: "/images/drools_dog.jpg",
     packagingSizes: ["Real duck chunks, pumpkin & kale in gravy"]
   },
   {
@@ -554,8 +564,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available as a Kitten Ocean Fish variant.",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "dr-cat-ts-adt",
@@ -577,8 +587,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Part of Drools' core cat dry-food line-up.",
-    image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "dr-cat-mac-adt",
@@ -600,8 +610,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Part of Drools' core cat dry-food line-up.",
-    image: "https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "dr-cat-chk-adt",
@@ -623,8 +633,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available as a Kitten Real Chicken variant.",
-    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "dr-cat-ocf-kit",
@@ -646,8 +656,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion product to Real Chicken Kitten Cat Food.",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "dr-cat-chk-kit",
@@ -669,8 +679,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion product to Ocean Fish Kitten Cat Food.",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "dr-mou-chk-adt",
@@ -692,8 +702,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "dr-mou-ocf-adt",
@@ -715,8 +725,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "dr-mou-sal-adt",
@@ -738,8 +748,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "dr-mou-tun-adt",
@@ -761,8 +771,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "dr-mou-chk-kit",
@@ -784,8 +794,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "dr-mou-ocf-kit",
@@ -807,8 +817,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "dr-mou-sal-kit",
@@ -830,8 +840,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "dr-mou-tun-kit",
@@ -853,8 +863,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Serve as a standalone meal or topper per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     storageInstructions: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
     additionalInfo: "Part of Drools' Cat Mousse wet-food range.",
-    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["85g Pouch", "12 x 85g Box"]
+    image: "/images/drools_cat.jpg",
+    packagingSizes: ["85g Pouch"]
   },
   {
     id: "rc-mini-str",
@@ -876,8 +886,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "First stage of the Mini (small-breed) Size Health Nutrition line, followed by Mini Puppy.",
-    image: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/royal_canin_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "rc-mini-pup",
@@ -900,7 +910,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Available from 800 g up to 8 kg pack sizes.",
-    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Mini Puppy, 4 kg"]
   },
   {
@@ -924,7 +934,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available in 800 g and 8 kg+ pack sizes.",
-    image: "https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Mini Adult, 4 kg"]
   },
   {
@@ -947,8 +957,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Retail (non-veterinary) senior formula within Royal Canin's standard Mini range.",
-    image: "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/royal_canin_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "rc-med-pup",
@@ -971,7 +981,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion product to Medium Adult.",
-    image: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Medium Puppy, 1 kg"]
   },
   {
@@ -994,8 +1004,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Available in dry and wet formats per Royal Canin's India range.",
-    image: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/royal_canin_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "rc-maxi-str",
@@ -1018,7 +1028,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "First stage of the Maxi (large-breed) line, followed by Maxi Puppy.",
-    image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Maxi Starter, 1 kg"]
   },
   {
@@ -1042,7 +1052,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Available from 220 g trial packs up to 20 kg bulk bags.",
-    image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Maxi Puppy, 4 kg"]
   },
   {
@@ -1066,7 +1076,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available in 1 kg, 10 kg and other pack sizes.",
-    image: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Maxi Adult, 4 kg"]
   },
   {
@@ -1090,7 +1100,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "A Labrador Retriever Puppy variant also exists internationally; check current India availability.",
-    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Labrador Retriever Adult, 3 kg"]
   },
   {
@@ -1114,7 +1124,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "An Adult German Shepherd variant also exists; check current India availability and pricing.",
-    image: "https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["German Shepherd Puppy, 3 kg"]
   },
   {
@@ -1138,7 +1148,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available as a Golden Retriever Puppy formula for dogs under 15 months.",
-    image: "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Golden Retriever Adult, 3 kg"]
   },
   {
@@ -1162,7 +1172,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion product to Shih Tzu Puppy.",
-    image: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Shih Tzu Adult, 1.5 kg"]
   },
   {
@@ -1186,7 +1196,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Companion product to Shih Tzu Adult.",
-    image: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Shih Tzu Puppy, 1.5 kg"]
   },
   {
@@ -1209,7 +1219,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Part of Royal Canin India's Breed Health Nutrition line for small companion breeds.",
-    image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_dog.jpg",
     packagingSizes: ["Pug Adult"]
   },
   {
@@ -1232,8 +1242,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Part of Royal Canin India's Breed Health Nutrition line.",
-    image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["3 KG", "10 KG", "15 KG"]
+    image: "/images/royal_canin_dog.jpg",
+    packagingSizes: ["3 KG", "10 KG"]
   },
   {
     id: "rc-kitten-2nd",
@@ -1256,7 +1266,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Transition to an adult formula over 7-10 days from 12 months.",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_cat.jpg",
     packagingSizes: ["Second Age Kitten"]
   },
   {
@@ -1280,8 +1290,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "First stage of Royal Canin's cat life-stage feeding path, followed by Second Age Kitten.",
-    image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/royal_canin_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "rc-indoor-adt",
@@ -1304,8 +1314,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Pairs with Royal Canin's Instinctive wet food range for mixed feeding.",
-    image: "https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/royal_canin_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "rc-ster-adt",
@@ -1328,8 +1338,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     storageInstructions: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
     additionalInfo: "Also available as a wet-food pouch/can within the Sterilised line.",
-    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/royal_canin_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "rc-fit32-adt",
@@ -1352,8 +1362,8 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Balanced adult-maintenance formula for moderately active cats (guaranteed analysis on pack).",
     storageInstructions: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     additionalInfo: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80",
-    packagingSizes: ["1.2 KG", "3 KG", "7 KG"]
+    image: "/images/royal_canin_cat.jpg",
+    packagingSizes: ["1.2 KG", "3 KG"]
   },
   {
     id: "rc-persian-adt",
@@ -1376,7 +1386,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Skin/coat-support and hairball-control formula with low indigestible proteins (guaranteed analysis on pack).",
     storageInstructions: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     additionalInfo: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
-    image: "https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_cat.jpg",
     packagingSizes: ["Persian Adult, 400 g"]
   },
   {
@@ -1400,7 +1410,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Growth-stage formula tailored to the Persian breed profile (guaranteed analysis on pack).",
     storageInstructions: "Feed as per the body-weight/age feeding chart printed on pack, split across 2 (adult) or multiple (puppy/kitten) daily meals; ensure fresh water is available at all times.",
     additionalInfo: "Store in a cool, dry place away from direct sunlight; reseal the bag/pouch tightly after each use to preserve freshness.",
-    image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_cat.jpg",
     packagingSizes: ["Persian Kitten, 1 kg"]
   },
   {
@@ -1424,7 +1434,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Complete and balanced kitten wet-food formula as labelled on pack.",
     storageInstructions: "Serve per the feeding guide on pack, ideally alongside dry kitten food; refrigerate any unused portion and use within 24 hours.",
     additionalInfo: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
-    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_cat.jpg",
     packagingSizes: ["Loaf/Gravy, 12x85 g multipack"]
   },
   {
@@ -1448,7 +1458,7 @@ export const PRODUCTS: Product[] = [
     feedingInfo: "Complete and balanced adult wet-food formula with hairball-control fibre (as labelled on pack).",
     storageInstructions: "Serve per the feeding guide on pack; refrigerate any unused portion and use within 24 hours.",
     additionalInfo: "Store unopened pouches in a cool, dry place; refrigerate opened pouches and consume within the timeframe stated on pack.",
-    image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80",
+    image: "/images/royal_canin_cat.jpg",
     packagingSizes: ["Gravy, 12x85 g multipack"]
   },
 ];
