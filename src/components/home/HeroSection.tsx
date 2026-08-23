@@ -102,9 +102,9 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Exact User Specified Mobile Studio Image #f9f3ea)   */}
+      {/* 2. MOBILE HERO LAYOUT (Single "Get Quote" CTA + Enlarged Transparent Dog)  */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-[#f9f3ea] overflow-hidden flex flex-col justify-between pt-6 pb-2">
+      <div className="block lg:hidden relative w-full bg-[#FAF8F5] overflow-hidden flex flex-col justify-between pt-6 pb-2">
         
         {/* Content Container (Top Section z-20) */}
         <div className="relative z-20 px-5 sm:px-6 text-left max-w-sm w-full">
@@ -113,7 +113,7 @@ export default function HeroSection() {
             
             {/* Subheading Tag & Framer Motion Text Loop */}
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-1.5 bg-white/90 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 bg-white border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
                 <Zap className="w-3.5 h-3.5 text-emerald-600 animate-pulse shrink-0" />
                 <span>PAWNOURISH® B2B</span>
               </div>
@@ -148,21 +148,13 @@ export default function HeroSection() {
               </p>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-row items-center gap-2 pt-1 max-w-full">
-              <Link
-                href="/become-a-dealer"
-                className="px-4 py-2.5 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-xl text-xs shadow-md transition-all whitespace-nowrap text-center flex items-center gap-1.5"
-              >
-                <span>Become partner</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-
+            {/* Single CTA Button: Get Quote */}
+            <div className="pt-1 max-w-full">
               <button
                 onClick={() => openDealerModal()}
-                className="px-4 py-2.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-xl border border-slate-300 shadow-xs transition-all text-xs whitespace-nowrap text-center"
+                className="px-5 py-3 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-xl border border-slate-300 shadow-xs transition-all text-xs whitespace-nowrap text-center flex items-center justify-center gap-2"
               >
-                Get Quote
+                <span>Get Quote</span>
               </button>
             </div>
 
@@ -170,14 +162,14 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Studio Hero Image (z-10, Seamless #f9f3ea background fit) */}
-        <div className="relative w-full h-[46vh] min-h-[360px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-2 -mb-2">
+        {/* Mobile Enlarged Transparent Dog Visual (z-10, Seamless background, positioned above bottom stat bar) */}
+        <div className="relative w-full h-[52vh] min-h-[400px] max-w-[420px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-1 -mb-1">
           <Image
-            src="/images/studio_drools_mobile_hero.png"
+            src="/images/golden_drools_nobg.png"
             alt="Pawnourish B2B Mobile Hero Studio Golden Retriever holding Drools SUPUPPY pack"
             fill
             priority
-            className="object-contain object-bottom scale-110 translate-y-1"
+            className="object-contain object-bottom scale-125 translate-y-1"
             sizes="100vw"
           />
         </div>
