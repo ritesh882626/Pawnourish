@@ -102,7 +102,7 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Single "Get Quote" CTA + Enlarged Transparent Dog)  */}
+      {/* 2. MOBILE HERO LAYOUT (Single "Get Quote" CTA + Fresh Enlarged Dog Image) */}
       {/* ========================================================================= */}
       <div className="block lg:hidden relative w-full bg-[#FAF8F5] overflow-hidden flex flex-col justify-between pt-6 pb-2">
         
@@ -162,19 +162,19 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Enlarged Transparent Dog Visual (z-10, Seamless background, positioned above bottom stat bar) */}
-        <div className="relative w-full h-[52vh] min-h-[400px] max-w-[420px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-1 -mb-1">
+        {/* Mobile Enlarged Fresh Dog Image (z-10, Transparent background, positioned above bottom stat bar) */}
+        <div className="relative w-full h-[54vh] min-h-[420px] max-w-[440px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-1 -mb-1">
           <Image
             src="/images/golden_drools_nobg.png"
-            alt="Pawnourish B2B Mobile Hero Studio Golden Retriever holding Drools SUPUPPY pack"
+            alt="Pawnourish B2B Mobile Hero Fresh Studio Golden Retriever holding Drools SUPUPPY pack"
             fill
             priority
-            className="object-contain object-bottom scale-125 translate-y-1"
+            className="object-contain object-bottom scale-130 translate-y-1"
             sizes="100vw"
           />
         </div>
 
-        {/* Bottom Green Stat Bar (z-30) */}
+        {/* Single Lower Green Stat Bar (z-30) */}
         <div className="relative z-30 mx-3 sm:mx-4 mt-1 mb-2 bg-[#004D43] text-white rounded-2xl p-3 border border-emerald-700/60 shadow-xl grid grid-cols-4 gap-1 text-center">
           
           <div className="flex flex-col items-center space-y-0.5">
