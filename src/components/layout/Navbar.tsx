@@ -2,16 +2,17 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useStore } from '@/store/useStore';
 import { PRODUCTS } from '@/data/mockData';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronDown, 
+  ChevronRight,
   Dog, 
   Cat, 
   ArrowRight, 
-  X, 
   MessageCircle, 
   FileText,
   Award,
@@ -28,6 +29,18 @@ export default function Navbar() {
   const [mobileBrandsOpen, setMobileBrandsOpen] = useState(false);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Lock background page scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   // Dynamic calculations from product dataset
   const dogProducts = PRODUCTS.filter(p => p.species === 'Dog');
@@ -57,17 +70,25 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-[#005F56] text-white border-b border-emerald-800 shadow-lg">
       
-      {/* Top Header Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-6">
+      {/* ========================================================= */}
+      {/* DESKTOP HEADER (Unchanged, Visible on >= lg) */}
+      {/* ========================================================= */}
+      <div className="hidden lg:flex max-w-7xl mx-auto px-6 h-20 items-center justify-between gap-6">
         
-        {/* Brand Logo */}
+        {/* Desktop Brand Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-extrabold text-2xl shadow-lg group-hover:scale-105 transition-transform">
-            P
+          <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/20 bg-white/10 shrink-0">
+            <Image
+              src="/images/pawnourish_logo.png"
+              alt="Pawnourish Logo"
+              fill
+              className="object-contain p-0.5"
+              priority
+            />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-white leading-tight">
-              Pawnourish
+            <span className="font-extrabold text-2xl tracking-tight text-white leading-tight">
+              pawnourish
             </span>
             <span className="text-[10px] font-bold tracking-wider text-emerald-200 uppercase">
               B2B Pet Wholesale • Delhi NCR
@@ -76,8 +97,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Primary Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-8">
-          
+        <nav className="flex items-center gap-8">
           <Link
             href="/"
             className={`text-sm font-bold tracking-wide transition-colors py-2 ${
@@ -114,7 +134,7 @@ export default function Navbar() {
               <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === 'products' ? 'rotate-180 text-amber-400' : ''}`} />
             </Link>
 
-            {/* CLEAN TWO-COLUMN PRODUCTS MEGA MENU (NO POPULAR RANGES) */}
+            {/* TWO-COLUMN PRODUCTS MEGA MENU */}
             <AnimatePresence>
               {activeDropdown === 'products' && (
                 <motion.div
@@ -231,8 +251,6 @@ export default function Navbar() {
                   className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[500px] z-50"
                 >
                   <div className="bg-white text-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-200 grid grid-cols-2 gap-6 text-left">
-                    
-                    {/* DROOLS */}
                     <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-3">
                       <div className="flex items-center gap-2">
                         <Award className="w-5 h-5 text-red-600" />
@@ -250,7 +268,6 @@ export default function Navbar() {
                       </Link>
                     </div>
 
-                    {/* ROYAL CANIN */}
                     <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-3">
                       <div className="flex items-center gap-2">
                         <ShieldCheck className="w-5 h-5 text-emerald-700" />
@@ -267,7 +284,6 @@ export default function Navbar() {
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
                     </div>
-
                   </div>
                 </motion.div>
               )}
@@ -291,11 +307,10 @@ export default function Navbar() {
           >
             CONTACT
           </Link>
-
         </nav>
 
         {/* Desktop Primary Header Action Buttons */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           <a 
             href="https://wa.me/919711633094" 
             target="_blank" 
@@ -315,145 +330,278 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Toggle Button */}
-        <div className="lg:hidden flex items-center gap-3">
-          <button
-            onClick={() => openDealerModal()}
-            className="px-3.5 py-2 bg-amber-400 text-slate-950 font-black rounded-xl text-xs"
-          >
-            REQUEST PRICE
-          </button>
+      </div>
 
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="w-10 h-10 rounded-xl bg-slate-900/40 hover:bg-slate-900/60 text-white flex items-center justify-center border border-emerald-400/20"
-            aria-label="Toggle menu"
-          >
-            <div className="space-y-1.5 w-5">
-              <span className="block w-full h-0.5 bg-white rounded-full" />
-              <span className="block w-full h-0.5 bg-white rounded-full" />
-            </div>
-          </button>
-        </div>
+
+      {/* ========================================================= */}
+      {/* CLOSED MOBILE/TABLET HEADER (< lg) */}
+      {/* EXTREMELY MINIMAL: ONLY [LOGO] pawnourish ... ☰ */}
+      {/* ========================================================= */}
+      <div className="lg:hidden h-[68px] px-5 sm:px-6 flex items-center justify-between">
+        
+        {/* LEFT: [LOGO] pawnourish */}
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0">
+            <Image
+              src="/images/pawnourish_logo.png"
+              alt="Pawnourish Logo"
+              width={32}
+              height={32}
+              className="object-contain"
+              priority
+            />
+          </div>
+          <span className="text-base font-extrabold tracking-tight text-white lowercase">
+            pawnourish
+          </span>
+        </Link>
+
+        {/* RIGHT: Animated Hamburger Icon (☰ ↔ X) */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="w-10 h-10 flex flex-col justify-center items-center gap-1.5 text-white focus:outline-none"
+          aria-label={mobileMenuOpen ? "Close Menu" : "Open Menu"}
+        >
+          <span 
+            className={`w-5 h-[2px] bg-white rounded-full transition-all duration-300 transform origin-center ${
+              mobileMenuOpen ? 'rotate-45 translate-y-[3.5px]' : ''
+            }`} 
+          />
+          <span 
+            className={`w-5 h-[2px] bg-white rounded-full transition-all duration-300 ${
+              mobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100'
+            }`} 
+          />
+          <span 
+            className={`w-5 h-[2px] bg-white rounded-full transition-all duration-300 transform origin-center ${
+              mobileMenuOpen ? '-rotate-45 -translate-y-[3.5px]' : ''
+            }`} 
+          />
+        </button>
 
       </div>
 
-      {/* Mobile Drawer */}
+
+      {/* ========================================================= */}
+      {/* OPEN MOBILE/TABLET FULL-SCREEN NAVIGATION */}
+      {/* ========================================================= */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <div className="fixed inset-0 z-[100] flex">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm"
-            />
-
-            <motion.div 
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="relative w-[85%] sm:w-[380px] h-full bg-[#FAFAFA] text-slate-900 z-[110] shadow-2xl flex flex-col justify-between p-6 sm:p-8 overflow-y-auto"
-            >
-
-              <div className="flex items-center justify-between pb-4 border-b border-slate-200">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-black">P</div>
-                  <span className="font-extrabold text-xl text-slate-900">Pawnourish B2B</span>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] bg-slate-950 text-white flex flex-col justify-between lg:hidden overflow-hidden"
+          >
+            
+            {/* Header Inside Open Menu */}
+            <div className="h-[68px] px-5 sm:px-6 flex items-center justify-between border-b border-slate-800/80 shrink-0">
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2.5">
+                <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0">
+                  <Image
+                    src="/images/pawnourish_logo.png"
+                    alt="Pawnourish Logo"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
                 </div>
-                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-slate-400 hover:text-slate-900">
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
+                <span className="text-base font-extrabold tracking-tight text-white lowercase">
+                  pawnourish
+                </span>
+              </Link>
 
-              <div className="py-6 space-y-4 my-auto">
-                <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block text-xl font-black text-slate-900">
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-10 h-10 flex flex-col justify-center items-center gap-1.5 text-white focus:outline-none"
+                aria-label="Close Menu"
+              >
+                <span className="w-5 h-[2px] bg-white rounded-full transform rotate-45 translate-y-[3.5px]" />
+                <span className="w-5 h-[2px] bg-white rounded-full opacity-0 scale-0" />
+                <span className="w-5 h-[2px] bg-white rounded-full transform -rotate-45 -translate-y-[3.5px]" />
+              </button>
+            </div>
+
+            {/* Scrollable Navigation Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-8 space-y-6">
+              
+              {/* 1. Home */}
+              <div>
+                <Link
+                  href="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-black text-white hover:text-amber-400 transition-colors block py-1.5"
+                >
                   Home
                 </Link>
+              </div>
 
-                <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block text-xl font-black text-slate-900">
+              {/* 2. About Us */}
+              <div>
+                <Link
+                  href="/about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-black text-white hover:text-amber-400 transition-colors block py-1.5"
+                >
                   About Us
                 </Link>
+              </div>
 
-                {/* Mobile Products Accordion */}
-                <div className="space-y-2 border-y border-slate-100 py-3">
-                  <button
-                    onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                    className="w-full flex items-center justify-between text-xl font-black text-slate-900 text-left"
-                  >
-                    <span>Products</span>
-                    <ChevronDown className={`w-5 h-5 transition-transform ${mobileProductsOpen ? 'rotate-180' : ''}`} />
-                  </button>
+              {/* 3. Products Accordion */}
+              <div className="space-y-3">
+                <button
+                  onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                  className="w-full flex items-center justify-between text-2xl font-black text-white hover:text-amber-400 transition-colors py-1.5 text-left"
+                >
+                  <span>Products</span>
+                  <ChevronDown className={`w-6 h-6 text-slate-400 transition-transform duration-200 ${mobileProductsOpen ? 'rotate-180 text-amber-400' : ''}`} />
+                </button>
 
+                <AnimatePresence>
                   {mobileProductsOpen && (
-                    <div className="pl-4 space-y-2 pt-2 text-sm font-bold text-slate-700">
-                      <Link href="/products" onClick={() => setMobileMenuOpen(false)} className="block text-emerald-700">
-                        Explore Portfolio Overview →
-                      </Link>
-                      <Link href="/products/dog-food" onClick={() => setMobileMenuOpen(false)} className="block">
-                        Dog Food ({dogProducts.length} Products)
-                      </Link>
-                      <Link href="/products/cat-food" onClick={() => setMobileMenuOpen(false)} className="block">
-                        Cat Food ({catProducts.length} Products)
-                      </Link>
-                    </div>
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="pl-4 space-y-4 pt-1 overflow-hidden border-l-2 border-slate-800"
+                    >
+                      {/* Dog Food Group */}
+                      <div className="space-y-2">
+                        <Link
+                          href="/products/dog-food"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="text-lg font-extrabold text-emerald-400 hover:text-emerald-300 block"
+                        >
+                          Dog Food
+                        </Link>
+                        <div className="pl-3 space-y-1.5 text-sm font-semibold text-slate-300">
+                          <Link
+                            href="/products/dog-food"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block hover:text-white py-1"
+                          >
+                            Dry Food (Kibble)
+                          </Link>
+                          <Link
+                            href="/products/dog-food"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block hover:text-white py-1"
+                          >
+                            Wet Food (Gravy & Chunks)
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* Cat Food Group */}
+                      <div className="space-y-2 pt-1">
+                        <Link
+                          href="/products/cat-food"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="text-lg font-extrabold text-amber-400 hover:text-amber-300 block"
+                        >
+                          Cat Food
+                        </Link>
+                        <div className="pl-3 space-y-1.5 text-sm font-semibold text-slate-300">
+                          <Link
+                            href="/products/cat-food"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block hover:text-white py-1"
+                          >
+                            Dry Food (Kibble)
+                          </Link>
+                          <Link
+                            href="/products/cat-food"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block hover:text-white py-1"
+                          >
+                            Wet Food (Mousse & Pouches)
+                          </Link>
+                        </div>
+                      </div>
+
+                    </motion.div>
                   )}
-                </div>
+                </AnimatePresence>
+              </div>
 
-                {/* Mobile Brands Accordion */}
-                <div className="space-y-2 border-b border-slate-100 pb-3">
-                  <button
-                    onClick={() => setMobileBrandsOpen(!mobileBrandsOpen)}
-                    className="w-full flex items-center justify-between text-xl font-black text-slate-900 text-left"
-                  >
-                    <span>Brands</span>
-                    <ChevronDown className={`w-5 h-5 transition-transform ${mobileBrandsOpen ? 'rotate-180' : ''}`} />
-                  </button>
+              {/* 4. Brands Accordion */}
+              <div className="space-y-3">
+                <button
+                  onClick={() => setMobileBrandsOpen(!mobileBrandsOpen)}
+                  className="w-full flex items-center justify-between text-2xl font-black text-white hover:text-amber-400 transition-colors py-1.5 text-left"
+                >
+                  <span>Brands</span>
+                  <ChevronDown className={`w-6 h-6 text-slate-400 transition-transform duration-200 ${mobileBrandsOpen ? 'rotate-180 text-amber-400' : ''}`} />
+                </button>
 
+                <AnimatePresence>
                   {mobileBrandsOpen && (
-                    <div className="pl-4 space-y-2 pt-2 text-sm font-bold text-slate-700">
-                      <Link href="/brands#drools" onClick={() => setMobileMenuOpen(false)} className="block">
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="pl-4 space-y-2.5 pt-1 overflow-hidden border-l-2 border-slate-800"
+                    >
+                      <Link
+                        href="/brands#drools"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-base font-extrabold text-slate-200 hover:text-white block py-1"
+                      >
                         Drools (36 SKUs)
                       </Link>
-                      <Link href="/brands#royal-canin" onClick={() => setMobileMenuOpen(false)} className="block">
+                      <Link
+                        href="/brands#royal-canin"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-base font-extrabold text-slate-200 hover:text-white block py-1"
+                      >
                         Royal Canin (25 SKUs)
                       </Link>
-                    </div>
+                    </motion.div>
                   )}
-                </div>
+                </AnimatePresence>
+              </div>
 
-                <Link href="/become-a-dealer" onClick={() => setMobileMenuOpen(false)} className="block text-xl font-black text-emerald-700">
+              {/* 5. Become a Dealer */}
+              <div>
+                <Link
+                  href="/become-a-dealer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-black text-emerald-400 hover:text-emerald-300 transition-colors block py-1.5"
+                >
                   Become a Dealer
                 </Link>
+              </div>
 
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block text-xl font-black text-slate-900">
-                  Contact Sales
+              {/* 6. Contact Us */}
+              <div>
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-black text-white hover:text-amber-400 transition-colors block py-1.5"
+                >
+                  Contact Us
                 </Link>
               </div>
 
-              <div className="space-y-4 pt-4 border-t border-slate-200">
-                <a
-                  href="https://wa.me/919711633094"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3.5 bg-emerald-700 text-white font-bold rounded-2xl text-center shadow-md text-xs flex items-center justify-center gap-2"
-                >
-                  <MessageCircle className="w-4 h-4 fill-white" />
-                  <span>WhatsApp (+91 97116 33094)</span>
-                </a>
+            </div>
 
-                <button
-                  onClick={() => { setMobileMenuOpen(false); openDealerModal(); }}
-                  className="w-full py-4 bg-amber-400 text-slate-950 font-black rounded-2xl text-center shadow-lg text-sm"
-                >
-                  REQUEST PRICE
-                </button>
-              </div>
+            {/* STICKY BOTTOM CTA */}
+            <div className="p-6 bg-slate-950 border-t border-slate-800/80 shrink-0 shadow-2xl">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openDealerModal();
+                }}
+                className="w-full py-4 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-2xl text-center text-sm shadow-xl tracking-wider uppercase transition-transform active:scale-[0.98]"
+              >
+                REQUEST PRICE
+              </button>
+            </div>
 
-            </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
