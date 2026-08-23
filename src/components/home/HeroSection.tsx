@@ -4,8 +4,17 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/store/useStore';
-import { ArrowRight, FileText, Building2, MapPin, Zap, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, FileText, Building2, MapPin, Zap, CheckCircle2, Users, ShieldCheck, Truck, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// Mobile-only floating kibble particles
+const MOBILE_KIBBLE_PARTICLES = [
+  { id: 1, top: '42%', left: '12%', size: 'w-3 h-3', delay: 0, duration: 5.2 },
+  { id: 2, top: '48%', left: '82%', size: 'w-3.5 h-3.5', delay: 1.2, duration: 6.1 },
+  { id: 3, top: '65%', left: '18%', size: 'w-2.5 h-2.5', delay: 2.4, duration: 4.8 },
+  { id: 4, top: '72%', left: '78%', size: 'w-3 h-3', delay: 0.8, duration: 5.7 },
+  { id: 5, top: '80%', left: '48%', size: 'w-2 h-2', delay: 1.9, duration: 5.0 },
+];
 
 export default function HeroSection() {
   const { openDealerModal } = useStore();
@@ -102,18 +111,41 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Mobile ONLY: New Studio Dog + Drools Pack Image)   */}
+      {/* 2. MOBILE HERO LAYOUT (Mobile ONLY: Enlarged Dog Visual + Stat Bar)       */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[62vh] flex flex-col justify-between pt-6 pb-2">
+      <div className="block lg:hidden relative w-full bg-[#FAF8F5] overflow-hidden flex flex-col justify-between pt-6 pb-2">
         
+        {/* MOBILE-ONLY ANIMATED FOOD PARTICLES (z-5) */}
+        <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+          {MOBILE_KIBBLE_PARTICLES.map((particle) => (
+            <motion.div
+              key={particle.id}
+              initial={{ y: 0, opacity: 0.2, rotate: 0 }}
+              animate={{
+                y: [-10, 10, -10],
+                opacity: [0.2, 0.6, 0.2],
+                rotate: [0, 12, -12, 0],
+              }}
+              transition={{
+                duration: particle.duration,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: particle.delay,
+              }}
+              style={{ top: particle.top, left: particle.left }}
+              className={`absolute ${particle.size} bg-amber-600/40 rounded-full blur-[0.5px] shadow-sm`}
+            />
+          ))}
+        </div>
+
         {/* Content Container (Top Section z-20) */}
         <div className="relative z-20 px-5 sm:px-6 text-left max-w-sm w-full">
           
-          <div className="space-y-3.5">
+          <div className="space-y-3">
             
             {/* Subheading Tag & Framer Motion Text Loop */}
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-1.5 bg-emerald-50/90 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
                 <Zap className="w-3.5 h-3.5 text-emerald-600 animate-pulse shrink-0" />
                 <span>PAWNOURISH® B2B</span>
               </div>
@@ -127,7 +159,7 @@ export default function HeroSection() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -14, opacity: 0 }}
                     transition={{ duration: 0.35, ease: "easeOut" }}
-                    className="text-xs font-extrabold text-emerald-700 tracking-wide uppercase whitespace-nowrap flex items-center gap-1"
+                    className="text-xs font-black text-emerald-800 tracking-wide uppercase whitespace-nowrap flex items-center gap-1"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                     <span>{phrases[index]}</span>
@@ -137,52 +169,78 @@ export default function HeroSection() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-[1.2]">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-[1.18]">
               Royal Canin & Drools <span className="text-emerald-700 font-extrabold">Authorized Dealer</span>
             </h1>
 
             {/* Supporting Line */}
             <div className="pt-0.5">
-              <p className="text-xs sm:text-sm font-extrabold tracking-wider text-slate-600 uppercase">
+              <p className="text-xs font-black tracking-wider text-slate-500 uppercase">
                 Authorized B2B Supplier
               </p>
             </div>
 
-            {/* Single Row Action Buttons */}
+            {/* Action Buttons */}
             <div className="flex flex-row items-center gap-2 pt-1 max-w-full">
-              
-              {/* Button 1: Become partner */}
               <Link
                 href="/become-a-dealer"
-                className="px-3.5 py-2.5 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-lg sm:rounded-xl text-xs shadow-md transition-all whitespace-nowrap text-center"
+                className="px-4 py-2.5 bg-[#005F56] hover:bg-[#004D46] active:scale-[0.98] text-white font-extrabold rounded-xl text-xs shadow-md transition-all whitespace-nowrap text-center flex items-center gap-1.5"
               >
-                Become partner
+                <span>Become partner</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
 
-              {/* Button 2: Get Quote */}
               <button
                 onClick={() => openDealerModal()}
-                className="px-3.5 py-2.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-lg sm:rounded-xl border border-slate-300 shadow-xs transition-all text-xs whitespace-nowrap text-center"
+                className="px-4 py-2.5 bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-950 font-extrabold rounded-xl border border-slate-300 shadow-xs transition-all text-xs whitespace-nowrap text-center"
               >
                 Get Quote
               </button>
-
             </div>
 
           </div>
 
         </div>
 
-        {/* Mobile Studio Hero Image (z-10, Anchored around -5px from bottom horizon) */}
-        <div className="relative w-full h-[45vh] min-h-[350px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-2 -mb-1">
+        {/* Mobile Enlarged Transparent Dog Visual (z-10, Anchored above bottom stat bar) */}
+        <div className="relative w-full h-[46vh] min-h-[360px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-2 -mb-2">
           <Image
-            src="/images/studio_drools_mobile_hero.png"
-            alt="Pawnourish B2B Mobile Hero Studio Dog Background"
+            src="/images/golden_drools_nobg.png"
+            alt="Pawnourish B2B Mobile Hero Golden Retriever holding Drools SUPUPPY pack"
             fill
             priority
-            className="object-contain object-bottom scale-105 translate-y-1"
+            className="object-contain object-bottom scale-115 translate-y-1"
             sizes="100vw"
           />
+        </div>
+
+        {/* Bottom Green Stat Bar (z-30) */}
+        <div className="relative z-30 mx-3 sm:mx-4 mt-1 mb-2 bg-[#004D43] text-white rounded-2xl p-3 border border-emerald-700/60 shadow-xl grid grid-cols-4 gap-1 text-center">
+          
+          <div className="flex flex-col items-center space-y-0.5">
+            <Users className="w-4 h-4 text-amber-400" />
+            <span className="text-[11px] font-black text-white leading-tight">500+</span>
+            <span className="text-[8px] font-bold text-emerald-200 uppercase tracking-tight leading-none">NCR Retailers</span>
+          </div>
+
+          <div className="flex flex-col items-center space-y-0.5 border-l border-emerald-700/60 pl-1">
+            <ShieldCheck className="w-4 h-4 text-amber-400" />
+            <span className="text-[11px] font-black text-white leading-tight">100%</span>
+            <span className="text-[8px] font-bold text-emerald-200 uppercase tracking-tight leading-none">Authentic Stock</span>
+          </div>
+
+          <div className="flex flex-col items-center space-y-0.5 border-l border-emerald-700/60 pl-1">
+            <Truck className="w-4 h-4 text-amber-400" />
+            <span className="text-[11px] font-black text-white leading-tight">24-Hour</span>
+            <span className="text-[8px] font-bold text-emerald-200 uppercase tracking-tight leading-none">NCR Dispatch</span>
+          </div>
+
+          <div className="flex flex-col items-center space-y-0.5 border-l border-emerald-700/60 pl-1">
+            <TrendingUp className="w-4 h-4 text-amber-400" />
+            <span className="text-[11px] font-black text-white leading-tight">Max</span>
+            <span className="text-[8px] font-bold text-emerald-200 uppercase tracking-tight leading-none">Retailer Margins</span>
+          </div>
+
         </div>
 
       </div>
