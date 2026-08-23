@@ -41,15 +41,15 @@ export default function ProductCard({ product }: ProductCardProps) {
           />
         </Link>
         
-        {/* Top-Left Corner: Brand Badge */}
-        <span className="absolute top-3 left-3 bg-slate-950 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md z-10">
-          {product.brand}
-        </span>
-        
-        {/* TOP-RIGHT CORNER: VARIANT + PACK SIZE BADGE */}
-        <span className="absolute top-3 right-3 bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase z-10 max-w-[150px] truncate">
-          {topRightBadge}
-        </span>
+        {/* Top Badges Header Bar (Flex layout prevents badge overlapping) */}
+        <div className="absolute top-3 left-3 right-3 z-10 flex items-center justify-between gap-2 pointer-events-none">
+          <span className="shrink-0 bg-slate-950 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md pointer-events-auto">
+            {product.brand}
+          </span>
+          <span className="min-w-0 max-w-[60%] truncate bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase pointer-events-auto text-right">
+            {topRightBadge}
+          </span>
+        </div>
       </div>
 
       {/* Product Information Section */}
