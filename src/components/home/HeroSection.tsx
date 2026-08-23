@@ -7,15 +7,6 @@ import { useStore } from '@/store/useStore';
 import { ArrowRight, FileText, Building2, MapPin, Zap, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Mobile-only floating kibble particles
-const MOBILE_KIBBLE_PARTICLES = [
-  { id: 1, top: '48%', left: '15%', size: 'w-3 h-3', delay: 0, duration: 5.2 },
-  { id: 2, top: '55%', left: '80%', size: 'w-3.5 h-3.5', delay: 1.2, duration: 6.1 },
-  { id: 3, top: '70%', left: '20%', size: 'w-2.5 h-2.5', delay: 2.4, duration: 4.8 },
-  { id: 4, top: '78%', left: '75%', size: 'w-3 h-3', delay: 0.8, duration: 5.7 },
-  { id: 5, top: '85%', left: '45%', size: 'w-2 h-2', delay: 1.9, duration: 5.0 },
-];
-
 export default function HeroSection() {
   const { openDealerModal } = useStore();
 
@@ -39,12 +30,11 @@ export default function HeroSection() {
     <section className="relative w-full bg-white text-slate-900 overflow-hidden border-b border-slate-100 min-h-[75vh]">
       
       {/* ========================================================================= */}
-      {/* 1. DESKTOP HERO LAYOUT (Exact Restoration of Original Desktop Hero)       */}
-      {/* NO PARTICLES, NO NEW DOG IMAGE ON DESKTOP                                 */}
+      {/* 1. DESKTOP HERO LAYOUT (Exact Original Desktop Hero - 100% Untouched)      */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative w-full min-h-[75vh] items-center overflow-hidden">
         
-        {/* Desktop Dog Hero Image Container (Original Landscape Image & Positioning) */}
+        {/* Desktop Dog Hero Image Container */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <div className="max-w-[1536px] mx-auto px-6 h-full relative">
             <div className="absolute left-[520px] xl:left-[560px] right-0 top-[-10%] bottom-0 flex items-center justify-end pr-0 translate-x-[40px]">
@@ -112,33 +102,10 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Mobile ONLY: Transparent PNG + Food Particles)    */}
+      {/* 2. MOBILE HERO LAYOUT (Mobile ONLY: New Studio Dog + Drools Pack Image)   */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[60vh] flex flex-col justify-between pt-6">
+      <div className="block lg:hidden relative w-full bg-white overflow-hidden min-h-[62vh] flex flex-col justify-between pt-6 pb-2">
         
-        {/* MOBILE-ONLY ANIMATED FOOD PARTICLES (z-5) */}
-        <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
-          {MOBILE_KIBBLE_PARTICLES.map((particle) => (
-            <motion.div
-              key={particle.id}
-              initial={{ y: 0, opacity: 0.2, rotate: 0 }}
-              animate={{
-                y: [-10, 10, -10],
-                opacity: [0.2, 0.6, 0.2],
-                rotate: [0, 12, -12, 0],
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: particle.delay,
-              }}
-              style={{ top: particle.top, left: particle.left }}
-              className={`absolute ${particle.size} bg-amber-600/40 rounded-full blur-[0.5px] shadow-sm`}
-            />
-          ))}
-        </div>
-
         {/* Content Container (Top Section z-20) */}
         <div className="relative z-20 px-5 sm:px-6 text-left max-w-sm w-full">
           
@@ -206,14 +173,14 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Transparent Dog Hero Image (z-10) */}
-        <div className="relative w-full h-[45vh] min-h-[340px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-4">
+        {/* Mobile Studio Hero Image (z-10, Anchored around -5px from bottom horizon) */}
+        <div className="relative w-full h-[45vh] min-h-[350px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-2 -mb-1">
           <Image
-            src="/images/golden_drools_transparent.png"
-            alt="Pawnourish B2B Mobile Hero Dog Background"
+            src="/images/studio_drools_mobile_hero.png"
+            alt="Pawnourish B2B Mobile Hero Studio Dog Background"
             fill
             priority
-            className="object-contain object-bottom scale-110"
+            className="object-contain object-bottom scale-105 translate-y-1"
             sizes="100vw"
           />
         </div>
