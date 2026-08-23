@@ -312,7 +312,7 @@ export default function RetailerMarginCalculatorModal() {
                   </button>
 
                   <a
-                    href={`https://wa.me/919810098100?text=Hi%20Pawnourish%2C%20I%20used%20the%20Margin%20Calculator%20for%20${brand}%20(${monthlyQty}%20units/mo).%20I%20want%20to%20get%20wholesale%20rates.`}
+                    href={`https://wa.me/919711633094?text=Hi%20Pawnourish%2C%20I%20used%20the%20Margin%20Calculator%20for%20${brand}%20(${monthlyQty}%20units/mo).%20I%20want%20to%20get%20wholesale%20rates.`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 py-3 bg-[#25D366] hover:bg-emerald-600 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md"

@@ -74,7 +74,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-emerald-400" />
-              <span>Sales Desk: +91 98100 98100</span>
+              <span>Sales Desk: +91 97116 33094</span>
             </div>
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-emerald-400" />
@@ -90,8 +90,10 @@ export default function Footer() {
             <li><Link href="/" className="hover:text-emerald-400 transition-colors">Home</Link></li>
             <li><Link href="/about" className="hover:text-emerald-400 transition-colors">About Pawnourish</Link></li>
             <li><Link href="/brands" className="hover:text-emerald-400 transition-colors">Authorized Brands</Link></li>
-            <li><Link href="/catalogue" className="hover:text-emerald-400 transition-colors">Product Catalogue</Link></li>
-            <li><Link href="/become-a-dealer" className="hover:text-emerald-400 transition-colors text-emerald-400 font-semibold">Become a Dealer</Link></li>
+            <li><Link href="/products" className="hover:text-emerald-400 transition-colors">Products Portfolio</Link></li>
+            <li><Link href="/products/dog-food" className="hover:text-emerald-400 transition-colors">Dog Food</Link></li>
+            <li><Link href="/products/cat-food" className="hover:text-emerald-400 transition-colors">Cat Food</Link></li>
+            <li><Link href="/become-a-dealer" className="hover:text-emerald-400 font-semibold text-emerald-400 transition-colors">Become a Dealer</Link></li>
             <li><Link href="/contact" className="hover:text-emerald-400 transition-colors">Contact Sales</Link></li>
           </ul>
         </div>

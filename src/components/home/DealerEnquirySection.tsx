@@ -58,7 +58,7 @@ export default function DealerEnquirySection() {
           <div className="space-y-4 pt-4 text-xs sm:text-sm text-emerald-100/80 border-t border-slate-800">
             <div className="flex items-center gap-3">
               <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
-              <span>Direct Wholesale Desk: +91 98100 98100 (Mon - Sat, 9 AM - 7 PM)</span>
+              <span>Direct Wholesale Desk: +91 97116 33094 (Mon - Sat, 9 AM - 7 PM)</span>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
@@ -217,7 +217,7 @@ export default function DealerEnquirySection() {
                         <input 
                           required 
                           type="tel" 
-                          placeholder="+91 98100 XXXXX" 
+                          placeholder="+91 97116 XXXXX" 
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 min-h-[52px]"

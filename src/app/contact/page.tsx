@@ -40,8 +40,8 @@ export default function ContactPage() {
               </div>
               <div>
                 <span className="text-xs text-slate-400 block font-semibold">Wholesale Phone Line</span>
-                <a href="tel:+919810098100" className="font-bold text-white hover:text-emerald-400 text-base">
-                  +91 98100 98100
+                <a href="tel:+919711633094" className="font-bold text-white hover:text-emerald-400 text-base">
+                  +91 97116 33094
                 </a>
               </div>
             </div>
@@ -53,12 +53,12 @@ export default function ContactPage() {
               <div>
                 <span className="text-xs text-slate-400 block font-semibold">WhatsApp Instant Inquiry</span>
                 <a 
-                  href="https://wa.me/919810098100" 
+                  href="https://wa.me/919711633094" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="font-bold text-[#25D366] hover:underline text-base"
                 >
-                  +91 98100 98100
+                  +91 97116 33094
                 </a>
               </div>
             </div>
@@ -116,7 +116,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Phone Number (WhatsApp) *</label>
-                  <input required type="tel" placeholder="+91 98100 XXXXX" className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
+                  <input required type="tel" placeholder="+91 97116 XXXXX" className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
                 </div>
               </div>
 

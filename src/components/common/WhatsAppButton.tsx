@@ -55,7 +55,7 @@ export default function WhatsAppButton() {
 
       {/* Floating Dog Face Button */}
       <a
-        href="https://wa.me/919810098100?text=Hi%20Pawnourish%20Team%2C%20I%20am%20a%20pet%20retailer%2Fvet%20in%20Delhi%20NCR.%20I%20want%20to%20inquire%20about%20Royal%20Canin%20%26%20Drools%20wholesale%20rates."
+        href="https://wa.me/919711633094?text=Hi%20Pawnourish%20Team%2C%20I%20am%20a%20pet%20retailer%2Fvet%20in%20Delhi%20NCR.%20I%20want%20to%20inquire%20about%20Royal%20Canin%20%26%20Drools%20wholesale%20rates."
         target="_blank"
         rel="noopener noreferrer"
         className="group relative w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-emerald-600 to-amber-400 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer"

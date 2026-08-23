@@ -1,315 +1,438 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '@/store/useStore';
+import { submitDealerEnquiry } from '@/services/enquiryService';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle2, Building2, ArrowLeft, ArrowRight, Sparkles, Store, MapPin, User, Phone, Mail, FileText } from 'lucide-react';
+import { 
+  X, 
+  CheckCircle2, 
+  ArrowRight, 
+  ArrowLeft, 
+  Building2, 
+  MessageCircle, 
+  AlertCircle,
+  PackageCheck,
+  Tag,
+  ShieldCheck,
+  Send
+} from 'lucide-react';
 
 export default function DealerEnquiryModal() {
-  const { isDealerModalOpen, closeDealerModal, selectedProductForInquiry } = useStore();
-  const [step, setStep] = useState<number>(1);
-  const [submitted, setSubmitted] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
-    businessName: '',
-    contactName: '',
-    phone: '',
-    email: '',
-    businessType: 'Pet Store',
-    location: 'Delhi',
-    notes: ''
-  });
+  const { 
+    isDealerModalOpen, 
+    selectedProductForInquiry: selectedProduct, 
+    selectedVariantForInquiry: prefilledVariant, 
+    closeDealerModal 
+  } = useStore();
+
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1); // 1: Product, 2: Retailer Details, 3: Success, 4: Error
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Form Fields
+  const [name, setName] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('Delhi NCR');
+  const [businessType, setBusinessType] = useState('Pet Store');
+  const [quantity, setQuantity] = useState('');
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (isDealerModalOpen) {
+      setStep(1);
+      setLoading(false);
+      setErrorMessage('');
+    }
+  }, [isDealerModalOpen]);
 
   if (!isDealerModalOpen) return null;
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleStep1Continue = () => {
+    setStep(2);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (step < 3) {
-      setStep((prev) => prev + 1);
+    setLoading(true);
+    setErrorMessage('');
+
+    const payload = {
+      productSku: selectedProduct?.code || 'GENERAL-CATALOG',
+      brand: selectedProduct?.brand || 'All Brands',
+      productName: selectedProduct?.title || 'Wholesale Price List',
+      variant: prefilledVariant || selectedProduct?.variantName || '',
+      species: selectedProduct?.species || '',
+      foodType: selectedProduct?.subCategory || '',
+      lifeStage: selectedProduct?.lifeStage || '',
+
+      name,
+      businessName,
+      phone,
+      email,
+      city,
+      businessType,
+      quantity,
+      message
+    };
+
+    const res = await submitDealerEnquiry(payload);
+    setLoading(false);
+
+    if (res.success) {
+      setStep(3); // Success
     } else {
-      setSubmitted(true);
+      setErrorMessage(res.error || 'Submission failed');
+      setStep(4); // Error
     }
   };
 
-  const handleBack = () => {
-    if (step > 1) setStep((prev) => prev - 1);
-  };
-
-  const handleClose = () => {
-    setStep(1);
-    setSubmitted(false);
-    closeDealerModal();
-  };
-
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       
-      {/* Dark Blur Overlay Backdrop */}
-      <motion.div 
+      {/* Backdrop */}
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-slate-950/80 backdrop-blur-xl transition-opacity"
-        onClick={handleClose}
+        onClick={closeDealerModal}
+        className="fixed inset-0 bg-slate-950/70 backdrop-blur-md"
       />
 
-      {/* Main Slide-Up Glassmorphism Green Container */}
-      <motion.div 
-        initial={{ y: "100%", opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: "100%", opacity: 0 }}
-        transition={{ type: "spring", damping: 25, stiffness: 220 }}
-        className="relative bg-emerald-950/90 backdrop-blur-2xl text-white w-full max-w-xl max-h-[92vh] sm:max-h-[90vh] rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl shadow-emerald-950/50 overflow-hidden z-10 border border-emerald-500/30 flex flex-col"
+      {/* Modal Card Container */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+        transition={{ type: "spring", damping: 25, stiffness: 280 }}
+        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden z-10 text-slate-900 border border-slate-100 my-auto"
       >
 
-        {/* Top Header & Step Navigation */}
-        <div className="px-6 py-5 flex items-center justify-between text-white shrink-0 border-b border-emerald-800/40">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between p-6 pb-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            {step > 1 && !submitted && (
-              <button 
-                onClick={handleBack}
-                className="w-10 h-10 rounded-2xl bg-emerald-900/60 hover:bg-emerald-800/80 border border-emerald-500/30 flex items-center justify-center text-white transition-colors"
-                aria-label="Back"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-            )}
+            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black">
+              P
+            </div>
             <div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400 block">
-                {!submitted ? `Step 0${step} of 03` : "Complete"}
-              </span>
-              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                {selectedProductForInquiry ? "Inquire Rate Card" : "Dealer Application"}
-              </h2>
+              <h3 className="font-black text-slate-900 text-lg leading-none">Wholesale Request</h3>
+              <p className="text-[11px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">Pawnourish B2B Desk</p>
             </div>
           </div>
 
-          <button 
-            onClick={handleClose}
-            className="w-10 h-10 rounded-2xl bg-emerald-900/60 hover:bg-emerald-800/80 border border-emerald-500/30 flex items-center justify-center text-white transition-colors"
-            aria-label="Close"
+          <button
+            onClick={closeDealerModal}
+            className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Progress Line */}
-        {!submitted && (
-          <div className="w-full bg-emerald-950/60 h-1.5 shrink-0">
-            <motion.div 
-              className="bg-emerald-400 shadow-[0_0_12px_#34d399] h-full"
-              initial={{ width: "33%" }}
-              animate={{ width: step === 1 ? "33%" : step === 2 ? "66%" : "100%" }}
-              transition={{ duration: 0.3 }}
-            />
+        {/* Progress Indicator (Step 1 -> Step 2) */}
+        {(step === 1 || step === 2) && (
+          <div className="px-6 pt-4 pb-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-xs font-bold text-slate-500">
+            <div className={`flex items-center gap-2 ${step >= 1 ? 'text-emerald-700 font-black' : ''}`}>
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] ${step >= 1 ? 'bg-emerald-700 text-white' : 'bg-slate-200'}`}>1</span>
+              <span>Product Request</span>
+            </div>
+            <div className="w-12 h-0.5 bg-slate-200 rounded-full" />
+            <div className={`flex items-center gap-2 ${step === 2 ? 'text-emerald-700 font-black' : ''}`}>
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] ${step === 2 ? 'bg-emerald-700 text-white' : 'bg-slate-200'}`}>2</span>
+              <span>Your Details</span>
+            </div>
           </div>
         )}
 
-        {/* Scrollable Glassmorphism Green Form Body with Generous Spacing */}
-        <div className="p-6 sm:p-8 overflow-y-auto flex-1 text-white space-y-6">
-          
-          {submitted ? (
-            /* Success Step */
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="text-center py-8 space-y-5 my-auto"
-            >
-              <div className="w-20 h-20 bg-emerald-900/80 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto text-emerald-400 shadow-inner">
-                <CheckCircle2 className="w-12 h-12" />
-              </div>
-              <h3 className="text-2xl font-black text-white">Application Submitted!</h3>
-              <p className="text-emerald-100 text-xs sm:text-sm leading-relaxed max-w-sm mx-auto">
-                Thank you for applying. Our Delhi NCR wholesale manager will contact you on <strong>{formData.phone || "WhatsApp"}</strong> within 2 hours with the official Royal Canin & Drools price list.
-              </p>
-              <button
-                onClick={handleClose}
-                className="mt-6 w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-2xl shadow-xl transition-all text-sm min-h-[52px]"
-              >
-                Close & Continue Browsing
-              </button>
-            </motion.div>
-          ) : (
-            /* Step Wise Glassmorphism Form with Spacing */
-            <form onSubmit={handleNext} className="flex flex-col justify-between flex-1 min-h-[320px] space-y-6">
+        <div className="p-6 sm:p-8">
+
+          {/* STEP 1: PRODUCT CONFIRMATION */}
+          {step === 1 && (
+            <div className="space-y-6">
               
-              <AnimatePresence mode="wait">
-                
-                {/* STEP 1: Business Profile */}
-                {step === 1 && (
-                  <motion.div
-                    key="step1"
-                    initial={{ y: 25, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -25, opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="space-y-6"
-                  >
-                    <div className="space-y-1">
-                      <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <Store className="w-4 h-4" /> Store Profile
-                      </span>
-                      <h3 className="text-lg sm:text-xl font-extrabold text-white">Tell us about your business</h3>
+              <div className="space-y-1">
+                <h4 className="text-xl font-black text-slate-900">Confirm Product Selection</h4>
+                <p className="text-xs text-slate-500 font-medium">
+                  Review the product details you are enquiring about before providing your contact information.
+                </p>
+              </div>
+
+              {selectedProduct ? (
+                /* Selected Product Card Summary */
+                <div className="p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 flex gap-4 items-center">
+                  <div className="w-20 h-20 rounded-xl bg-white p-2 border border-emerald-100 shrink-0 overflow-hidden shadow-sm">
+                    <img 
+                      src={selectedProduct.image} 
+                      alt={selectedProduct.title} 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
+
+                  <div className="space-y-1 min-w-0 flex-1 text-left">
+                    <span className="bg-slate-900 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                      {selectedProduct.brand}
+                    </span>
+                    
+                    <h5 className="font-extrabold text-slate-900 text-base leading-snug truncate">
+                      {selectedProduct.title}
+                    </h5>
+
+                    <p className="text-xs text-emerald-800 font-bold">
+                      {selectedProduct.species} • {selectedProduct.lifeStage} • {selectedProduct.subCategory}
+                    </p>
+
+                    <div className="text-[11px] text-slate-500 font-mono pt-0.5">
+                      SKU: <span className="font-bold text-slate-800">{selectedProduct.code}</span>
                     </div>
+                  </div>
+                </div>
+              ) : (
+                /* General Catalog Selection */
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-left">
+                  <div className="flex items-center gap-2 text-emerald-700 font-extrabold text-sm">
+                    <PackageCheck className="w-4 h-4" />
+                    <span>Complete B2B Wholesale Rate Card</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-medium">
+                    You are requesting the complete 2026 Wholesale Dealer Price List for Royal Canin & Drools products in Delhi NCR.
+                  </p>
+                </div>
+              )}
 
-                    <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Store / Business Name *</label>
-                      <input 
-                        required
-                        type="text"
-                        placeholder="e.g. Royal Pet Care Plaza"
-                        value={formData.businessName}
-                        onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 min-h-[52px]"
-                      />
-                    </div>
+              {/* Continue Button */}
+              <button
+                onClick={handleStep1Continue}
+                className="w-full py-4 bg-slate-950 hover:bg-emerald-800 text-white font-black rounded-2xl shadow-xl text-sm flex items-center justify-center gap-2 transition-all"
+              >
+                <span>CONTINUE TO DETAILS</span>
+                <ArrowRight className="w-4 h-4 text-amber-400" />
+              </button>
 
-                    <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Business Type *</label>
-                      <select 
-                        value={formData.businessType}
-                        onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
-                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm font-medium text-white focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 min-h-[52px]"
-                      >
-                        <option value="Pet Store" className="bg-emerald-950 text-white">Pet Retail Store</option>
-                        <option value="Veterinary Clinic" className="bg-emerald-950 text-white">Veterinary Clinic</option>
-                        <option value="Grooming Salon" className="bg-emerald-950 text-white">Pet Grooming Salon</option>
-                        <option value="Pet Pharmacy" className="bg-emerald-950 text-white">Pet Pharmacy</option>
-                        <option value="Breeder / Kennel" className="bg-emerald-950 text-white">Breeder / Kennel</option>
-                        <option value="Distributor" className="bg-emerald-950 text-white">Local Distributor</option>
-                      </select>
-                    </div>
-                  </motion.div>
-                )}
+            </div>
+          )}
 
-                {/* STEP 2: Contact Details */}
-                {step === 2 && (
-                  <motion.div
-                    key="step2"
-                    initial={{ y: 25, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -25, opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="space-y-5"
-                  >
-                    <div className="space-y-1">
-                      <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <User className="w-4 h-4" /> Contact & Location
-                      </span>
-                      <h3 className="text-lg sm:text-xl font-extrabold text-white">How can our team reach you?</h3>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Contact Person Name *</label>
-                      <input 
-                        required
-                        type="text"
-                        placeholder="Owner / Manager Name"
-                        value={formData.contactName}
-                        onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 min-h-[52px]"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Phone Number (WhatsApp) *</label>
-                      <input 
-                        required
-                        type="tel"
-                        placeholder="+91 98100 XXXXX"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 min-h-[52px]"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">NCR Location / City *</label>
-                      <select 
-                        value={formData.location}
-                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm font-medium text-white focus:outline-none focus:border-emerald-400 min-h-[52px]"
-                      >
-                        <option value="Delhi" className="bg-emerald-950 text-white">Delhi (All Zones)</option>
-                        <option value="Gurugram" className="bg-emerald-950 text-white">Gurugram</option>
-                        <option value="Noida" className="bg-emerald-950 text-white">Noida / Greater Noida</option>
-                        <option value="Ghaziabad" className="bg-emerald-950 text-white">Ghaziabad</option>
-                        <option value="Faridabad" className="bg-emerald-950 text-white">Faridabad</option>
-                        <option value="Other NCR" className="bg-emerald-950 text-white">Other NCR Region</option>
-                      </select>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* STEP 3: Email & Final Submit */}
-                {step === 3 && (
-                  <motion.div
-                    key="step3"
-                    initial={{ y: 25, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -25, opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="space-y-5"
-                  >
-                    <div className="space-y-1">
-                      <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <FileText className="w-4 h-4" /> Preferences & Submit
-                      </span>
-                      <h3 className="text-lg sm:text-xl font-extrabold text-white">Final step to get your rate card</h3>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Business Email *</label>
-                      <input 
-                        required
-                        type="email"
-                        placeholder="store@domain.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400 min-h-[52px]"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-emerald-200">Preferred Brands / SKUs Notes</label>
-                      <textarea 
-                        rows={2}
-                        placeholder="Mention Royal Canin or Drools requirements..."
-                        value={formData.notes}
-                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        className="w-full bg-emerald-900/60 backdrop-blur-md border border-emerald-500/30 p-4 rounded-2xl text-base sm:text-sm text-white placeholder-emerald-300/40 focus:outline-none focus:border-emerald-400"
-                      />
-                    </div>
-                  </motion.div>
-                )}
-
-              </AnimatePresence>
-
-              {/* Bottom Action Button */}
-              <div className="pt-4">
+          {/* STEP 2: BUSINESS & CONTACT DETAILS */}
+          {step === 2 && (
+            <form onSubmit={handleSubmit} className="space-y-4 text-left">
+              
+              <div className="flex items-center justify-between pb-1">
+                <div>
+                  <h4 className="text-xl font-black text-slate-900">Tell us about yourself</h4>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Share your details and our team will get back to you with availability and pricing.
+                  </p>
+                </div>
                 <button
-                  type="submit"
-                  className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl shadow-emerald-500/30 transition-all min-h-[52px]"
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="text-xs font-bold text-slate-400 hover:text-slate-900 flex items-center gap-1 shrink-0"
                 >
-                  {step === 3 ? (
-                    <>
-                      <Send className="w-5 h-5 text-slate-950" />
-                      <span>Submit & Get Price List</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Continue</span>
-                      <ArrowRight className="w-5 h-5 text-slate-950" />
-                    </>
-                  )}
+                  <ArrowLeft className="w-3.5 h-3.5" /> Back
                 </button>
               </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">Full Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g. Rajesh Kumar"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">Business Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={businessName}
+                    onChange={(e) => setBusinessName(e.target.value)}
+                    placeholder="e.g. Paws & Tails Clinic"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">Phone / WhatsApp *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+91 97116 XXXXX"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">Email Address</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="retailer@domain.com"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">City / Region *</label>
+                  <input
+                    type="text"
+                    required
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="Delhi, Gurugram, Noida, etc."
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">Business Type *</label>
+                  <select
+                    value={businessType}
+                    onChange={(e) => setBusinessType(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  >
+                    <option value="Pet Store">Pet Store</option>
+                    <option value="Distributor">Distributor</option>
+                    <option value="Veterinary Clinic">Veterinary Clinic</option>
+                    <option value="Retailer">Retailer</option>
+                    <option value="Reseller">Reseller</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">Required Quantity</label>
+                  <input
+                    type="text"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    placeholder="e.g. 10 bags / 5 boxes"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[11px] font-extrabold uppercase text-slate-600">Message / Notes</label>
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Special requirements..."
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-black rounded-2xl shadow-xl text-sm flex items-center justify-center gap-2 transition-all pt-3 mt-2 disabled:opacity-50"
+              >
+                {loading ? (
+                  <span>SUBMITTING...</span>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>SUBMIT ENQUIRY</span>
+                  </>
+                )}
+              </button>
+
             </form>
+          )}
+
+          {/* STEP 3: SUCCESS STATE */}
+          {step === 3 && (
+            <div className="py-6 text-center space-y-5">
+              <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-md">
+                <CheckCircle2 className="w-10 h-10 stroke-[2.5]" />
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-2xl font-black text-slate-900">Enquiry Received</h4>
+                <p className="text-xs text-slate-600 font-medium max-w-sm mx-auto leading-relaxed">
+                  Thank you, <span className="font-extrabold text-slate-900">{name || 'Dealer'}</span>. We&apos;ve received your enquiry for{' '}
+                  <span className="font-extrabold text-emerald-800">{selectedProduct?.title || 'our Wholesale Product Portfolio'}</span>.
+                </p>
+                <p className="text-xs text-slate-500">
+                  Our B2B account team will contact you shortly with availability and wholesale pricing.
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 space-y-3">
+                <button
+                  onClick={closeDealerModal}
+                  className="w-full py-3.5 bg-slate-950 hover:bg-slate-900 text-white font-black rounded-2xl text-xs tracking-wider"
+                >
+                  BACK TO PRODUCTS
+                </button>
+
+                <a
+                  href="https://wa.me/919711633094"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 hover:text-emerald-800"
+                >
+                  <MessageCircle className="w-4 h-4 fill-emerald-700 text-white" />
+                  <span>Instant WhatsApp Support: +91 97116 33094</span>
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 4: ERROR STATE */}
+          {step === 4 && (
+            <div className="py-6 text-center space-y-5">
+              <div className="w-16 h-16 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto shadow-md">
+                <AlertCircle className="w-10 h-10" />
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-2xl font-black text-slate-900">Submission Error</h4>
+                <p className="text-xs text-slate-600 font-medium max-w-sm mx-auto leading-relaxed">
+                  We couldn&apos;t submit your enquiry right now. Please try again or contact us directly on WhatsApp.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100">
+                <button
+                  onClick={() => setStep(2)}
+                  className="py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-black rounded-2xl text-xs"
+                >
+                  TRY AGAIN
+                </button>
+
+                <a
+                  href="https://wa.me/919711633094"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-black rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-md"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  <span>WHATSAPP US</span>
+                </a>
+              </div>
+            </div>
           )}
 
         </div>
 
       </motion.div>
+
     </div>
   );
 }
