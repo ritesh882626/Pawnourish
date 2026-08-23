@@ -7,15 +7,6 @@ import { useStore } from '@/store/useStore';
 import { ArrowRight, FileText, Building2, MapPin, Zap, CheckCircle2, Users, ShieldCheck, Truck, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Mobile-only floating kibble particles
-const MOBILE_KIBBLE_PARTICLES = [
-  { id: 1, top: '42%', left: '12%', size: 'w-3 h-3', delay: 0, duration: 5.2 },
-  { id: 2, top: '48%', left: '82%', size: 'w-3.5 h-3.5', delay: 1.2, duration: 6.1 },
-  { id: 3, top: '65%', left: '18%', size: 'w-2.5 h-2.5', delay: 2.4, duration: 4.8 },
-  { id: 4, top: '72%', left: '78%', size: 'w-3 h-3', delay: 0.8, duration: 5.7 },
-  { id: 5, top: '80%', left: '48%', size: 'w-2 h-2', delay: 1.9, duration: 5.0 },
-];
-
 export default function HeroSection() {
   const { openDealerModal } = useStore();
 
@@ -111,33 +102,10 @@ export default function HeroSection() {
 
 
       {/* ========================================================================= */}
-      {/* 2. MOBILE HERO LAYOUT (Mobile ONLY: Enlarged Dog Visual + Stat Bar)       */}
+      {/* 2. MOBILE HERO LAYOUT (Exact User Specified Mobile Studio Image #f9f3ea)   */}
       {/* ========================================================================= */}
-      <div className="block lg:hidden relative w-full bg-[#FAF8F5] overflow-hidden flex flex-col justify-between pt-6 pb-2">
+      <div className="block lg:hidden relative w-full bg-[#f9f3ea] overflow-hidden flex flex-col justify-between pt-6 pb-2">
         
-        {/* MOBILE-ONLY ANIMATED FOOD PARTICLES (z-5) */}
-        <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
-          {MOBILE_KIBBLE_PARTICLES.map((particle) => (
-            <motion.div
-              key={particle.id}
-              initial={{ y: 0, opacity: 0.2, rotate: 0 }}
-              animate={{
-                y: [-10, 10, -10],
-                opacity: [0.2, 0.6, 0.2],
-                rotate: [0, 12, -12, 0],
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: particle.delay,
-              }}
-              style={{ top: particle.top, left: particle.left }}
-              className={`absolute ${particle.size} bg-amber-600/40 rounded-full blur-[0.5px] shadow-sm`}
-            />
-          ))}
-        </div>
-
         {/* Content Container (Top Section z-20) */}
         <div className="relative z-20 px-5 sm:px-6 text-left max-w-sm w-full">
           
@@ -145,7 +113,7 @@ export default function HeroSection() {
             
             {/* Subheading Tag & Framer Motion Text Loop */}
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 bg-white/90 border border-emerald-200 px-3 py-1 rounded-full text-xs font-black text-emerald-800 shadow-2xs">
                 <Zap className="w-3.5 h-3.5 text-emerald-600 animate-pulse shrink-0" />
                 <span>PAWNOURISH® B2B</span>
               </div>
@@ -175,7 +143,7 @@ export default function HeroSection() {
 
             {/* Supporting Line */}
             <div className="pt-0.5">
-              <p className="text-xs font-black tracking-wider text-slate-500 uppercase">
+              <p className="text-xs font-black tracking-wider text-slate-600 uppercase">
                 Authorized B2B Supplier
               </p>
             </div>
@@ -202,14 +170,14 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Mobile Enlarged Transparent Dog Visual (z-10, Anchored above bottom stat bar) */}
+        {/* Mobile Studio Hero Image (z-10, Seamless #f9f3ea background fit) */}
         <div className="relative w-full h-[46vh] min-h-[360px] mx-auto shrink-0 z-10 flex items-end justify-center overflow-hidden pointer-events-none mt-2 -mb-2">
           <Image
-            src="/images/golden_drools_nobg.png"
-            alt="Pawnourish B2B Mobile Hero Golden Retriever holding Drools SUPUPPY pack"
+            src="/images/studio_drools_mobile_hero.png"
+            alt="Pawnourish B2B Mobile Hero Studio Golden Retriever holding Drools SUPUPPY pack"
             fill
             priority
-            className="object-contain object-bottom scale-115 translate-y-1"
+            className="object-contain object-bottom scale-110 translate-y-1"
             sizes="100vw"
           />
         </div>
