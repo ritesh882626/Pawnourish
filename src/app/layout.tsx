@@ -9,6 +9,15 @@ import RetailerMarginCalculatorModal from '@/components/common/RetailerMarginCal
 export const metadata: Metadata = {
   title: 'Pawnourish — Royal Canin & Drools Wholesale Supplier in Delhi NCR',
   description: 'Authorized B2B wholesale distributor of Royal Canin and Drools pet food products for pet stores, veterinary clinics, and retailers across Delhi, Gurugram, Noida, Ghaziabad & Faridabad.',
+  icons: {
+    icon: [
+      { url: '/images/pawnourish_logo.png', type: 'image/png' },
+    ],
+    shortcut: ['/images/pawnourish_logo.png'],
+    apple: [
+      { url: '/images/pawnourish_logo.png', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({

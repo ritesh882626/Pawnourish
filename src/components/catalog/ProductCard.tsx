@@ -97,7 +97,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Primary ENQUIRE Button */}
           <div className="grid grid-cols-12 gap-2">
             <button
-              onClick={() => openDealerModal(product, product.variantName, primaryPack)}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                openDealerModal(product, product.variantName, primaryPack);
+              }}
               className="col-span-9 py-3 px-4 bg-slate-950 hover:bg-emerald-800 text-white font-extrabold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md transition-all group/btn"
             >
               <FileText className="w-4 h-4 text-amber-400" />
