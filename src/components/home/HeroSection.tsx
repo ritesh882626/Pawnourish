@@ -142,7 +142,7 @@ export default function HeroSection() {
             </h1>
 
             {/* Supporting Line */}
-            <div className="pt-0.5">
+            <div className="pt-0.5 hidden lg:block">
               <p className="text-xs font-black tracking-wider text-slate-600 uppercase">
                 Authorized B2B Supplier
               </p>

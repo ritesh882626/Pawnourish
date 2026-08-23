@@ -28,7 +28,7 @@ export default function TrustIndicators() {
   ];
 
   return (
-    <section className="relative bg-emerald-950 text-white py-2.5 sm:py-3.5 border-b border-emerald-900 shadow-inner">
+    <section className="hidden lg:block relative bg-emerald-950 text-white py-2.5 sm:py-3.5 border-b border-emerald-900 shadow-inner">
       <div className="max-w-7xl mx-auto px-2 sm:px-6">
         
         {/* Thin Informative Strip across all screen sizes */}
