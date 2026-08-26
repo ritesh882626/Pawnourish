@@ -69,7 +69,9 @@ export default function ContactPage() {
               </div>
               <div>
                 <span className="text-xs text-slate-400 block font-semibold">Email Sales Desk</span>
-                <span className="font-bold text-white text-base">b2b@pawnourish.com</span>
+                <a href="mailto:enquiry@pawnaurish.in" className="font-bold text-white hover:text-emerald-400 text-base transition-colors">
+                  enquiry@pawnaurish.in
+                </a>
               </div>
             </div>
 

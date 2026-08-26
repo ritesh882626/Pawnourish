@@ -7,6 +7,7 @@ import { useStore } from '@/store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Phone, 
+  Mail,
   MessageCircle, 
   FileText, 
   ChevronDown, 
@@ -132,6 +133,14 @@ export default function Footer() {
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>WhatsApp Sales Desk</span>
+              </a>
+
+              <a 
+                href="mailto:enquiry@pawnaurish.in" 
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors"
+              >
+                <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>enquiry@pawnaurish.in</span>
               </a>
 
               <div className="text-[11px] text-slate-500 pt-1">

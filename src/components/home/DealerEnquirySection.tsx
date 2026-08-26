@@ -62,7 +62,7 @@ export default function DealerEnquirySection() {
             </div>
             <div className="flex items-center gap-3">
               <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
-              <span>Dealer Email: b2b@pawnourish.com</span>
+              <a href="mailto:enquiry@pawnaurish.in" className="hover:text-amber-400 transition-colors">Dealer Email: enquiry@pawnaurish.in</a>
             </div>
             <div className="flex items-center gap-3">
               <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
