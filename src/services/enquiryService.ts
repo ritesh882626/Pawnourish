@@ -1,6 +1,7 @@
 import { Product } from '@/data/mockData';
 
 export interface DealerEnquiryData {
+  formSource?: string;
   // Product context (prefilled automatically)
   productSku?: string;
   brand?: string;
@@ -13,11 +14,11 @@ export interface DealerEnquiryData {
 
   // Retailer details
   name: string;
-  businessName: string;
+  businessName?: string;
   phone: string;
   email?: string;
-  city: string;
-  businessType: string;
+  city?: string;
+  businessType?: string;
   quantity?: string;
   message?: string;
 }
@@ -25,8 +26,8 @@ export interface DealerEnquiryData {
 export async function submitDealerEnquiry(data: DealerEnquiryData): Promise<{ success: boolean; error?: string }> {
   try {
     // 1. Client-Side Validation
-    if (!data.name || !data.phone || !data.businessName || !data.city) {
-      return { success: false, error: 'Please fill in all required fields (Name, Business Name, Phone, City).' };
+    if (!data.name || !data.phone) {
+      return { success: false, error: 'Please fill in required fields (Name and Phone Number).' };
     }
 
     // 2. Post to secure server-side Next.js API route

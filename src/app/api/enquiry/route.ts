@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     const {
+      formSource,
       productSku,
       brand,
       productName,
@@ -27,15 +28,15 @@ export async function POST(req: NextRequest) {
     } = body;
 
     // 1. Basic validation
-    if (!name || !phone || !businessName || !city) {
+    if (!name || !phone) {
       return NextResponse.json(
-        { success: false, error: 'Required fields missing: Name, Business Name, Phone, and City are required.' },
+        { success: false, error: 'Required fields missing: Name and Phone are required.' },
         { status: 400 }
       );
     }
 
     // 2. Server-side Deduplication (Hash Key from phone + product + timestamp window)
-    const dedupeKey = `${phone}_${productSku || productName || 'general'}_${businessName}`.toLowerCase().replace(/\s+/g, '');
+    const dedupeKey = `${phone}_${productSku || productName || 'general'}_${businessName || 'lead'}`.toLowerCase().replace(/\s+/g, '');
     const now = Date.now();
     const lastSubmitted = recentSubmissions.get(dedupeKey);
 
@@ -65,36 +66,34 @@ export async function POST(req: NextRequest) {
       timeStyle: 'medium'
     });
 
-    // 4. Secure Server-Side Google Sheet / Google Form Submission
-    const googleFormUrl = process.env.GOOGLE_FORM_URL || process.env.NEXT_PUBLIC_GOOGLE_FORM_URL || process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    // 4. Send to Google Sheets Webhook (Apps Script)
+    const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL;
 
-    if (googleFormUrl && googleFormUrl.trim() !== '') {
-      const formData = new URLSearchParams();
-
-      // Standard Google Form / Webhook mapping
-      if (process.env.GOOGLE_FIELD_TIMESTAMP) formData.append(process.env.GOOGLE_FIELD_TIMESTAMP, timestamp);
-      if (process.env.GOOGLE_FIELD_NAME) formData.append(process.env.GOOGLE_FIELD_NAME, name);
-      if (process.env.GOOGLE_FIELD_BUSINESS_NAME) formData.append(process.env.GOOGLE_FIELD_BUSINESS_NAME, businessName);
-      if (process.env.GOOGLE_FIELD_PHONE) formData.append(process.env.GOOGLE_FIELD_PHONE, phone);
-      if (process.env.GOOGLE_FIELD_EMAIL && email) formData.append(process.env.GOOGLE_FIELD_EMAIL, email);
-      if (process.env.GOOGLE_FIELD_CITY) formData.append(process.env.GOOGLE_FIELD_CITY, city);
-      if (process.env.GOOGLE_FIELD_BUSINESS_TYPE) formData.append(process.env.GOOGLE_FIELD_BUSINESS_TYPE, businessType || 'Retailer');
-      if (process.env.GOOGLE_FIELD_BRAND && brand) formData.append(process.env.GOOGLE_FIELD_BRAND, brand);
-      if (process.env.GOOGLE_FIELD_PRODUCT_NAME && productName) formData.append(process.env.GOOGLE_FIELD_PRODUCT_NAME, productName);
-      if (process.env.GOOGLE_FIELD_VARIANT && variant) formData.append(process.env.GOOGLE_FIELD_VARIANT, variant);
-      if (process.env.GOOGLE_FIELD_PACK_SIZE && packSize) formData.append(process.env.GOOGLE_FIELD_PACK_SIZE, packSize);
-      if (process.env.GOOGLE_FIELD_SKU && productSku) formData.append(process.env.GOOGLE_FIELD_SKU, productSku);
-      if (process.env.GOOGLE_FIELD_QUANTITY && quantity) formData.append(process.env.GOOGLE_FIELD_QUANTITY, quantity);
-      if (process.env.GOOGLE_FIELD_MESSAGE && message) formData.append(process.env.GOOGLE_FIELD_MESSAGE, message);
-
+    if (webhookUrl && webhookUrl.trim() !== '') {
       try {
-        await fetch(googleFormUrl, {
+        await fetch(webhookUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: formData.toString()
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            timestamp,
+            formSource: formSource || 'Website Lead',
+            name,
+            businessName: businessName || 'N/A',
+            businessType: businessType || 'Pet Retailer',
+            phone,
+            email: email || '',
+            city: city || 'Delhi NCR',
+            productName: productName || (brand ? `${brand} ${variant || ''}` : ''),
+            productSku: productSku || '',
+            variant: variant || '',
+            packSize: packSize || '',
+            quantity: quantity || '',
+            message: message || ''
+          }),
+          redirect: 'follow'
         });
       } catch (postErr) {
-        console.warn('Server-side Google Form push warning:', postErr);
+        console.warn('Google Sheet Webhook push warning:', postErr);
       }
     }
 
@@ -111,3 +110,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

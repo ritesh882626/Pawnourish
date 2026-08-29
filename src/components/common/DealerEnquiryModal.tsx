@@ -61,6 +61,7 @@ export default function DealerEnquiryModal() {
     setErrorMessage('');
 
     const payload = {
+      formSource: 'Product Catalogue Modal',
       productSku: selectedProduct?.code || 'GENERAL-CATALOG',
       brand: selectedProduct?.brand || 'All Brands',
       productName: selectedProduct?.title || 'Wholesale Price List',

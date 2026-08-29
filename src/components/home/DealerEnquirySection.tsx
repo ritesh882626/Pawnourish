@@ -2,11 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Building2, Send, CheckCircle2, Phone, Mail, MapPin, ArrowLeft, ArrowRight, Store, User, FileText } from 'lucide-react';
+import { Building2, Send, CheckCircle2, Phone, Mail, MapPin, ArrowLeft, ArrowRight, Store, User, FileText, AlertCircle } from 'lucide-react';
+import { submitDealerEnquiry } from '@/services/enquiryService';
 
 export default function DealerEnquirySection() {
   const [step, setStep] = useState<number>(1);
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const [formData, setFormData] = useState({
     storeName: '',
     contactName: '',
@@ -17,12 +20,31 @@ export default function DealerEnquirySection() {
     notes: ''
   });
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step < 3) {
       setStep((prev) => prev + 1);
     } else {
-      setSubmitted(true);
+      setLoading(true);
+      setErrorMsg('');
+
+      const res = await submitDealerEnquiry({
+        formSource: 'Dealer Wizard (Homepage / Become a Dealer)',
+        name: formData.contactName,
+        businessName: formData.storeName,
+        phone: formData.phone,
+        email: formData.email,
+        city: formData.location,
+        businessType: formData.businessType,
+        message: formData.notes
+      });
+
+      setLoading(false);
+      if (res.success) {
+        setSubmitted(true);
+      } else {
+        setErrorMsg(res.error || 'Failed to submit. Please try again.');
+      }
     }
   };
 
@@ -285,12 +307,22 @@ export default function DealerEnquirySection() {
 
                 </AnimatePresence>
 
+                {errorMsg && (
+                  <div className="p-3 bg-red-950/80 border border-red-500/50 rounded-xl text-red-200 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+                    <span>{errorMsg}</span>
+                  </div>
+                )}
+
                 <div className="pt-4">
                   <button
                     type="submit"
-                    className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl shadow-emerald-500/30 transition-all min-h-[52px]"
+                    disabled={loading}
+                    className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-black rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl shadow-emerald-500/30 transition-all min-h-[52px] disabled:opacity-60"
                   >
-                    {step === 3 ? (
+                    {loading ? (
+                      <span>Submitting Application...</span>
+                    ) : step === 3 ? (
                       <>
                         <Send className="w-5 h-5 text-slate-950" />
                         <span>Submit Dealer Application</span>

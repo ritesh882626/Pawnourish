@@ -1,15 +1,42 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle2 } from 'lucide-react';
-import { NCR_LOCATIONS } from '@/data/mockData';
+import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { submitDealerEnquiry } from '@/services/enquiryService';
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    businessName: '',
+    message: ''
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setErrorMsg('');
+
+    const res = await submitDealerEnquiry({
+      formSource: 'Contact Page',
+      name: formData.name,
+      phone: formData.phone,
+      businessName: formData.businessName,
+      city: 'Delhi NCR',
+      businessType: 'Retailer Enquiry',
+      message: formData.message
+    });
+
+    setLoading(false);
+
+    if (res.success) {
+      setSubmitted(true);
+    } else {
+      setErrorMsg(res.error || 'Failed to submit enquiry. Please try again or WhatsApp us.');
+    }
   };
 
   return (
@@ -111,29 +138,73 @@ export default function ContactPage() {
                 <p className="text-xs text-slate-500">We will respond with price list and stock details.</p>
               </div>
 
+              {errorMsg && (
+                <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Your Name *</label>
-                  <input required type="text" placeholder="John Doe" className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
+                  <input 
+                    required 
+                    type="text" 
+                    placeholder="John Doe" 
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm focus:outline-none focus:border-emerald-600" 
+                  />
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Phone Number (WhatsApp) *</label>
-                  <input required type="tel" placeholder="+91 97116 XXXXX" className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
+                  <input 
+                    required 
+                    type="tel" 
+                    placeholder="+91 97116 XXXXX" 
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm focus:outline-none focus:border-emerald-600" 
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Store / Business Name *</label>
-                <input required type="text" placeholder="Pet Store / Clinic Name" className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Store / Business Name</label>
+                <input 
+                  type="text" 
+                  placeholder="Pet Store / Clinic Name" 
+                  value={formData.businessName}
+                  onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm focus:outline-none focus:border-emerald-600" 
+                />
               </div>
 
               <div>
                 <label className="block text-xs font-bold uppercase text-slate-700 mb-1">Message / Requirements</label>
-                <textarea required rows={4} placeholder="Mention required Royal Canin or Drools SKUs..." className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
+                <textarea 
+                  rows={4} 
+                  placeholder="Mention required Royal Canin or Drools SKUs..." 
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm focus:outline-none focus:border-emerald-600" 
+                />
               </div>
 
-              <button type="submit" className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-2xl flex items-center justify-center gap-2">
-                <Send className="w-4 h-4" /> Submit Sales Enquiry
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all shadow-md"
+              >
+                {loading ? (
+                  <span>Sending Message...</span>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" /> 
+                    <span>Submit Sales Enquiry</span>
+                  </>
+                )}
               </button>
             </form>
           )}
