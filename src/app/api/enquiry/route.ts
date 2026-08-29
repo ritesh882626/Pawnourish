@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
     });
 
     // 4. Send to Google Sheets Webhook (Apps Script)
-    const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxm4NDgDW62snref3Oowmq2wx8pRyGzEHOMyrSZWNv6YgSmHQSveuAn1VWFxk4Qy2bV/exec';
+    const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbymf2_y47Ob1xf79SzW7SJ2JQ-r8ZLA6-UjxgHrtgKRb0JZpOkzFFl2h6h05A2CvUxw/exec';
     const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL || process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL || DEFAULT_WEBHOOK_URL;
 
     if (webhookUrl && webhookUrl.trim() !== '') {
